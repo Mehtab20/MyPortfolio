@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+frontend/dist/
+frontend/dist-ssr/
+
+# Environment files
+.env
+backend/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# SQLite database (generated from seed)
+backend/portfolio.sqlite
+
+# Editor directories
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.local
