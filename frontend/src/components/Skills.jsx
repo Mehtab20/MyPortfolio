@@ -1,130 +1,168 @@
+import { useState, useEffect, useRef } from 'react';
+
 const skillCategories = [
   {
-    title: 'Programming Languages',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-      </svg>
-    ),
-    color: 'from-blue-500 to-cyan-400',
-    colorLight: 'blue',
+    key: 'languages',
+    label: 'Languages',
     skills: [
-      { name: 'Dart', description: 'Primary language for Flutter development' },
-      { name: 'Java', description: 'Object-oriented programming and application development' },
-      { name: 'C++', description: 'Systems programming and performance-critical applications' },
-      { name: 'SQL', description: 'Database querying and management' }
+      { name: 'Python', level: 85 },
+      { name: 'Java', level: 80 },
+      { name: 'JavaScript', level: 78 },
+      { name: 'C++', level: 72 },
+      { name: 'Dart', level: 82 },
+      { name: 'SQL', level: 78 },
     ],
   },
   {
-    title: 'Frameworks & Technologies',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.1-3.4a1.5 1.5 0 010-2.54l5.1-3.4a1.5 1.5 0 012.16 1.27v6.8a1.5 1.5 0 01-2.16 1.27zM19.42 15.17l-5.1-3.4a1.5 1.5 0 010-2.54l5.1-3.4a1.5 1.5 0 012.16 1.27v6.8a1.5 1.5 0 01-2.16 1.27z" />
-      </svg>
-    ),
-    color: 'from-violet-500 to-purple-400',
-    colorLight: 'violet',
+    key: 'frameworks',
+    label: 'Frameworks',
     skills: [
-      { name: 'Flutter', description: 'Cross-platform mobile application development' },
-      { name: 'Tailwind CSS', description: 'Utility-first CSS framework for rapid UI development' },
-      { name: 'React', description: 'JavaScript library for building user interfaces' },
-      { name: 'REST APIs', description: 'Designing and consuming web services' }
+      { name: 'Flutter', level: 88 },
+      { name: 'React', level: 75 },
+      { name: 'Tailwind CSS', level: 82 },
+      { name: 'REST APIs', level: 80 },
+      { name: 'Node.js', level: 65 },
+      { name: 'Express.js', level: 62 },
     ],
   },
   {
-    title: 'Databases & Design',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-      </svg>
-    ),
-    color: 'from-amber-500 to-orange-400',
-    colorLight: 'amber',
+    key: 'databases',
+    label: 'Databases',
     skills: [
-      { name: 'MySQL', description: 'Relational database management' },
-      { name: 'Oracle Database', description: 'Enterprise database systems' },
-      { name: 'Database Design', description: 'ER Modeling and Normalization' }
+      { name: 'MySQL', level: 82 },
+      { name: 'Oracle Database', level: 72 },
+      { name: 'Firebase', level: 85 },
+      { name: 'MongoDB', level: 65 },
     ],
   },
   {
-    title: 'Software Engineering Concepts',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-      </svg>
-    ),
-    color: 'from-emerald-500 to-teal-400',
-    colorLight: 'emerald',
+    key: 'devops',
+    label: 'DevOps',
     skills: [
-      { name: 'OOP & SDLC', description: 'Object-Oriented Programming and Software Development Life Cycle' },
-      { name: 'Design Patterns', description: 'Reusable solutions to common software design problems' },
-      { name: 'UI/UX & Agile', description: 'User-centered design principles and Agile methodologies' }
+      { name: 'Git & GitHub', level: 85 },
+      { name: 'Docker', level: 60 },
+      { name: 'Linux', level: 65 },
+      { name: 'CI/CD', level: 55 },
+    ],
+  },
+  {
+    key: 'aiml',
+    label: 'AI/ML',
+    skills: [
+      { name: 'Machine Learning', level: 55 },
+      { name: 'Data Analysis', level: 60 },
+      { name: 'NumPy / Pandas', level: 58 },
     ],
   },
 ];
 
-function SkillCard({ skill, categoryColor }) {
+function ProgressBar({ level, animate }) {
   return (
-    <div className="group relative rounded-2xl glass p-6 transition-all duration-500 hover:glow-border hover:-translate-y-1">
-      {/* Hover gradient overlay */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${categoryColor} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500`} />
-
-      <div className="relative">
-        {/* Title */}
-        <h3 className="text-lg font-semibold text-text-primary mb-2 group-hover:gradient-text-hover transition-all duration-300">
-          {skill.name}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm text-text-muted leading-relaxed">
-          {skill.description}
-        </p>
-      </div>
+    <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--theme-surface-lighter)' }}>
+      <div
+        className="h-full rounded-full progress-fill"
+        style={{
+          width: animate ? `${level}%` : '0%',
+          background: 'linear-gradient(90deg, #d4a522, #e8b92e)',
+        }}
+      />
     </div>
   );
 }
 
 export default function Skills() {
-  return (
-    <section id="skills" className="relative py-24 sm:py-32" aria-label="Skills section">
-      {/* Background accents */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-[100px] pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" aria-hidden="true" />
+  const [activeTab, setActiveTab] = useState('languages');
+  const [animate, setAnimate] = useState(false);
+  const sectionRef = useRef(null);
 
+  // Trigger progress bar animation when section enters viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setAnimate(true);
+      },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Re-trigger animation on tab change
+  useEffect(() => {
+    const timer = setTimeout(() => setAnimate(true), 50);
+    return () => clearTimeout(timer);
+  }, [activeTab]);
+
+  const activeCategory = skillCategories.find((c) => c.key === activeTab);
+
+  return (
+    <section id="skills" ref={sectionRef} className="relative py-24 sm:py-32" aria-label="Skills section">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full glass text-xs font-medium text-primary-light tracking-wider uppercase mb-4">
-            Technical Skills
-          </span>
+        <div className="text-center mb-12 reveal">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-text-primary">My </span>
-            <span className="gradient-text">Expertise</span>
+            <span style={{ color: 'var(--theme-text)' }}>My </span>
+            <span className="gradient-text">Skills</span>
           </h2>
-          <p className="max-w-lg mx-auto text-text-secondary text-base">
+          <p className="max-w-lg mx-auto text-base" style={{ color: 'var(--theme-text-secondary)' }}>
             Technologies and tools I use to bring ideas to life
           </p>
         </div>
 
-        {/* Skills by Category */}
-        <div className="space-y-12">
-          {skillCategories.map((category) => (
-            <div key={category.title}>
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-white`}>
-                  {category.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-text-primary">{category.title}</h3>
-                <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
+        {/* Tab Bar */}
+        <div className="reveal flex flex-wrap justify-center gap-2 mb-10">
+          {skillCategories.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => {
+                setAnimate(false);
+                setActiveTab(cat.key);
+              }}
+              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+                activeTab === cat.key
+                  ? 'btn-primary'
+                  : ''
+              }`}
+              style={
+                activeTab !== cat.key
+                  ? {
+                      color: 'var(--theme-text-secondary)',
+                      border: '1px solid var(--theme-border)',
+                      background: 'var(--theme-glass-bg)',
+                    }
+                  : undefined
+              }
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Skill Cards Grid */}
+        <div className="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {activeCategory?.skills.map((skill) => (
+            <div
+              key={skill.name}
+              className="group card-surface rounded-2xl p-6 transition-all duration-500 hover:-translate-y-1 golden-border-hover"
+            >
+              {/* Skill Name & Level */}
+              <div className="flex items-center justify-between mb-3">
+                <h3
+                  className="text-base font-semibold"
+                  style={{ color: 'var(--theme-text)' }}
+                >
+                  {skill.name}
+                </h3>
+                <span
+                  className="text-sm font-mono font-medium"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  {skill.level}%
+                </span>
               </div>
 
-              {/* Skill Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {category.skills.map((skill) => (
-                  <SkillCard key={skill.name} skill={skill} categoryColor={category.color} />
-                ))}
-              </div>
+              {/* Progress Bar */}
+              <ProgressBar level={skill.level} animate={animate} />
             </div>
           ))}
         </div>

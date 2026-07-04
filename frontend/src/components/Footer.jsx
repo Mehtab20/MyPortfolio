@@ -1,82 +1,132 @@
-const socialLinks = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com/Mehtab20',
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/in/mehtab-akbar-385024267',
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Email',
-    href: 'mailto:mehtabakbar5656@gmail.com',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-      </svg>
-    ),
-  },
-];
+const currentYear = new Date().getFullYear();
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <footer className="relative border-t border-border" role="contentinfo">
-      {/* Top glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" aria-hidden="true" />
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Left - Branding */}
-          <div className="text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent-purple flex items-center justify-center text-white font-bold text-xs">
-                MA
+    <footer
+      className="relative transition-colors duration-500"
+      style={{
+        backgroundColor: 'var(--theme-surface)',
+        borderTop: '1px solid var(--theme-border)',
+      }}
+      role="contentinfo"
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          
+          {/* Column 1: Branding */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div
+                className="w-9 h-9 rounded-lg border flex items-center justify-center font-bold text-sm"
+                style={{
+                  backgroundColor: 'var(--theme-surface-light)',
+                  borderColor: 'var(--theme-border)',
+                }}
+              >
+                <span className="gradient-text">MA</span>
               </div>
-              <span className="text-lg font-semibold">
+              <span className="text-lg font-semibold" style={{ color: 'var(--theme-text)' }}>
                 Mehtab
                 <span className="gradient-text ml-1">Akbar</span>
               </span>
             </div>
-            <p className="text-sm text-text-muted">Software Engineer</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              Guiding the future, one line at a time. Passionate about Cloud, DevOps, automation, and building high-performance software systems.
+            </p>
           </div>
 
-          {/* Center - Social Links */}
-          <div className="flex items-center gap-3">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                className="w-10 h-10 rounded-xl glass flex items-center justify-center text-text-muted transition-all duration-300 hover:text-white hover:border-primary/30 hover:glow-sm hover:-translate-y-0.5"
-                aria-label={link.label}
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className="text-xs uppercase tracking-widest font-bold mb-4" style={{ color: 'var(--theme-text-muted)' }}>
+              Quick Links
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { label: 'Home', href: '#home' },
+                { label: 'About', href: '#about' },
+                { label: 'Skills', href: '#skills' },
+                { label: 'Projects', href: '#projects' },
+                { label: 'Education', href: '#education' },
+                { label: 'Contact', href: '#contact' },
+              ].map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="text-sm transition-colors duration-300 hover:underline"
+                    style={{ color: 'var(--theme-text-secondary)' }}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Expertise / Services */}
+          <div>
+            <h4 className="text-xs uppercase tracking-widest font-bold mb-4" style={{ color: 'var(--theme-text-muted)' }}>
+              Expertise
+            </h4>
+            <ul className="space-y-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+              <li>Web Development</li>
+              <li>Cloud Deployment</li>
+              <li>DevOps Automation</li>
+              <li>Mobile Development</li>
+              <li>Database Architecture</li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter */}
+          <div className="space-y-4">
+            <h4 className="text-xs uppercase tracking-widest font-bold mb-4" style={{ color: 'var(--theme-text-muted)' }}>
+              Newsletter
+            </h4>
+            <p className="text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+              Stay updated with my latest additions and technical releases.
+            </p>
+            <form onSubmit={(e) => e.preventDefault()} className="flex gap-2">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="px-3.5 py-2 rounded-lg border text-sm w-full focus:outline-none transition-all duration-300"
+                style={{
+                  backgroundColor: 'var(--theme-input-bg)',
+                  borderColor: 'var(--theme-border)',
+                  color: 'var(--theme-text)',
+                }}
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-lg btn-primary text-xs font-bold whitespace-nowrap cursor-pointer"
               >
-                {link.icon}
-              </a>
-            ))}
+                Subscribe
+              </button>
+            </form>
           </div>
 
-          {/* Right - Copyright */}
-          <div className="text-center md:text-right">
-            <p className="text-sm text-text-muted">
-              &copy; {currentYear} Mehtab Akbar
-            </p>
-            <p className="text-xs text-text-muted/60 mt-1">
-              Built with React &amp; Tailwind CSS
-            </p>
-          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div
+          className="mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
+          style={{
+            borderTop: '1px solid var(--theme-border)',
+            color: 'var(--theme-text-muted)',
+          }}
+        >
+          <p>&copy; {currentYear} Mehtab Akbar. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            Made with{' '}
+            <span style={{ color: 'var(--color-primary)' }}>&hearts;</span> in Rawalpindi, Pakistan
+          </p>
         </div>
       </div>
     </footer>
