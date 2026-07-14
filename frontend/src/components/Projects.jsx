@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
+import { fetchProjects } from '../api/index.js';
 import projectComplaint from '../assets/project-complaint.png';
 import projectFood from '../assets/project-food.png';
 import projectLibrary from '../assets/project-library.png';
 
-const projects = [
+const fallbackProjects = [
   {
     id: 1,
     title: 'University Complaint System',
@@ -34,6 +36,15 @@ const projects = [
     demo: '#',
   },
 ];
+
+const getProjectImage = (title) => {
+  const t = (title || '').toLowerCase();
+  if (t.includes('complaint') || t.includes('university')) return projectComplaint;
+  if (t.includes('food') || t.includes('ecommerce') || t.includes('delivery') || t.includes('shop') || t.includes('store')) return projectFood;
+  if (t.includes('library') || t.includes('portfolio') || t.includes('bot') || t.includes('task') || t.includes('reference') || t.includes('medref')) return projectLibrary;
+  return projectLibrary; // default fallback
+};
+
 
 function TechBadge({ tech }) {
   return (
@@ -121,6 +132,36 @@ function ProjectCard({ project }) {
 }
 
 export default function Projects() {
+  const [projectList, setProjectList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    const loadProjects = async () => {
+      try {
+        const data = await fetchProjects();
+        if (active) {
+          if (data && data.length > 0) {
+            setProjectList(data);
+          } else {
+            setProjectList(fallbackProjects);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch projects, using fallback.', err);
+        if (active) {
+          setProjectList(fallbackProjects);
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    loadProjects();
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const handleScroll = (e) => {
     e.preventDefault();
     const el = document.getElementById('projects');
@@ -143,9 +184,27 @@ export default function Projects() {
 
         {/* Project Cards Grid */}
         <div className="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+          {projectList.map((project) => {
+            const parsedTech = Array.isArray(project.tech)
+              ? project.tech
+              : typeof project.tech === 'string'
+              ? project.tech.startsWith('[')
+                ? JSON.parse(project.tech)
+                : project.tech.split(',').map((item) => item.trim())
+              : [];
+
+            return (
+              <ProjectCard
+                key={project.id || project.title}
+                project={{
+                  ...project,
+                  image: project.image || getProjectImage(project.title),
+                  tech: parsedTech,
+                  demo: project.demo || '#',
+                }}
+              />
+            );
+          })}
         </div>
 
         {/* View All Button */}

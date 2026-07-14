@@ -1,25 +1,63 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { supabase } from '../supabase';
 
+/**
+ * Fetches the single CV profile row from the `cv_profile` table.
+ * @returns {Object|null} The profile object, or null if not found.
+ */
 export const fetchCV = async () => {
-  const response = await fetch(`${API_BASE_URL}/cv`);
-  if (!response.ok) throw new Error('Failed to fetch CV data');
-  return response.json();
+  const { data, error } = await supabase
+    .from('cv_profile')
+    .select('*')
+    .limit(1)
+    .single();
+
+  if (error) {
+    console.error('Error fetching CV:', error);
+    return null;
+  }
+
+  return data;
 };
 
+/**
+ * Fetches all projects from the `projects` table, ordered by ID ascending.
+ * @returns {Array} Array of project objects.
+ */
 export const fetchProjects = async () => {
-  const response = await fetch(`${API_BASE_URL}/projects`);
-  if (!response.ok) throw new Error('Failed to fetch projects');
-  return response.json();
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('id', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching projects:', error);
+    return [];
+  }
+
+  return data;
 };
 
+/**
+ * Inserts a contact message into the `contacts` table.
+ * @param {Object} messageData - { name, email, subject, message }
+ * @returns {Array} The inserted row(s).
+ */
 export const submitContactMessage = async (messageData) => {
-  const response = await fetch(`${API_BASE_URL}/message`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(messageData),
-  });
-  if (!response.ok) throw new Error('Failed to submit message');
-  return response.json();
+  const { data, error } = await supabase
+    .from('contacts')
+    .insert([
+      {
+        full_name: messageData.name,
+        email: messageData.email,
+        subject: messageData.subject,
+        message: messageData.message,
+      },
+    ])
+    .select();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 };

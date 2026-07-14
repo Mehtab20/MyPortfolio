@@ -19,10 +19,11 @@ CREATE TABLE IF NOT EXISTS projects (
     github VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE IF NOT EXISTS contacts (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,7 +1,7 @@
 import pool from '../db/index.js';
 
 export const submitMessage = async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, subject, message } = req.body;
 
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'All fields (name, email, message) are required.' });
@@ -9,8 +9,8 @@ export const submitMessage = async (req, res) => {
 
   try {
     const result = await pool.query(
-      'INSERT INTO messages (name, email, message) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, message]
+      'INSERT INTO contacts (full_name, email, subject, message) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, email, subject || null, message]
     );
 
     // 🤖 N8N AUTOMATION READINESS
