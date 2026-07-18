@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -105,8 +106,25 @@ export default function Navbar({ theme, toggleTheme }) {
             ))}
           </div>
 
-          {/* Right side: Theme Toggle + Download Resume */}
+          {/* Right side: Auth + Theme Toggle + Download Resume */}
           <div className="flex items-center gap-2">
+            {/* Sign In - Desktop */}
+            <Link
+              to="/login"
+              className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white/5"
+              style={{ color: 'var(--theme-text-secondary)' }}
+            >
+              Sign In
+            </Link>
+
+            {/* Get Started - Desktop */}
+            <Link
+              to="/signup"
+              className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg btn-primary text-sm font-semibold"
+            >
+              Get Started
+            </Link>
+
             {/* Theme Toggle */}
             <button
               id="theme-toggle"
@@ -204,6 +222,24 @@ export default function Navbar({ theme, toggleTheme }) {
               {link.label}
             </a>
           ))}
+          {/* Mobile Auth Links */}
+          <div className="flex gap-2 mt-3">
+            <Link
+              to="/login"
+              onClick={() => setIsOpen(false)}
+              className="flex-1 block px-4 py-2.5 rounded-lg text-sm font-semibold text-center btn-outline"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              onClick={() => setIsOpen(false)}
+              className="flex-1 block px-4 py-2.5 rounded-lg text-sm font-semibold text-center btn-primary"
+            >
+              Get Started
+            </Link>
+          </div>
+
           {/* Mobile Resume Link */}
           <a
             href="#"

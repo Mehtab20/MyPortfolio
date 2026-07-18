@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../supabase';
+import { supabase, isConfigured } from '../supabase';
 
 const AuthContext = createContext();
 
@@ -10,6 +10,11 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
+    if (!isConfigured || !supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -42,6 +47,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const fetchProfile = async (userId) => {
+    if (!supabase) return;
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -83,7 +89,14 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const checkConfig = () => {
+    if (!isConfigured || !supabase) {
+      throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your API Keys tab.');
+    }
+  };
+
   const signUp = async (email, password, fullName) => {
+    checkConfig();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -98,6 +111,7 @@ export function AuthProvider({ children }) {
   };
 
   const signIn = async (email, password) => {
+    checkConfig();
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -107,6 +121,7 @@ export function AuthProvider({ children }) {
   };
 
   const signInWithGoogle = async () => {
+    checkConfig();
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -118,6 +133,7 @@ export function AuthProvider({ children }) {
   };
 
   const signOut = async () => {
+    checkConfig();
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     setUser(null);
@@ -126,6 +142,7 @@ export function AuthProvider({ children }) {
   };
 
   const resetPassword = async (email) => {
+    checkConfig();
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/login`,
     });
@@ -134,6 +151,7 @@ export function AuthProvider({ children }) {
   };
 
   const updateProfile = async (updates) => {
+    checkConfig();
     const { data, error } = await supabase
       .from('profiles')
       .upsert({ id: user.id, ...updates })

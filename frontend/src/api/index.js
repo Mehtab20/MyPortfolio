@@ -1,10 +1,17 @@
-import { supabase } from '../supabase';
+import { supabase, isConfigured } from '../supabase';
+
+const checkConfig = () => {
+  if (!isConfigured || !supabase) {
+    throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to use this feature.');
+  }
+};
 
 /**
  * Fetches the single CV profile row from the `cv_profile` table.
  * @returns {Object|null} The profile object, or null if not found.
  */
 export const fetchCV = async () => {
+  checkConfig();
   const { data, error } = await supabase
     .from('cv_profile')
     .select('*')
@@ -24,6 +31,7 @@ export const fetchCV = async () => {
  * @returns {Array} Array of project objects.
  */
 export const fetchProjects = async () => {
+  checkConfig();
   const { data, error } = await supabase
     .from('projects')
     .select('*')
@@ -43,6 +51,7 @@ export const fetchProjects = async () => {
  * @returns {Array} The inserted row(s).
  */
 export const submitContactMessage = async (messageData) => {
+  checkConfig();
   const { data, error } = await supabase
     .from('contacts')
     .insert([
