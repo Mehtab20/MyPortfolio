@@ -1,4 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { getAvailableProviders, sendMessage, addMessage, createConversation } from '../../api/ai';
+
+const providers = getAvailableProviders();
 
 const suggestions = [
   'Explain cloud computing concepts',
@@ -8,54 +11,74 @@ const suggestions = [
 ];
 
 export default function AiChat() {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: "Hello! I'm your AI assistant. I can help you with coding, cloud architecture, DevOps practices, and more. How can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState(() => createConversation([{
+    role: 'assistant',
+    content: "Hello! I'm your AI assistant. I can help you with coding, cloud architecture, DevOps practices, and more. I support multiple AI providers — add an API key in your settings to get started.",
+  }]));
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState('openai');
+  const [isStreaming, setIsStreaming] = useState(false);
   const messagesEndRef = useRef(null);
+  const abortRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || loading) return;
 
     const userMessage = input.trim();
     setInput('');
-    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
+    const updatedMessages = addMessage(messages, 'user', userMessage);
+    setMessages(updatedMessages);
     setLoading(true);
+    setIsStreaming(true);
 
-    // Simulate AI response (placeholder for actual API integration)
-    setTimeout(() => {
-      const responses = {
-        default: "That's a great question! I'm currently configured as a demonstration. In production, I'll be connected to an AI model (like GPT-4, Claude, or an open-source alternative) to provide intelligent responses. The architecture is ready — just add your API key and connect to your preferred AI provider.",
-        'cloud computing': 'Cloud computing delivers computing services—including servers, storage, databases, networking, software, and analytics—over the internet ("the cloud"). The main cloud providers are AWS, Google Cloud, and Microsoft Azure. Key benefits include pay-as-you-go pricing, global scale, and managed services that reduce operational overhead.',
-      };
+    const abortController = new AbortController();
+    abortRef.current = abortController;
 
-      const matchedResponse = Object.entries(responses).find(([key]) =>
-        userMessage.toLowerCase().includes(key)
-      );
+    try {
+      let assistantContent = '';
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: matchedResponse ? matchedResponse[1] : responses.default,
+      await sendMessage(updatedMessages, {
+        provider: selectedProvider,
+        onStream: (chunk) => {
+          assistantContent += chunk;
+          // Update the last message in real-time during streaming
+          setMessages((prev) => {
+            const newMsgs = [...prev];
+            const lastMsg = newMsgs[newMsgs.length - 1];
+            if (lastMsg?.role === 'assistant') {
+              newMsgs[newMsgs.length - 1] = { ...lastMsg, content: assistantContent };
+            } else {
+              newMsgs.push({ role: 'assistant', content: assistantContent });
+            }
+            return newMsgs;
+          });
         },
-      ]);
-      setLoading(false);
-    }, 1500);
-  };
+        signal: abortController.signal,
+      });
 
-  const handleSuggestion = (suggestion) => {
+      // Finalize with the complete message
+      setMessages((prev) => addMessage(prev, 'assistant', assistantContent));
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        const errorMsg = `⚠️ ${err.message || 'Failed to get AI response. Please check your API key and try again.'}`;
+        setMessages((prev) => addMessage(prev, 'assistant', errorMsg));
+      }
+    } finally {
+      setLoading(false);
+      setIsStreaming(false);
+      abortRef.current = null;
+    }
+  }, [input, loading, messages, selectedProvider]);
+
+  const handleSuggestion = useCallback((suggestion) => {
     setInput(suggestion);
-  };
+  }, []);
 
   return (
     <div className="flex flex-col h-[calc(100vh-12rem)]">
@@ -125,9 +148,45 @@ export default function AiChat() {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Provider Selector */}
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-medium" style={{ color: 'var(--theme-text-muted)' }}>
+            Provider:
+          </span>
+          <div className="flex gap-1">
+            {providers.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setSelectedProvider(p.id)}
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-300 ${
+                  selectedProvider === p.id ? 'btn-primary' : ''
+                }`}
+                style={
+                  selectedProvider !== p.id
+                    ? { color: 'var(--theme-text-muted)', border: '1px solid var(--theme-border)', background: 'transparent' }
+                    : {}
+                }
+              >
+                {p.name}
+              </button>
+            ))}
+          </div>
+        </div>
+        {isStreaming && (
+          <button
+            onClick={() => abortRef.current?.abort()}
+            className="px-3 py-1 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-red-500/10 hover:text-red-500"
+            style={{ color: 'var(--theme-text-muted)', border: '1px solid var(--theme-border)' }}
+          >
+            Stop generating
+          </button>
+        )}
+      </div>
+
       {/* Suggestions */}
       {messages.length <= 1 && (
-        <div className="mb-4">
+        <div className="mb-4 animate-fade-in">
           <p className="text-xs font-medium mb-2" style={{ color: 'var(--theme-text-muted)' }}>
             Try asking:
           </p>
@@ -136,11 +195,11 @@ export default function AiChat() {
               <button
                 key={suggestion}
                 onClick={() => handleSuggestion(suggestion)}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:scale-105"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:scale-105 hover:bg-white/5"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.08)',
+                  backgroundColor: 'rgba(212, 165, 34, 0.06)',
                   color: 'var(--color-primary-light)',
-                  border: '1px solid rgba(212, 165, 34, 0.2)',
+                  border: '1px solid rgba(212, 165, 34, 0.15)',
                 }}
               >
                 {suggestion}
