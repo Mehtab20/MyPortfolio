@@ -59,9 +59,12 @@ const plans = [
 export default function Subscription() {
   const [billing, setBilling] = useState('monthly');
 
+  const [stripeInfo, setStripeInfo] = useState(null);
+
   const handleSubscribe = async (planName) => {
-    // Stripe checkout placeholder
-    alert(`[Stripe Placeholder] Redirecting to ${planName} checkout...\n\nIn production, this will:\n1. Create a Stripe Checkout Session\n2. Redirect to Stripe's hosted checkout page\n3. Handle the success/cancel callback\n4. Update the user's subscription status via webhook`);
+    setStripeInfo(planName);
+    // In production: create Stripe Checkout Session, redirect to Stripe
+    // setTimeout(() => setStripeInfo(null), 5000);
   };
 
   return (
@@ -187,6 +190,41 @@ export default function Subscription() {
           </div>
         ))}
       </div>
+
+      {/* Stripe placeholder info */}
+      {stripeInfo && (
+        <div className="card-surface rounded-2xl p-5 sm:p-6 golden-border border-primary/30 animate-fade-in">
+          <div className="flex items-start gap-3">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ backgroundColor: 'rgba(212, 165, 34, 0.1)', color: 'var(--color-primary)' }}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-bold mb-1" style={{ color: 'var(--theme-text)' }}>
+                Stripe Checkout — {stripeInfo}
+              </h3>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                This is a placeholder. To complete the integration, create a Stripe account,
+                set up products and prices, and connect the frontend to your backend.
+              </p>
+            </div>
+            <button
+              onClick={() => setStripeInfo(null)}
+              className="shrink-0 p-1 rounded-lg hover:bg-white/5"
+              style={{ color: 'var(--theme-text-muted)' }}
+              aria-label="Dismiss"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Current Plan Info */}
       <div className="card-surface rounded-2xl p-6 sm:p-8 golden-border">

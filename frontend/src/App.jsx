@@ -9,6 +9,7 @@ import PageTransition from './components/layout/PageTransition';
 
 // ─── Eager-loaded (critical path) ──
 import Landing from './pages/Landing';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // ─── Lazy-loaded (code-split) ──
 const Login = lazy(() => import('./pages/auth/Login'));
@@ -21,6 +22,7 @@ const Settings = lazy(() => import('./pages/dashboard/Settings'));
 const Subscription = lazy(() => import('./pages/dashboard/Subscription'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const Analytics = lazy(() => import('./pages/admin/Analytics'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSuspense({ children }) {
   return (
@@ -46,6 +48,7 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
+          <ErrorBoundary>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingWrapper />} />
@@ -63,7 +66,11 @@ export default function App() {
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><AdminDashboard /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
             <Route path="/admin/analytics" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><Analytics /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
+
+            {/* 404 Catch-all */}
+            <Route path="*" element={<SuspenseRoute><NotFound /></SuspenseRoute>} />
           </Routes>
+          </ErrorBoundary>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

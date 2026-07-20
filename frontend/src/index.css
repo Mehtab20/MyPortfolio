@@ -443,6 +443,51 @@
   100% { background-position: 0% 50%; }
 }
 
+/* ── Accessibility: Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal, .reveal-scale, .reveal-left, .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .shimmer, .skeleton {
+    animation: none !important;
+    background: var(--theme-surface-light) !important;
+  }
+
+  .animate-float,
+  .animate-float-slow,
+  .animate-float-delayed,
+  .animate-pulse-slow,
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-gradient-shift {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .pulse-dot::before {
+    animation: none !important;
+    display: none;
+  }
+
+  .hover\:-translate-y-1:hover {
+    transform: none !important;
+  }
+
+  .hover\:scale-110:hover {
+    transform: none !important;
+  }
+}
+
 /* ── Animation utility classes ── */
 .animate-float {
   animation: float 6s ease-in-out infinite;

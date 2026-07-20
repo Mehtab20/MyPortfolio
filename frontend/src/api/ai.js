@@ -202,11 +202,14 @@ export function getAvailableProviders() {
 export async function sendMessage(messages, options = {}) {
   const provider = PROVIDERS[options.provider || activeProvider];
   const model = options.model || activeModel || provider.defaultModel;
-  const apiKey = options.apiKey || import.meta.env[`VITE_${provider.name.toUpperCase()}_API_KEY`] || '';
+  const envKey = `VITE_${provider.name.toUpperCase().replace(/\s+/g, '_')}_API_KEY`;
+  // NEVER hardcode API keys in source code.
+  // Users must add API keys via the Freebuff API Keys tab as env variables.
+  const apiKey = options.apiKey || import.meta.env[envKey] || '';
 
   if (!apiKey) {
     throw new Error(
-      `${provider.name} API key not configured. Add VITE_${provider.name.toUpperCase()}_API_KEY to your environment variables.`
+      `${provider.name} API key not configured. Add ${envKey} to your environment variables.`
     );
   }
 

@@ -5,7 +5,8 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
-import Education from '../components/Education';
+import CareerJourney from '../components/CareerJourney';
+import Certifications from '../components/Certifications';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import AuroraBackground from '../components/AuroraBackground';
@@ -171,7 +172,7 @@ function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style={{ backgroundColor: 'rgba(212,165,34,0.15)', color: 'var(--color-primary)' }}>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style={{ backgroundColor: 'rgba(212, 165, 34, 0.15)', color: 'var(--color-primary)' }}>
                   {t.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
@@ -297,7 +298,7 @@ function BlogPreview() {
         <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {posts.map((post, i) => (
             <div key={i} className="group card-surface rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 golden-border-hover">
-              <div className="h-2" style={{ background: 'linear-gradient(90deg, #d4a522, #e8b92e)' }} />
+              <div className="h-2" style={{ background: 'linear-gradient(90deg, #d4a522, #e8b92e, #f0c840)' }} />
               <div className="p-5 sm:p-6">
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {post.tags.map((tag) => (
@@ -318,10 +319,10 @@ function BlogPreview() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs" style={{ color: 'var(--theme-text-muted)' }}>
-                    {post.date} • {post.author}
+                    {post.date} &bull; {post.author}
                   </span>
                   <span className="text-xs font-semibold" style={{ color: 'var(--color-primary)' }}>
-                    Read More →
+                    Read More &rarr;
                   </span>
                 </div>
               </div>
@@ -396,7 +397,8 @@ export default function Landing({ theme, toggleTheme }) {
           <About />
           <Skills />
           <Projects />
-          <Education />
+          <CareerJourney />
+          <Certifications />
           <Pricing />
           <Testimonials />
           <FAQ />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import profilePhoto from '../assets/profile-photo.png';
-import { useTypewriter, useTilt, useInView } from '../lib/hooks';
+import { useTilt } from '../lib/hooks';
 
 const roles = [
   'Software Engineering Student',
@@ -19,10 +19,8 @@ function TypewriterRoles() {
     let timeout;
 
     if (!isDeleting && displayRole === currentRole) {
-      // Pause before deleting
       timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayRole === '') {
-      // Move to next role
       setIsDeleting(false);
       setRoleIndex((prev) => (prev + 1) % roles.length);
     } else {
@@ -49,36 +47,6 @@ function TypewriterRoles() {
         style={{ backgroundColor: 'var(--color-primary)' }}
       />
     </span>
-  );
-}
-
-function AnimatedStat({ value, label, suffix = '' }) {
-  const [ref, inView] = useInView(0.5);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let startTime;
-    const duration = 2000;
-    const animate = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * value));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [inView, value]);
-
-  return (
-    <div ref={ref} className="text-center">
-      <div className="text-2xl sm:text-3xl font-bold gradient-text">
-        {count}{suffix}
-      </div>
-      <div className="text-xs mt-1 font-medium" style={{ color: 'var(--theme-text-muted)' }}>
-        {label}
-      </div>
-    </div>
   );
 }
 
@@ -111,7 +79,7 @@ function ProfileImage() {
         >
           {/* Golden ring */}
           <div
-            className={`w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full p-[3px] transition-all duration-700 ${
+            className={`w-52 h-52 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-full p-[3px] transition-all duration-700 ${
               isHovered ? 'scale-105' : 'scale-100'
             }`}
             style={{
@@ -136,16 +104,6 @@ function ProfileImage() {
           </div>
         </div>
       </div>
-
-      {/* Floating decorative dots */}
-      <div
-        className="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-pulse-slow"
-        style={{ backgroundColor: 'var(--color-primary)', opacity: 0.5 }}
-      />
-      <div
-        className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full animate-float"
-        style={{ backgroundColor: 'var(--color-primary)', opacity: 0.3 }}
-      />
     </div>
   );
 }
@@ -172,48 +130,54 @@ export default function Hero() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* ── Left: Text Content ── */}
-          <div className="flex-1 text-center lg:text-left">
-            {/* Greeting with badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium mb-6 glass animate-fade-in-up">
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
+            {/* Available badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium mb-5 glass animate-fade-in-up">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span style={{ color: 'var(--theme-text-muted)' }}>
-                Available for opportunities
+              <span style={{ color: 'var(--theme-text-muted)' }}>Available</span>
+            </div>
+
+            {/* Name */}
+            <h1 className="animate-fade-in-up delay-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 tracking-tight">
+              <span style={{ color: 'var(--theme-text)' }}>Mehtab</span>
+              <br className="sm:hidden" />
+              <span className="gradient-text"> Akbar</span>
+            </h1>
+
+            {/* Code-style role badge */}
+            <div className="animate-fade-in-up delay-200 mb-4">
+              <span
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-mono font-medium"
+                style={{
+                  backgroundColor: 'rgba(212,165,34,0.06)',
+                  border: '1px solid rgba(212,165,34,0.15)',
+                  color: 'var(--color-primary-light)',
+                }}
+              >
+                <span className="opacity-50" style={{ color: 'var(--theme-text-muted)' }}>&lt;</span>
+                <TypewriterRoles />
+                <span className="opacity-50" style={{ color: 'var(--theme-text-muted)' }}>/&gt;</span>
               </span>
             </div>
 
-            {/* Name with gradient */}
-            <h1 className="animate-fade-in-up delay-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 tracking-tight">
-              <span style={{ color: 'var(--theme-text)' }}>Hi, I&apos;m </span>
-              <span className="gradient-text">Mehtab Akbar</span>
-            </h1>
-
-            {/* Typing animation subtitle */}
-            <div className="animate-fade-in-up delay-200 mb-6">
-              <p className="text-lg sm:text-xl md:text-2xl font-medium" style={{ color: 'var(--theme-text-secondary)' }}>
-                <TypewriterRoles />
-              </p>
-            </div>
-
-            {/* Description */}
+            {/* Tagline */}
             <p
               className="animate-fade-in-up delay-300 max-w-xl text-base sm:text-lg leading-relaxed mb-8"
               style={{ color: 'var(--theme-text-secondary)' }}
             >
-              Passionate about building scalable cloud architectures,
-              infrastructure, and turning complex ideas into impactful
-              applications with industry standards and robust solutions.
+              Crafting exceptional digital experiences through cloud-native architectures and modern software engineering.
             </p>
 
             {/* CTA Buttons */}
-            <div className="animate-fade-in-up delay-400 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="animate-fade-in-up delay-400 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
               <a
-                href="#projects"
-                onClick={(e) => handleScroll(e, '#projects')}
-                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-xl btn-primary text-sm font-semibold"
+                href="#about"
+                onClick={(e) => handleScroll(e, '#about')}
+                className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-primary text-sm font-semibold"
               >
-                <span>View My Work</span>
+                <span>Get To Know Me</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                   fill="none"
@@ -225,39 +189,33 @@ export default function Hero() {
                 </svg>
               </a>
               <a
-                href="#contact"
-                onClick={(e) => handleScroll(e, '#contact')}
-                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-xl btn-outline text-sm font-semibold"
+                href="#projects"
+                onClick={(e) => handleScroll(e, '#projects')}
+                className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-outline text-sm font-semibold"
               >
-                <span>Contact Me</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
+                <span>View My Work</span>
               </a>
             </div>
 
-            {/* Stats */}
-            <div className="animate-fade-in-up delay-500 mt-12 pt-8 border-t" style={{ borderColor: 'var(--theme-border)' }}>
-              <div className="grid grid-cols-3 gap-8 sm:gap-12">
-                <AnimatedStat value={10} suffix="+" label="Projects" />
-                <AnimatedStat value={8} suffix="+" label="CGPA" />
-                <AnimatedStat value={3} suffix="+" label="Technologies" />
+            {/* Hero Stats */}
+            <div className="animate-fade-in-up delay-500 mt-10 grid grid-cols-3 gap-6 sm:gap-10 max-w-sm lg:max-w-none mx-auto lg:mx-0">
+              <div className="text-center lg:text-left">
+                <div className="text-xl sm:text-2xl font-bold gradient-text">10+</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Projects</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-xl sm:text-2xl font-bold gradient-text">3+</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Years Active</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-xl sm:text-2xl font-bold gradient-text">100%</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Dedication</div>
               </div>
             </div>
           </div>
 
           {/* ── Right: Profile Photo ── */}
-          <div className="animate-fade-in-up delay-200">
+          <div className="animate-fade-in-up delay-200 order-1 lg:order-2">
             <ProfileImage />
           </div>
         </div>

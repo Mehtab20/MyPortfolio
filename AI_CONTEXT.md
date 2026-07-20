@@ -225,15 +225,25 @@ MyPortfolio/
 - Supabase dynamic project fetching
 - Contact form integration
 
+### ✅ Completed (Portfolio Refinement)
+- Hero: Code-style `<Full Stack Developer />` badge, refined tagline, cleaner stats (10+ Projects, 3+ Years, 100% Dedication)
+- About: Redesigned with personal info grid (Experience, Location, Nationality, Born) — matching fawadiqbal.dev
+- Skills: Converted from progress bars to clean emoji tech grid with category groups
+- Career Journey: Combined timeline (work experience + education) with golden dots
+- Certifications: New section with professional certifications grid + stats
+- Contact: Refined header to "Let's Connect" with cleaner layout
+- Landing: Updated section order, removed standalone Education, integrated CareerJourney + Certifications
+
 ### 🔄 In Progress
 - Email confirmation handling (Supabase Auth setting)
 - Admin role assignment
 
 ### 📋 Planned
 - Stripe checkout integration
-- AI provider API connection (OpenAI/Anthropic)
+- AI provider API connection (OpenAI/Anthropic/Gemini)
 - User profile avatar upload (Supabase Storage)
 - Blog admin management
+- Google OAuth refinement
 
 ---
 
