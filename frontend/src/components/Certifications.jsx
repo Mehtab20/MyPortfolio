@@ -83,7 +83,7 @@ export default function Certifications() {
               <span
                 className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.08)',
+                  backgroundColor: 'rgba(20, 184, 166, 0.06)',
                   color: 'var(--theme-text-muted)',
                 }}
               >

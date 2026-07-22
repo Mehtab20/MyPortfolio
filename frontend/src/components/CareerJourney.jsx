@@ -101,9 +101,9 @@ export default function CareerJourney() {
                     <span
                       className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0"
                       style={{
-                        backgroundColor: 'rgba(212, 165, 34, 0.1)',
+                        backgroundColor: 'rgba(20, 184, 166, 0.08)',
                         color: 'var(--color-primary-light)',
-                        border: '1px solid rgba(212, 165, 34, 0.15)',
+                        border: '1px solid rgba(20, 184, 166, 0.15)',
                       }}
                     >
                       {item.period}

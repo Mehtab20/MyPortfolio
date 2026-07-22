@@ -165,14 +165,14 @@ function Testimonials() {
         <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <div key={i} className="card-surface rounded-2xl p-6 golden-border-hover transition-all duration-500 hover:-translate-y-1">
-              <svg className="w-8 h-8 mb-4" fill="currentColor" viewBox="0 0 24 24" style={{ color: 'rgba(212,165,34,0.3)' }}>
+              <svg className="w-8 h-8 mb-4" fill="currentColor" viewBox="0 0 24 24" style={{ color: 'rgba(20,184,166,0.25)' }}>
                 <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311C9.591 11.69 11 13.164 11 15c0 1.933-1.567 3.5-3.5 3.5-1.271 0-2.404-.655-2.917-1.179zm10 0c-1.03-1.094-1.583-2.321-1.583-4.31 0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311C19.591 11.69 21 13.164 21 15c0 1.933-1.567 3.5-3.5 3.5-1.271 0-2.404-.655-2.917-1.179z" />
               </svg>
               <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style={{ backgroundColor: 'rgba(212, 165, 34, 0.15)', color: 'var(--color-primary)' }}>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"                    style={{ backgroundColor: 'rgba(20, 184, 166, 0.1)', color: 'var(--color-primary)' }}>
                   {t.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
@@ -298,14 +298,14 @@ function BlogPreview() {
         <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {posts.map((post, i) => (
             <div key={i} className="group card-surface rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 golden-border-hover">
-              <div className="h-2" style={{ background: 'linear-gradient(90deg, #d4a522, #e8b92e, #f0c840)' }} />
+              <div className="h-2" style={{ background: 'linear-gradient(90deg, #14b8a6, #06b6d4, #2dd4bf)' }} />
               <div className="p-5 sm:p-6">
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
                       className="px-2 py-0.5 rounded-full text-[10px] font-medium"
-                      style={{ backgroundColor: 'rgba(212,165,34,0.1)', color: 'var(--color-primary-light)', border: '1px solid rgba(212,165,34,0.2)' }}
+                      style={{ backgroundColor: 'rgba(20,184,166,0.08)', color: 'var(--color-primary-light)', border: '1px solid rgba(20,184,166,0.18)' }}
                     >
                       {tag}
                     </span>
@@ -340,7 +340,7 @@ function CTABanner() {
     <section className="relative py-24 sm:py-32">
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
         <div className="card-surface rounded-3xl p-10 sm:p-16 golden-border relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at 50% 50%, #d4a522, transparent 70%)' }} />
+          <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at 50% 50%, #14b8a6, transparent 70%)' }} />
           <div className="relative z-10">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: 'var(--theme-text)' }}>
               Ready to Build Your{' '}
