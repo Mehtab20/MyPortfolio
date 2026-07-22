@@ -1,28 +1,66 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
   <defs>
-    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="mbg4" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#030712"/>
       <stop offset="50%" style="stop-color:#0a1210"/>
       <stop offset="100%" style="stop-color:#030712"/>
     </linearGradient>
-    <radialGradient id="glow4" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:0.12"/>
-      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:0"/>
+    <radialGradient id="aurora" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:0.08"/>
+      <stop offset="30%" style="stop-color:#06b6d4;stop-opacity:0.04"/>
+      <stop offset="100%" style="stop-color:#030712;stop-opacity:0"/>
     </radialGradient>
-    <linearGradient id="line4" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0"/>
-      <stop offset="50%" style="stop-color:#14b8a6;stop-opacity:0.6"/>
-      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0"/>
+    <linearGradient id="cta4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14b8a6"/>
+      <stop offset="100%" style="stop-color:#0d9488"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="500" fill="url(#bg4)"/>
-  <circle cx="400" cy="250" r="180" fill="url(#glow4)"/>
-  <circle cx="400" cy="180" r="50" fill="none" stroke="#14b8a6" stroke-width="2" opacity="0.5"/>
-  <circle cx="400" cy="180" r="20" fill="#14b8a6" opacity="0.4"/>
-  <rect x="340" y="130" width="120" height="100" rx="60" fill="#14b8a6" opacity="0.1"/>
-  <rect x="340" y="260" width="120" height="6" rx="2" fill="#14b8a6" opacity="0.5"/>
-  <rect x="340" y="278" width="80" height="4" rx="2" fill="#14b8a6" opacity="0.3"/>
-  <rect x="340" y="296" width="100" height="4" rx="2" fill="#2dd4bf" opacity="0.4"/>
-  <rect x="340" y="314" width="60" height="4" rx="2" fill="#14b8a6" opacity="0.3"/>
-  <line x1="100" y1="420" x2="700" y2="420" stroke="url(#line4)" stroke-width="1"/>
+  <rect width="800" height="500" fill="url(#mbg4)"/>
+  <circle cx="400" cy="200" r="250" fill="url(#aurora)"/>
+  <!-- Browser window -->
+  <rect x="100" y="40" width="600" height="420" rx="8" fill="none" stroke="#14b8a6" stroke-opacity="0.08" stroke-width="0.5"/>
+  <!-- Title bar -->
+  <rect x="100" y="40" width="600" height="32" rx="8" fill="#0a0f1a"/>
+  <rect x="100" y="64" width="600" height="8" fill="#0a0f1a"/>
+  <circle cx="120" cy="56" r="4" fill="#ef4444"/>
+  <circle cx="136" cy="56" r="4" fill="#f59e0b"/>
+  <circle cx="152" cy="56" r="4" fill="#10b981"/>
+  <!-- Navbar -->
+  <rect x="100" y="72" width="600" height="44" fill="none"/>
+  <text x="140" y="98" fill="#14b8a6" font-size="12" font-family="system-ui" font-weight="bold">MA</text>
+  <text x="170" y="98" fill="#f3f4f6" font-size="10" font-family="system-ui">Mehtab Akbar</text>
+  <!-- Nav links -->
+  <text x="520" y="98" fill="#6b7280" font-size="9" font-family="system-ui">Home  About  Skills  Projects</text>
+  <!-- Hero content -->
+  <!-- Available badge -->
+  <rect x="340" y="130" width="100" height="20" rx="10" fill="#10b981" opacity="0.1" stroke="#10b981" stroke-opacity="0.2" stroke-width="0.5"/>
+  <circle cx="352" cy="140" r="4" fill="#10b981"/>
+  <text x="362" y="143" fill="#10b981" font-size="8" font-family="system-ui">Available</text>
+  <!-- Name -->
+  <text x="180" y="210" fill="#f3f4f6" font-size="32" font-family="system-ui" font-weight="bold">Hi, I'm</text>
+  <text x="180" y="248" fill="none" stroke="#14b8a6" stroke-width="0.5" font-size="36" font-family="system-ui" font-weight="bold">Mehtab Akbar</text>
+  <!-- Role badge -->
+  <rect x="180" y="264" width="180" height="22" rx="6" fill="#14b8a6" opacity="0.06" stroke="#14b8a6" stroke-opacity="0.12" stroke-width="0.5"/>
+  <text x="192" y="280" fill="#14b8a6" font-size="10" font-family="monospace">&lt; Full Stack Developer /&gt;</text>
+  <!-- Tagline -->
+  <text x="180" y="310" fill="#9ca3af" font-size="10" font-family="system-ui">Crafting exceptional digital experiences through</text>
+  <text x="180" y="326" fill="#9ca3af" font-size="10" font-family="system-ui">cloud-native architectures and modern software engineering.</text>
+  <!-- CTA buttons -->
+  <rect x="180" y="340" width="130" height="32" rx="8" fill="url(#cta4)"/>
+  <text x="245" y="360" fill="#030712" font-size="10" font-family="system-ui" font-weight="bold" text-anchor="middle">Get To Know Me →</text>
+  <rect x="322" y="340" width="120" height="32" rx="8" fill="none" stroke="#14b8a6" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="382" y="360" fill="#14b8a6" font-size="10" font-family="system-ui" font-weight="bold" text-anchor="middle">View My Work</text>
+  <!-- Stats -->
+  <text x="180" y="400" fill="#14b8a6" font-size="20" font-family="system-ui" font-weight="bold">10+</text>
+  <text x="180" y="414" fill="#6b7280" font-size="8" font-family="system-ui">Projects</text>
+  <text x="250" y="400" fill="#14b8a6" font-size="20" font-family="system-ui" font-weight="bold">3+</text>
+  <text x="250" y="414" fill="#6b7280" font-size="8" font-family="system-ui">Years Active</text>
+  <text x="320" y="400" fill="#14b8a6" font-size="20" font-family="system-ui" font-weight="bold">100%</text>
+  <text x="320" y="414" fill="#6b7280" font-size="8" font-family="system-ui">Dedication</text>
+  <!-- Profile circle -->
+  <circle cx="550" cy="250" r="70" fill="none" stroke="#14b8a6" stroke-opacity="0.3" stroke-width="0.5"/>
+  <circle cx="550" cy="250" r="65" fill="#14b8a6" opacity="0.05"/>
+  <circle cx="550" cy="250" r="60" fill="#111827" stroke="#14b8a6" stroke-opacity="0.15" stroke-width="1.5"/>
+  <text x="550" y="248" fill="#14b8a6" font-size="24" font-family="system-ui" text-anchor="middle">👨‍💻</text>
+  <text x="550" y="265" fill="#6b7280" font-size="8" font-family="system-ui" text-anchor="middle">Mehtab</text>
 </svg>

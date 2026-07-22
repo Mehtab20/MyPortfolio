@@ -1,29 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
   <defs>
-    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="mbg3" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#030712"/>
       <stop offset="50%" style="stop-color:#0a1a1a"/>
       <stop offset="100%" style="stop-color:#030712"/>
     </linearGradient>
-    <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.12"/>
-      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0"/>
-    </radialGradient>
-    <linearGradient id="line3" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#2dd4bf;stop-opacity:0"/>
-      <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.6"/>
-      <stop offset="100%" style="stop-color:#2dd4bf;stop-opacity:0"/>
+    <linearGradient id="msgUser" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6"/>
+      <stop offset="100%" style="stop-color:#0d9488"/>
+    </linearGradient>
+    <linearGradient id="msgAI" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f2937"/>
+      <stop offset="100%" style="stop-color:#111827"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="500" fill="url(#bg3)"/>
-  <circle cx="400" cy="250" r="180" fill="url(#glow3)"/>
-  <rect x="250" y="180" width="300" height="160" rx="8" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.4"/>
-  <rect x="260" y="190" width="280" height="8" rx="2" fill="#06b6d4" opacity="0.3"/>
-  <rect x="260" y="208" width="140" height="6" rx="2" fill="#14b8a6" opacity="0.5"/>
-  <rect x="260" y="224" width="200" height="6" rx="2" fill="#14b8a6" opacity="0.4"/>
-  <rect x="260" y="240" width="120" height="6" rx="2" fill="#2dd4bf" opacity="0.5"/>
-  <rect x="260" y="260" width="180" height="6" rx="2" fill="#14b8a6" opacity="0.3"/>
-  <circle cx="275" cy="320" r="4" fill="#2dd4bf" opacity="0.6"/>
-  <rect x="290" y="316" width="60" height="8" rx="2" fill="#2dd4bf" opacity="0.4"/>
-  <line x1="100" y1="420" x2="700" y2="420" stroke="url(#line3)" stroke-width="1"/>
+  <rect width="800" height="500" fill="url(#mbg3)"/>
+  <!-- Browser window -->
+  <rect x="100" y="40" width="600" height="420" rx="8" fill="#0a0f1a" stroke="#06b6d4" stroke-opacity="0.1" stroke-width="1"/>
+  <!-- Title bar -->
+  <rect x="100" y="40" width="600" height="32" rx="8" fill="#111827"/>
+  <rect x="100" y="64" width="600" height="8" fill="#111827"/>
+  <circle cx="120" cy="56" r="4" fill="#ef4444"/>
+  <circle cx="136" cy="56" r="4" fill="#f59e0b"/>
+  <circle cx="152" cy="56" r="4" fill="#10b981"/>
+  <!-- Sidebar -->
+  <rect x="100" y="72" width="180" height="388" fill="#0a0f1a" stroke="#06b6d4" stroke-opacity="0.04" stroke-width="0.5"/>
+  <!-- AI SaaS logo -->
+  <rect x="116" y="84" width="148" height="28" rx="6" fill="#14b8a6" opacity="0.1"/>
+  <circle cx="130" cy="98" r="6" fill="#14b8a6" opacity="0.3"/>
+  <text x="144" y="102" fill="#14b8a6" font-size="10" font-family="system-ui" font-weight="bold">AI SaaS Kit</text>
+  <!-- Nav items -->
+  <rect x="116" y="124" width="148" height="24" rx="4" fill="#06b6d4" opacity="0.1"/>
+  <text x="140" y="139" fill="#06b6d4" font-size="9" font-family="system-ui">💬 Chat</text>
+  <text x="140" y="171" fill="#6b7280" font-size="9" font-family="system-ui">📊 Dashboard</text>
+  <text x="140" y="191" fill="#6b7280" font-size="9" font-family="system-ui">👤 Profile</text>
+  <text x="140" y="211" fill="#6b7280" font-size="9" font-family="system-ui">⚙️ Settings</text>
+  <text x="140" y="231" fill="#6b7280" font-size="9" font-family="system-ui">🔑 Subscription</text>
+  <!-- Chat area -->
+  <rect x="290" y="80" width="400" height="130" rx="6" fill="none"/>
+  <!-- AI message -->
+  <rect x="300" y="88" width="280" height="44" rx="8" fill="url(#msgAI)" stroke="#374151" stroke-width="0.5"/>
+  <text x="314" y="108" fill="#d1d5db" font-size="9" font-family="system-ui">Hello! I'm your AI assistant.</text>
+  <text x="314" y="122" fill="#6b7280" font-size="8" font-family="system-ui">How can I help you today?</text>
+  <!-- User message -->
+  <rect x="460" y="140" width="200" height="28" rx="8" fill="url(#msgUser)"/>
+  <text x="476" y="158" fill="#030712" font-size="9" font-family="system-ui" font-weight="bold">Build a React app</text>
+  <!-- AI thinking -->
+  <rect x="300" y="176" width="160" height="28" rx="8" fill="#1f2937" stroke="#374151" stroke-width="0.5"/>
+  <circle cx="320" cy="190" r="3" fill="#14b8a6" opacity="0.5"/>
+  <circle cx="332" cy="190" r="3" fill="#14b8a6" opacity="0.7"/>
+  <circle cx="344" cy="190" r="3" fill="#14b8a6"/>
+  <!-- Input area -->
+  <rect x="290" y="218" width="400" height="36" rx="10" fill="#111827" stroke="#06b6d4" stroke-opacity="0.1" stroke-width="0.5"/>
+  <text x="310" y="240" fill="#4b5563" font-size="9" font-family="system-ui">Type your message...</text>
+  <!-- Provider badges -->
+  <rect x="290" y="264" width="90" height="22" rx="6" fill="#14b8a6" opacity="0.08" stroke="#14b8a6" stroke-opacity="0.15" stroke-width="0.5"/>
+  <circle cx="304" cy="275" r="3" fill="#10b981"/>
+  <text x="312" y="279" fill="#14b8a6" font-size="8" font-family="system-ui">Gemini</text>
+  <rect x="386" y="264" width="80" height="22" rx="6" fill="#374151" opacity="0.3"/>
+  <text x="403" y="279" fill="#6b7280" font-size="8" font-family="system-ui">OpenAI</text>
+  <rect x="472" y="264" width="86" height="22" rx="6" fill="#374151" opacity="0.3"/>
+  <text x="490" y="279" fill="#6b7280" font-size="8" font-family="system-ui">Claude</text>
 </svg>
