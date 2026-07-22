@@ -51,9 +51,9 @@ function TechBadge({ tech }) {
     <span
       className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
       style={{
-        backgroundColor: 'rgba(212, 165, 34, 0.1)',
+        backgroundColor: 'rgba(20, 184, 166, 0.1)',
         color: 'var(--color-primary-light)',
-        border: '1px solid rgba(212, 165, 34, 0.2)',
+        border: '1px solid rgba(20, 184, 166, 0.2)',
       }}
     >
       {tech}

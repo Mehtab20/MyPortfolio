@@ -33,8 +33,8 @@ function TimelineDot({ type }) {
         className="w-10 h-10 rounded-full flex items-center justify-center z-10"
         style={{
           backgroundColor: type === 'work'
-            ? 'rgba(212, 165, 34, 0.15)'
-            : 'rgba(232, 185, 46, 0.12)',
+            ? 'rgba(20, 184, 166, 0.15)'
+            : 'rgba(6, 182, 212, 0.12)',
           border: `2px solid ${color}`,
         }}
       >

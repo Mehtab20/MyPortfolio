@@ -39,10 +39,6 @@ function PageSuspense({ children }) {
   );
 }
 
-function withPageTransition(children) {
-  return <PageTransition>{children}</PageTransition>;
-}
-
 export default function App() {
   return (
     <BrowserRouter>

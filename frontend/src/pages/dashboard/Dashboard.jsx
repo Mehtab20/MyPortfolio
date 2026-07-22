@@ -123,7 +123,7 @@ export default function Dashboard() {
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.08)',
+                  backgroundColor: 'rgba(20, 184, 166, 0.08)',
                   color: 'var(--color-primary)',
                 }}
               >
@@ -148,7 +148,7 @@ export default function Dashboard() {
         <div className="card-surface rounded-2xl p-6 sm:p-8 golden-border text-center">
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-            style={{ backgroundColor: 'rgba(212, 165, 34, 0.08)' }}
+            style={{ backgroundColor: 'rgba(20, 184, 166, 0.08)' }}
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-primary)' }}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />

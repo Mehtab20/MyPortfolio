@@ -29,7 +29,7 @@ function ReadingProgress() {
         className="h-full transition-all duration-150 ease-out"
         style={{
           width: `${progress}%`,
-          background: 'linear-gradient(90deg, #d4a522, #e8b92e, #f0c840)',
+          background: 'linear-gradient(90deg, #14b8a6, #06b6d4, #2dd4bf)',
         }}
       />
     </div>
@@ -98,7 +98,7 @@ export default function Navbar({ theme, toggleTheme }) {
             className="relative group flex items-center gap-2"
             aria-label="Mehtab Akbar - Home"
           >
-            <div className="w-9 h-9 rounded-lg bg-[#0d0d14] border border-primary/30 flex items-center justify-center font-bold text-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-golden">
+            <div className="w-9 h-9 rounded-lg bg-[#0a0f1a] border border-primary/30 flex items-center justify-center font-bold text-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
               <span className="gradient-text">MA</span>
             </div>
             <span className="text-lg font-semibold hidden sm:block" style={{ color: 'var(--theme-text)' }}>
@@ -224,7 +224,7 @@ export default function Navbar({ theme, toggleTheme }) {
                     : 'var(--theme-text-secondary)',
                 background:
                   activeSection === link.href.slice(1)
-                    ? 'rgba(212, 165, 34, 0.06)'
+                    ? 'rgba(20, 184, 166, 0.06)'
                     : 'transparent',
               }}
             >

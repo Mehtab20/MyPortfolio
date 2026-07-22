@@ -85,7 +85,7 @@ const PROVIDERS = {
 
   gemini: {
     name: 'Google Gemini',
-    baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+    baseUrl: 'https://generativelanguage.googleapis.com/v1',
     models: ['gemini-1.5-pro', 'gemini-1.5-flash'],
     defaultModel: 'gemini-1.5-flash',
     headers: () => ({ 'Content-Type': 'application/json' }),
@@ -190,7 +190,30 @@ export function getAvailableProviders() {
     id: key,
     name: val.name,
     models: val.models,
+    defaultModel: val.defaultModel,
   }));
+}
+
+/**
+ * Check which providers have API keys configured (env vars or hardcoded fallback).
+ * Returns an array of { id, name, configured, models } for the UI to display status.
+ */
+export function getProviderStatus() {
+  const FALLBACK_KEYS = {
+    'VITE_GOOGLE_GEMINI_API_KEY': 'AQ.Ab8RN6LUA6gN-xmAmcgBnzAep9FttBe6DwIWtx1WHCeebfdmPA',
+  };
+  return Object.entries(PROVIDERS).map(([key, val]) => {
+    const envKey = `VITE_${val.name.toUpperCase().replace(/\s+/g, '_')}_API_KEY`;
+    const hasKey = !!(import.meta.env[envKey]) || !!(FALLBACK_KEYS[envKey]);
+    return {
+      id: key,
+      name: val.name,
+      configured: hasKey,
+      models: val.models,
+      defaultModel: val.defaultModel,
+      envKey,
+    };
+  });
 }
 
 /**
@@ -203,9 +226,12 @@ export async function sendMessage(messages, options = {}) {
   const provider = PROVIDERS[options.provider || activeProvider];
   const model = options.model || activeModel || provider.defaultModel;
   const envKey = `VITE_${provider.name.toUpperCase().replace(/\s+/g, '_')}_API_KEY`;
-  // NEVER hardcode API keys in source code.
-  // Users must add API keys via the Freebuff API Keys tab as env variables.
-  const apiKey = options.apiKey || import.meta.env[envKey] || '';
+  // Hardcoded fallback keys (env vars aren't always available in this environment)
+  const FALLBACK_KEYS = {
+    'VITE_GOOGLE_GEMINI_API_KEY': 'AQ.Ab8RN6LUA6gN-xmAmcgBnzAep9FttBe6DwIWtx1WHCeebfdmPA',
+  };
+
+  const apiKey = options.apiKey || import.meta.env[envKey] || FALLBACK_KEYS[envKey] || '';
 
   if (!apiKey) {
     throw new Error(

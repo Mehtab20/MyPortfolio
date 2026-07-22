@@ -129,7 +129,7 @@ export default function Contact() {
               <div
                 className="mx-auto w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.08)',
+                  backgroundColor: 'rgba(20, 184, 166, 0.08)',
                   color: 'var(--color-primary)',
                 }}
               >

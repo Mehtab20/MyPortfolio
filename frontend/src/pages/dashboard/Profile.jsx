@@ -45,7 +45,7 @@ export default function Profile() {
           <div
             className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold"
             style={{
-              backgroundColor: 'rgba(212, 165, 34, 0.15)',
+              backgroundColor: 'rgba(20, 184, 166, 0.15)',
               color: 'var(--color-primary)',
             }}
           >

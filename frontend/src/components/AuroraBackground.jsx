@@ -28,16 +28,16 @@ export default function AuroraBackground() {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
       return isDark
         ? [
-            { r: 212, g: 165, b: 34, a: 0.15 },  // Gold
-            { r: 180, g: 30, b: 60, a: 0.08 },   // Deep crimson
-            { r: 100, g: 50, b: 180, a: 0.06 },   // Purple
-            { r: 20, g: 100, b: 180, a: 0.05 },   // Blue
+            { r: 20, g: 184, b: 166, a: 0.15 },  // Teal
+            { r: 6, g: 182, b: 212, a: 0.10 },    // Cyan
+            { r: 16, g: 185, b: 129, a: 0.08 },   // Emerald
+            { r: 59, g: 130, b: 246, a: 0.06 },   // Blue
           ]
         : [
-            { r: 212, g: 165, b: 34, a: 0.08 },
-            { r: 220, g: 100, b: 80, a: 0.04 },
-            { r: 140, g: 80, b: 200, a: 0.03 },
-            { r: 60, g: 120, b: 200, a: 0.03 },
+            { r: 20, g: 184, b: 166, a: 0.08 },
+            { r: 6, g: 182, b: 212, a: 0.05 },
+            { r: 16, g: 185, b: 129, a: 0.04 },
+            { r: 59, g: 130, b: 246, a: 0.03 },
           ];
     };
 

@@ -128,7 +128,13 @@ export function AuthProvider({ children }) {
         redirectTo: `${window.location.origin}/dashboard`,
       },
     });
-    if (error) throw error;
+    if (error) {
+      // Provide a helpful message for common Google OAuth configuration issues
+      if (error.message?.includes('popup') || error.message?.includes('closed')) {
+        throw new Error('Google sign-in popup was closed or blocked. Please allow popups and try again.');
+      }
+      throw new Error(`Google sign-in failed: ${error.message || 'Please check your Supabase dashboard → Authentication → Providers → Google is configured correctly.'}`);
+    }
     return data;
   };
 

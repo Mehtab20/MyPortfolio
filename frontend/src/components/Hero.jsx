@@ -62,7 +62,7 @@ function ProfileImage() {
           isHovered ? 'opacity-60 scale-110' : 'opacity-20 scale-100'
         }`}
         style={{
-          background: 'radial-gradient(circle, rgba(212,165,34,0.3), transparent 70%)',
+          background: 'radial-gradient(circle, rgba(20,184,166,0.3), transparent 70%)',
           filter: 'blur(20px)',
         }}
       />
@@ -84,8 +84,8 @@ function ProfileImage() {
             }`}
             style={{
               background: isHovered
-                ? 'linear-gradient(135deg, #f0c840, #d4a522, #e8b92e, #d4a522)'
-                : 'linear-gradient(135deg, #d4a522, #e8b92e, #d4a522)',
+                ? 'linear-gradient(135deg, #2dd4bf, #14b8a6, #06b6d4, #14b8a6)'
+                : 'linear-gradient(135deg, #14b8a6, #2dd4bf, #14b8a6)',
               backgroundSize: '200% 200%',
               animation: isHovered ? 'gradient-shift 2s ease infinite' : 'none',
             }}
@@ -125,7 +125,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(212,165,34,0.03) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(20,184,166,0.03) 0%, transparent 60%)',
         }}
       />
 
@@ -151,8 +151,8 @@ export default function Hero() {
               <span
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-mono font-medium"
                 style={{
-                  backgroundColor: 'rgba(212,165,34,0.06)',
-                  border: '1px solid rgba(212,165,34,0.15)',
+                  backgroundColor: 'rgba(20,184,166,0.06)',
+                  border: '1px solid rgba(20,184,166,0.15)',
                   color: 'var(--color-primary-light)',
                 }}
               >

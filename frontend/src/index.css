@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ============================================
-   PREMIUM DESIGN SYSTEM — Dark Charcoal + Gold
-   Inspired by Vercel, Linear, Stripe, Apple
+   PREMIUM DESIGN SYSTEM — Dark Canvas + Teal/Cyan
+   Inspired by Vercel, Linear, VSCode terminal aesthetics
    ============================================ */
 
 @theme {
@@ -14,6 +14,7 @@
   --color-primary: var(--theme-primary);
   --color-primary-light: var(--theme-primary-light);
   --color-primary-dark: var(--theme-primary-dark);
+  --color-accent: var(--theme-accent);
   --color-surface: var(--theme-surface);
   --color-surface-light: var(--theme-surface-light);
   --color-surface-lighter: var(--theme-surface-lighter);
@@ -24,6 +25,7 @@
   --color-text-secondary: var(--theme-text-secondary);
   --color-text-muted: var(--theme-text-muted);
   --color-bg-body: var(--theme-bg);
+  --color-live: #10b981;
 }
 
 /* ============================================
@@ -31,61 +33,80 @@
    ============================================ */
 
 :root[data-theme="dark"] {
-  --theme-primary: #d4a522;
-  --theme-primary-light: #e8b92e;
-  --theme-primary-dark: #b8901a;
+  --theme-primary: #14b8a6;
+  --theme-primary-light: #2dd4bf;
+  --theme-primary-dark: #0d9488;
+  --theme-accent: #06b6d4;
 
-  --theme-bg: #07070d;
-  --theme-surface: #0d0d14;
-  --theme-surface-light: #14141e;
-  --theme-surface-lighter: #1c1c2a;
-  --theme-surface-card: rgba(22, 22, 42, 0.6);
+  --theme-bg: #030712;
+  --theme-surface: #0a0f1a;
+  --theme-surface-light: #111827;
+  --theme-surface-lighter: #1f2937;
+  --theme-surface-card: rgba(15, 23, 42, 0.6);
 
-  --theme-text: #f0f0f5;
-  --theme-text-secondary: #8a8a9e;
-  --theme-text-muted: #5c5c72;
+  --theme-text: #f3f4f6;
+  --theme-text-secondary: #9ca3af;
+  --theme-text-muted: #6b7280;
 
-  --theme-border: rgba(212, 165, 34, 0.10);
-  --theme-border-strong: rgba(212, 165, 34, 0.22);
+  --theme-border: rgba(20, 184, 166, 0.10);
+  --theme-border-strong: rgba(20, 184, 166, 0.22);
 
-  --theme-overlay: rgba(7, 7, 13, 0.85);
-  --theme-glass-bg: rgba(13, 13, 20, 0.55);
-  --theme-glass-strong-bg: rgba(13, 13, 20, 0.82);
-  --theme-card-bg: rgba(22, 22, 42, 0.55);
-  --theme-input-bg: #0d0d14;
-  --theme-scrollbar-track: #07070d;
-  --theme-scrollbar-thumb: rgba(212, 165, 34, 0.2);
-  --theme-scrollbar-thumb-hover: rgba(212, 165, 34, 0.4);
-  --theme-selection-bg: rgba(212, 165, 34, 0.2);
+  --theme-overlay: rgba(3, 7, 18, 0.85);
+  --theme-glass-bg: rgba(10, 15, 26, 0.55);
+  --theme-glass-strong-bg: rgba(10, 15, 26, 0.82);
+  --theme-card-bg: rgba(15, 23, 42, 0.55);
+  --theme-input-bg: #0a0f1a;
+  --theme-scrollbar-track: #030712;
+  --theme-scrollbar-thumb: rgba(20, 184, 166, 0.2);
+  --theme-scrollbar-thumb-hover: rgba(20, 184, 166, 0.4);
+  --theme-selection-bg: rgba(20, 184, 166, 0.2);
+
+  /* Adaptive timeline categories */
+  --color-cat-rest: #6366f1;
+  --color-cat-planning: #f59e0b;
+  --color-cat-architecture: #0ea5e9;
+  --color-cat-backend: #3b82f6;
+  --color-cat-frontend: #8b5cf6;
+  --color-cat-ops: #f97316;
+  --color-cat-creative: #10b981;
 }
 
 :root[data-theme="light"] {
-  --theme-primary: #a17700;
-  --theme-primary-light: #b8860b;
-  --theme-primary-dark: #7a5a00;
+  --theme-primary: #0d9488;
+  --theme-primary-light: #14b8a6;
+  --theme-primary-dark: #0f766e;
+  --theme-accent: #0891b2;
 
-  --theme-bg: #f5f4f1;
+  --theme-bg: #f8fafc;
   --theme-surface: #ffffff;
-  --theme-surface-light: #f0efec;
-  --theme-surface-lighter: #e6e5e0;
+  --theme-surface-light: #f1f5f9;
+  --theme-surface-lighter: #e2e8f0;
   --theme-surface-card: rgba(255, 255, 255, 0.8);
 
-  --theme-text: #15151f;
-  --theme-text-secondary: #4a4a5a;
-  --theme-text-muted: #7a7a8a;
+  --theme-text: #111827;
+  --theme-text-secondary: #4b5563;
+  --theme-text-muted: #6b7280;
 
-  --theme-border: rgba(161, 119, 0, 0.12);
-  --theme-border-strong: rgba(161, 119, 0, 0.25);
+  --theme-border: rgba(13, 148, 136, 0.12);
+  --theme-border-strong: rgba(13, 148, 136, 0.25);
 
-  --theme-overlay: rgba(245, 244, 241, 0.80);
+  --theme-overlay: rgba(248, 250, 252, 0.80);
   --theme-glass-bg: rgba(255, 255, 255, 0.60);
   --theme-glass-strong-bg: rgba(255, 255, 255, 0.82);
   --theme-card-bg: rgba(255, 255, 255, 0.80);
-  --theme-input-bg: #f0efec;
-  --theme-scrollbar-track: #f5f4f1;
-  --theme-scrollbar-thumb: rgba(161, 119, 0, 0.3);
-  --theme-scrollbar-thumb-hover: rgba(161, 119, 0, 0.5);
-  --theme-selection-bg: rgba(161, 119, 0, 0.15);
+  --theme-input-bg: #f1f5f9;
+  --theme-scrollbar-track: #f8fafc;
+  --theme-scrollbar-thumb: rgba(13, 148, 136, 0.3);
+  --theme-scrollbar-thumb-hover: rgba(13, 148, 136, 0.5);
+  --theme-selection-bg: rgba(13, 148, 136, 0.15);
+
+  --color-cat-rest: #6366f1;
+  --color-cat-planning: #d97706;
+  --color-cat-architecture: #0284c7;
+  --color-cat-backend: #2563eb;
+  --color-cat-frontend: #7c3aed;
+  --color-cat-ops: #ea580c;
+  --color-cat-creative: #059669;
 }
 
 /* ============================================
@@ -168,16 +189,23 @@
     border-color: var(--theme-border-strong);
   }
 
-  /* ── Golden Gradient Text ── */
+  /* ── Teal Gradient Text ── */
   .gradient-text {
-    background: linear-gradient(135deg, #d4a522, #e8b92e, #f0c840);
+    background: linear-gradient(135deg, #14b8a6, #06b6d4, #2dd4bf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #06b6d4, #22d3ee, #67e8f9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .gradient-text-subtle {
-    background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-light));
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -185,37 +213,41 @@
 
   /* ── Glow Effects ── */
   .glow-sm {
-    box-shadow: 0 0 20px rgba(212, 165, 34, 0.10);
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.10);
   }
   .glow-md {
-    box-shadow: 0 0 40px rgba(212, 165, 34, 0.12);
+    box-shadow: 0 0 40px rgba(20, 184, 166, 0.12);
   }
   .glow-lg {
-    box-shadow: 0 0 60px rgba(212, 165, 34, 0.15);
+    box-shadow: 0 0 60px rgba(20, 184, 166, 0.15);
   }
-  .glow-golden {
+  .glow-accent {
     box-shadow:
-      0 0 20px rgba(212, 165, 34, 0.10),
-      0 0 40px rgba(212, 165, 34, 0.05),
-      inset 0 1px 0 rgba(212, 165, 34, 0.10);
+      0 0 20px rgba(20, 184, 166, 0.10),
+      0 0 40px rgba(6, 182, 212, 0.05),
+      inset 0 1px 0 rgba(20, 184, 166, 0.10);
   }
 
   /* ── Borders ── */
   .golden-border {
-    border: 1px solid rgba(212, 165, 34, 0.22);
+    border: 1px solid rgba(20, 184, 166, 0.22);
   }
   .golden-border-hover {
-    border: 1px solid rgba(212, 165, 34, 0.10);
+    border: 1px solid rgba(20, 184, 166, 0.10);
     transition: border-color 0.4s ease;
   }
   .golden-border-hover:hover {
-    border-color: rgba(212, 165, 34, 0.45);
+    border-color: rgba(20, 184, 166, 0.45);
+  }
+
+  .accent-border {
+    border: 1px solid rgba(6, 182, 212, 0.25);
   }
 
   /* ── Button Styles ── */
   .btn-primary {
-    background: linear-gradient(135deg, #d4a522, #b8901a);
-    color: #07070d;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: #030712;
     font-weight: 600;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -225,7 +257,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #e8b92e, #d4a522);
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -233,7 +265,7 @@
     opacity: 1;
   }
   .btn-primary:hover {
-    box-shadow: 0 8px 30px rgba(212, 165, 34, 0.30);
+    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.30);
     transform: translateY(-2px);
   }
   .btn-primary:active {
@@ -246,15 +278,15 @@
 
   .btn-outline {
     background: transparent;
-    border: 1px solid rgba(212, 165, 34, 0.30);
+    border: 1px solid rgba(20, 184, 166, 0.30);
     color: var(--color-primary);
     font-weight: 600;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-outline:hover {
     border-color: var(--color-primary);
-    background: rgba(212, 165, 34, 0.06);
-    box-shadow: 0 8px 25px rgba(212, 165, 34, 0.12);
+    background: rgba(20, 184, 166, 0.06);
+    box-shadow: 0 8px 25px rgba(20, 184, 166, 0.12);
     transform: translateY(-2px);
   }
   .btn-outline:active {
@@ -269,7 +301,7 @@
     transition: all 0.3s ease;
   }
   .btn-ghost:hover {
-    background: rgba(212, 165, 34, 0.06);
+    background: rgba(20, 184, 166, 0.06);
     color: var(--color-primary);
   }
 
@@ -346,7 +378,7 @@
     animation: shimmer 1.5s ease-in-out infinite;
   }
 
-  /* ── Map Pin ── */
+  /* ── Status Dots ── */
   .pulse-dot {
     width: 8px;
     height: 8px;
@@ -359,7 +391,24 @@
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    background: rgba(212, 165, 34, 0.2);
+    background: rgba(20, 184, 166, 0.2);
+    animation: pulse-ring 2s ease infinite;
+  }
+
+  /* ── Live Status ── */
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    position: relative;
+  }
+  .live-dot::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.25);
     animation: pulse-ring 2s ease infinite;
   }
 
@@ -375,6 +424,15 @@
     animation: shimmer 1.5s ease-in-out infinite;
     border-radius: 8px;
   }
+
+  /* ── Timeline Category Badges ── */
+  .badge-rest { background: rgba(99, 102, 241, 0.12); color: #6366f1; border: 1px solid rgba(99, 102, 241, 0.25); }
+  .badge-planning { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
+  .badge-architecture { background: rgba(14, 165, 233, 0.12); color: #0ea5e9; border: 1px solid rgba(14, 165, 233, 0.25); }
+  .badge-backend { background: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.25); }
+  .badge-frontend { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); }
+  .badge-ops { background: rgba(249, 115, 22, 0.12); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.25); }
+  .badge-creative { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25); }
 }
 
 /* ============================================
@@ -474,7 +532,8 @@
     transform: none !important;
   }
 
-  .pulse-dot::before {
+  .pulse-dot::before,
+  .live-dot::before {
     animation: none !important;
     display: none;
   }

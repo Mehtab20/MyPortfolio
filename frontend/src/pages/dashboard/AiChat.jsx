@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { getAvailableProviders, sendMessage, addMessage, createConversation } from '../../api/ai';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { getAvailableProviders, getProviderStatus, sendMessage, addMessage, createConversation } from '../../api/ai';
 
 const providers = getAvailableProviders();
 
@@ -10,14 +10,44 @@ const suggestions = [
   'Write a Python script for data analysis',
 ];
 
+// ─── Welcome message builder ──
+function buildWelcomeMessage(providerStatus) {
+  const ready = providerStatus.filter(p => p.configured);
+  const coming = providerStatus.filter(p => !p.configured);
+
+  let msg = "Hello! I'm your AI assistant. I can help you with coding, cloud architecture, DevOps practices, and more.\n\n";
+
+  if (ready.length > 0) {
+    msg += "✅ **Ready to use:**\n";
+    ready.forEach(p => {
+      msg += `   • **${p.name}** — ${p.defaultModel}\n`;
+    });
+    msg += "\nSelect one above and start chatting!\n\n";
+  }
+
+  if (coming.length > 0) {
+    msg += "🔧 **Under work — add an API key to enable:**\n";
+    coming.forEach(p => {
+      msg += `   • ${p.name} (add \`${p.envKey}\` in API Keys tab)\n`;
+    });
+  }
+
+  return msg;
+}
+
 export default function AiChat() {
+  const providerStatus = useMemo(() => getProviderStatus(), []);
   const [messages, setMessages] = useState(() => createConversation([{
     role: 'assistant',
-    content: "Hello! I'm your AI assistant. I can help you with coding, cloud architecture, DevOps practices, and more. I support multiple AI providers — add an API key in your settings to get started.",
+    content: buildWelcomeMessage(providerStatus),
   }]));
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedProvider, setSelectedProvider] = useState('openai');
+  const [selectedProvider, setSelectedProvider] = useState(() => {
+    // Default to first configured provider, otherwise first available
+    const firstReady = providerStatus.find(p => p.configured);
+    return firstReady?.id || providerStatus[0]?.id || 'openai';
+  });
   const [isStreaming, setIsStreaming] = useState(false);
   const messagesEndRef = useRef(null);
   const abortRef = useRef(null);
@@ -154,23 +184,33 @@ export default function AiChat() {
           <span className="text-xs font-medium" style={{ color: 'var(--theme-text-muted)' }}>
             Provider:
           </span>
-          <div className="flex gap-1">
-            {providers.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => setSelectedProvider(p.id)}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-300 ${
-                  selectedProvider === p.id ? 'btn-primary' : ''
-                }`}
-                style={
-                  selectedProvider !== p.id
-                    ? { color: 'var(--theme-text-muted)', border: '1px solid var(--theme-border)', background: 'transparent' }
-                    : {}
-                }
-              >
-                {p.name}
-              </button>
-            ))}
+          <div className="flex gap-1 flex-wrap">
+            {providers.map((p) => {
+              const status = providerStatus.find(s => s.id === p.id);
+              const isConfigured = status?.configured;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelectedProvider(p.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 flex items-center gap-1.5 ${
+                    selectedProvider === p.id ? 'btn-primary' : ''
+                  }`}
+                  style={
+                    selectedProvider !== p.id
+                      ? { color: 'var(--theme-text-muted)', border: '1px solid var(--theme-border)', background: 'transparent' }
+                      : {}
+                  }
+                  title={isConfigured ? `${p.name} — Ready` : `${p.name} — Add API key to enable`}
+                >
+                  {p.name}
+                  {isConfigured ? (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  ) : (
+                    <span className="text-[10px] opacity-60">🔧</span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
         {isStreaming && (
@@ -197,9 +237,9 @@ export default function AiChat() {
                 onClick={() => handleSuggestion(suggestion)}
                 className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:scale-105 hover:bg-white/5"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.06)',
+                  backgroundColor: 'rgba(20, 184, 166, 0.06)',
                   color: 'var(--color-primary-light)',
-                  border: '1px solid rgba(212, 165, 34, 0.15)',
+                  border: '1px solid rgba(20, 184, 166, 0.15)',
                 }}
               >
                 {suggestion}

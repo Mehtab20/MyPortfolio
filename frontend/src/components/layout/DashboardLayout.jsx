@@ -139,7 +139,7 @@ export default function DashboardLayout({ children }) {
                 }`}
                 style={{
                   color: isActive(link.href) ? 'var(--color-primary)' : 'var(--theme-text-secondary)',
-                  backgroundColor: isActive(link.href) ? 'rgba(212, 165, 34, 0.08)' : 'transparent',
+                  backgroundColor: isActive(link.href) ? 'rgba(20, 184, 166, 0.08)' : 'transparent',
                 }}
               >
                 {link.icon}
@@ -165,7 +165,7 @@ export default function DashboardLayout({ children }) {
                     }`}
                     style={{
                       color: isActive(link.href) ? 'var(--color-primary)' : 'var(--theme-text-secondary)',
-                      backgroundColor: isActive(link.href) ? 'rgba(212, 165, 34, 0.08)' : 'transparent',
+                      backgroundColor: isActive(link.href) ? 'rgba(20, 184, 166, 0.08)' : 'transparent',
                     }}
                   >
                     {link.icon}
@@ -185,7 +185,7 @@ export default function DashboardLayout({ children }) {
               <div
                 className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
                 style={{
-                  backgroundColor: 'rgba(212, 165, 34, 0.15)',
+                  backgroundColor: 'rgba(20, 184, 166, 0.15)',
                   color: 'var(--color-primary)',
                 }}
               >

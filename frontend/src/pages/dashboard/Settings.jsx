@@ -95,7 +95,7 @@ export default function Settings() {
 
         <div
           className="p-4 rounded-xl text-center"
-          style={{ backgroundColor: 'rgba(212, 165, 34, 0.05)', border: '1px dashed rgba(212, 165, 34, 0.3)' }}
+          style={{ backgroundColor: 'rgba(20, 184, 166, 0.05)', border: '1px dashed rgba(212, 165, 34, 0.3)' }}
         >
           <p className="text-sm font-medium" style={{ color: 'var(--theme-text-muted)' }}>
             API key management will be available on paid plans.
