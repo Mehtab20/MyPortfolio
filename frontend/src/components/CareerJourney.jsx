@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const journey = [
   {
     type: 'work',
@@ -32,9 +34,7 @@ function TimelineDot({ type }) {
       <div
         className="w-10 h-10 rounded-full flex items-center justify-center z-10"
         style={{
-          backgroundColor: type === 'work'
-            ? 'rgba(20, 184, 166, 0.15)'
-            : 'rgba(6, 182, 212, 0.12)',
+          backgroundColor: type === 'work' ? 'rgba(20, 184, 166, 0.15)' : 'rgba(6, 182, 212, 0.12)',
           border: `2px solid ${color}`,
         }}
       >
@@ -54,10 +54,23 @@ function TimelineDot({ type }) {
 
 export default function CareerJourney() {
   return (
-    <section id="career" className="relative py-24 sm:py-32" aria-label="Career Journey section">
+    <motion.section
+      id="career"
+      className="relative py-24 sm:py-32"
+      aria-label="Career Journey section"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16 reveal">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             <span style={{ color: 'var(--theme-text)' }}>Career </span>
             <span className="gradient-text">Journey</span>
@@ -65,33 +78,37 @@ export default function CareerJourney() {
           <p className="max-w-lg mx-auto text-base" style={{ color: 'var(--theme-text-secondary)' }}>
             Building impactful digital solutions through continuous learning.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-3xl mx-auto reveal">
-          {/* Vertical line */}
-          <div
-            className="absolute left-5 top-0 bottom-0 w-px"
-            style={{ backgroundColor: 'var(--theme-border)' }}
-          />
+        <motion.div
+          className="relative max-w-3xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2 } } }}
+        >
+          <div className="absolute left-5 top-0 bottom-0 w-px" style={{ backgroundColor: 'var(--theme-border)' }} />
 
           <div className="space-y-10">
             {journey.map((item, index) => (
-              <div key={index} className="relative flex gap-6">
-                {/* Dot */}
+              <motion.div
+                key={index}
+                className="relative flex gap-6"
+                variants={{
+                  hidden: { opacity: 0, x: -30 },
+                  visible: { opacity: 1, x: 0, transition: { type: 'spring', damping: 20, stiffness: 100 } },
+                }}
+              >
                 <div className="relative z-10">
                   <TimelineDot type={item.type} />
                 </div>
-
-                {/* Content Card */}
-                <div className="flex-1 card-surface rounded-xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 golden-border-hover">
-                  {/* Header */}
+                <motion.div
+                  className="flex-1 card-surface rounded-xl p-5 sm:p-6 transition-all duration-300 golden-border-hover"
+                  whileHover={{ y: -3, boxShadow: '0 8px 25px rgba(20,184,166,0.08)' }}
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                     <div>
-                      <h3
-                        className="text-base sm:text-lg font-bold"
-                        style={{ color: 'var(--theme-text)' }}
-                      >
+                      <h3 className="text-base sm:text-lg font-bold" style={{ color: 'var(--theme-text)' }}>
                         {item.title}
                       </h3>
                       <p className="text-sm font-medium" style={{ color: 'var(--color-primary)' }}>
@@ -101,21 +118,17 @@ export default function CareerJourney() {
                     <span
                       className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0"
                       style={{
-                        backgroundColor: 'rgba(20, 184, 166, 0.08)',
+                        backgroundColor: 'rgba(20,184,166,0.08)',
                         color: 'var(--color-primary-light)',
-                        border: '1px solid rgba(20, 184, 166, 0.15)',
+                        border: '1px solid rgba(20,184,166,0.15)',
                       }}
                     >
                       {item.period}
                     </span>
                   </div>
-
-                  {/* Description */}
                   <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
                     {item.description}
                   </p>
-
-                  {/* Highlights */}
                   <ul className="space-y-1.5">
                     {item.highlights.map((h, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs" style={{ color: 'var(--theme-text-muted)' }}>
@@ -124,12 +137,12 @@ export default function CareerJourney() {
                       </li>
                     ))}
                   </ul>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import { submitContactMessage } from '../api/index.js';
 
 const contactDetails = [
@@ -79,8 +81,6 @@ export default function Contact() {
     message: '',
   });
   const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -89,15 +89,13 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    setError(null);
     try {
       await submitContactMessage(formData);
-      setSent(true);
+      toast.success('Message sent successfully! I\'ll get back to you soon.');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setSent(false), 4000);
     } catch (err) {
       console.error(err);
-      setError('Failed to send message. Please try again.');
+      toast.error('Failed to send message. Please try again.');
     } finally {
       setSending(false);
     }
@@ -275,16 +273,7 @@ export default function Contact() {
                 )}
               </button>
 
-              {sent && (
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-                  <p className="text-sm text-emerald-500 font-medium">Thank you! Your message has been received.</p>
-                </div>
-              )}
-              {error && (
-                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                  <p className="text-sm text-red-500 font-medium">{error}</p>
-                </div>
-              )}
+
             </form>
           </div>
         </div>

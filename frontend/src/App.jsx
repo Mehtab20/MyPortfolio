@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import AuthGuard from './components/auth/AuthGuard';
@@ -45,6 +46,22 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <ErrorBoundary>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'var(--theme-surface)',
+                color: 'var(--theme-text)',
+                border: '1px solid var(--theme-border)',
+                borderRadius: '12px',
+                fontSize: '13px',
+                backdropFilter: 'blur(12px)',
+              },
+              success: { iconTheme: { primary: '#14b8a6', secondary: '#030712' } },
+              error: { iconTheme: { primary: '#ef4444', secondary: '#030712' } },
+            }}
+          />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingWrapper />} />
