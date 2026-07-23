@@ -261,8 +261,6 @@ export default function Contact() {
                     </svg>
                     Sending...
                   </>
-                ) : sent ? (
-                  'Message Sent!'
                 ) : (
                   <>
                     Send Message
