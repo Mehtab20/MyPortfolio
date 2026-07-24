@@ -1,4 +1,4 @@
-# AI Project Context — AI SaaS Starter Kit (formerly Mehtab Akbar Portfolio)
+# AI Project Context — Mehtab Akbar Portfolio
 
 > **Working Rule:** Before making any changes, read this file. After completing any meaningful task, update this file. Never remove historical work logs. Treat this as the single source of truth.
 
@@ -8,20 +8,18 @@
 
 | Field | Value |
 | :--- | :--- |
-| **Project Name** | AI SaaS Starter Kit |
-| **Purpose** | Production-ready AI SaaS starter kit built from a personal portfolio. Includes landing page (portfolio), Supabase auth, user dashboard, admin panel, AI chat, subscriptions, and analytics. |
-| **Target Audience** | Developers building AI-powered SaaS applications |
-| **Completion** | ~95% |
-| **Development Phase** | Auth & Integration Complete |
+| **Project Name** | Mehtab Akbar Portfolio |
+| **Purpose** | Premium software engineering portfolio showcasing real-world projects in AI/Healthcare, hospital management, SaaS platforms, and full-stack development. Includes Supabase auth, dashboard, admin panel, AI chat, and analytics. |
+| **Target Audience** | Tech recruiters, engineering managers, startup founders, collaborators |
+| **Completion** | ~90% |
 
 ### Main Objectives
-1. Keep portfolio as the public marketing website with pricing, testimonials, FAQ, and blog sections
-2. Provide Supabase Authentication (Login, Signup, Forgot Password, Google OAuth)
-3. User Dashboard with AI Chat, Profile, Settings, and Subscription management
-4. Admin Dashboard with User Management and Analytics
-5. Role-based access control (user / admin)
-6. Stripe-ready subscription architecture
-7. Production-ready folder structure with complete documentation
+1. Showcase 4 flagship projects with professional case studies (Medical Referral Agent, Gohar Medical Trust, AI SaaS Starter Kit, this portfolio)
+2. Present an authentic, recruiter-focused professional identity
+3. Provide Supabase Authentication (Login, Signup, Forgot Password, Google OAuth)
+4. User Dashboard with AI Chat, Profile, Settings
+5. Admin Dashboard with User Management and Analytics
+6. Role-based access control (user / admin)
 
 ---
 
@@ -31,67 +29,32 @@
 
 | Concern | Technology |
 | :--- | :--- |
-| Framework | React 19.2.6 |
+| Framework | React 19 |
 | Language | JavaScript (ES6+ / ESM), JSX |
-| CSS Framework | Tailwind CSS 4.3.1 via `@tailwindcss/vite` |
+| CSS Framework | Tailwind CSS 4 via `@tailwindcss/vite` |
 | Routing | React Router DOM v7 |
 | Icons | Inline SVGs (no icon library) |
-| Animations | CSS keyframes, Framer Motion-ready, custom `IntersectionObserver` |
+| Animations | Framer Motion + CSS keyframes + custom `IntersectionObserver` |
 | State Management | React hooks + React Context |
 | Charts | Recharts (bar, line, pie) |
 | UI Components | Custom glassmorphic components + reusable library |
-| Build Tool | Vite 8.0.16 |
+| Build Tool | Vite 8 |
 | Package Manager | npm |
 
 ### Backend / Database
 
 | Concern | Technology |
 | :--- | :--- |
-| **Database** | **Supabase PostgreSQL** (cloud-hosted, sole database) |
-| **Auth** | **Supabase Auth** (email/password + Google OAuth) |
-| Backend Express | Express.js 4.21.2 (optional, for Stripe/AI proxy) |
-| Client Library | `@supabase/supabase-js` ^2.110.0 |
-| Schema Location | `database/schema.sql` |
-| Profiles Table | `profiles` — auto-created on signup via DB trigger |
+| Database | Supabase PostgreSQL |
+| Auth | Supabase Auth (email/password + Google OAuth) |
+| Client Library | `@supabase/supabase-js` |
 
 ### Environment Variables
 
 | Variable | Purpose |
 | :--- | :--- |
-| `VITE_SUPABASE_URL` | Supabase project URL (`https://spfsnxfvyvebwcldhknm.supabase.co`) |
+| `VITE_SUPABASE_URL` | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase anonymous/public API key |
-
-### Supabase Project
-
-| Detail | Value |
-| :--- | :--- |
-| Provider | Supabase |
-| Project Ref | `spfsnxfvyvebwcldhknm` |
-| Project URL | `https://spfsnxfvyvebwcldhknm.supabase.co` |
-
-#### Database Tables
-
-| Table | Purpose | Status |
-| :--- | :--- | :--- |
-| `profiles` | User profiles & roles (user/admin) | ✅ Created |
-| `cv_profile` | Portfolio resume data | Needs creation |
-| `projects` | Portfolio project entries | Needs creation |
-| `contacts` | Contact form submissions | Needs creation |
-
-### Deployment
-
-| Detail | Value |
-| :--- | :--- |
-| Hosting | TBD (Vercel / Netlify recommended) |
-| Build Command | `npm run build` (Vite) |
-| Output Directory | `frontend/dist` |
-
-### Version Control
-
-| Detail | Value |
-| :--- | :--- |
-| Git Provider | GitHub — `Mehtab20/MyPortfolio` |
-| Branch Strategy | Direct main branch commits |
 
 ---
 
@@ -100,162 +63,78 @@
 ```
 MyPortfolio/
 ├── AI_CONTEXT.md              # THIS FILE — persistent AI project memory
-├── CHANGES.md                 # Comprehensive migration changelog
-├── CHANGELOG.md               # Version changelog
+├── CHANGES.md
+├── CHANGELOG.md
 ├── .gitignore
+├── vercel.json
 │
-├── database/                  # Supabase PostgreSQL migration scripts
+├── database/                  # SQL migration scripts
 │   ├── schema.sql
 │   ├── seed.sql
-│   ├── sqlite_schema.sql      # DEPRECATED
-│   └── sqlite_seed.sql        # DEPRECATED
+│   └── sqlite_*.sql
 │
-├── backend/                   # Express.js API server (optional proxy)
-│   ├── controllers/
-│   ├── db/
-│   ├── routes/
-│   └── server.js
+├── backend/                   # Express.js API server (optional)
+│   └── ...
 │
 └── frontend/                  # React + Vite SPA
-    ├── DOCS.md                # Complete 15-section documentation
     ├── index.html
     ├── package.json
     ├── vite.config.js
     ├── public/
     └── src/
         ├── api/               # API helpers
-        │   ├── index.js       # Portfolio API (CV, projects, contact)
-        │   ├── auth.js        # Profile & admin user management
-        │   └── stripe.js      # Stripe integration placeholders
-        ├── assets/            # Images
+        ├── assets/            # Images (profile photo, project SVGs)
         ├── components/
-        │   ├── auth/          # AuthGuards for route protection
-        │   │   ├── AuthGuard.jsx
-        │   │   └── AdminGuard.jsx
-        │   ├── layout/
-        │   │   └── DashboardLayout.jsx  # Sidebar + header layout
-        │   ├── ui/            # Reusable UI library
-        │   │   ├── Button.jsx
-        │   │   ├── Input.jsx
-        │   │   └── GlassCard.jsx
-        │   └── portfolio/     # Original portfolio components
-        │       ├── Navbar.jsx (now has Sign In / Get Started buttons)
-        │       ├── Hero.jsx
-        │       ├── About.jsx
-        │       ├── Skills.jsx
-        │       ├── Projects.jsx
-        │       ├── Education.jsx
-        │       ├── Contact.jsx
-        │       └── Footer.jsx
-        ├── context/           # React contexts
-        │   ├── ThemeContext.jsx  # Dark/light theme
-        │   └── AuthContext.jsx   # Supabase auth & user state
-        ├── lib/
-        │   └── utils.js       # Utility functions
+        │   ├── auth/          # AuthGuard, AdminGuard
+        │   ├── layout/        # DashboardLayout, PageTransition
+        │   ├── ui/            # Button, Input, GlassCard
+        │   └── portfolio/     # Hero, About, Skills, Projects, CareerJourney, Certifications, Contact, Footer, Navbar
+        ├── context/           # ThemeContext, AuthContext
+        ├── data/              # projects.js (project data & case studies)
+        ├── lib/               # hooks.js, utils.js, validation.js
         ├── pages/
-        │   ├── auth/
-        │   │   ├── Login.jsx
-        │   │   ├── Signup.jsx
-        │   │   └── ForgotPassword.jsx
-        │   ├── dashboard/
-        │   │   ├── Dashboard.jsx
-        │   │   ├── AiChat.jsx
-        │   │   ├── Profile.jsx
-        │   │   ├── Settings.jsx
-        │   │   └── Subscription.jsx
-        │   ├── admin/
-        │   │   ├── AdminDashboard.jsx
-        │   │   └── Analytics.jsx
-        │   └── Landing.jsx     # Enhanced portfolio + pricing + FAQ + blog
-        ├── App.jsx             # Root with React Router
-        ├── index.css           # Design system & theme
-        ├── main.jsx            # Entry point
-        └── supabase.js         # Supabase client (with hardcoded fallback)
+        │   ├── auth/          # Login, Signup, ForgotPassword
+        │   ├── dashboard/     # Dashboard, AiChat, Profile, Settings
+        │   ├── admin/         # AdminDashboard, Analytics
+        │   ├── Landing.jsx    # Portfolio landing (no SaaS sections)
+        │   └── NotFound.jsx
+        ├── App.jsx
+        ├── index.css
+        ├── main.jsx
+        └── supabase.js
 ```
 
 ---
 
 ## 4. Route Structure
 
-| Path | Page | Access | Status |
-|------|------|--------|--------|
-| `/` | Enhanced Portfolio Landing | Public | ✅ |
-| `/login` | Sign In | Public | ✅ |
-| `/signup` | Create Account | Public | ✅ |
-| `/forgot-password` | Reset Password | Public | ✅ |
-| `/dashboard` | User Dashboard | Authenticated | ✅ |
-| `/dashboard/chat` | AI Chat | Authenticated | ✅ |
-| `/dashboard/profile` | Profile Settings | Authenticated | ✅ |
-| `/dashboard/settings` | App Settings | Authenticated | ✅ |
-| `/dashboard/subscription` | Plans & Billing | Authenticated | ✅ |
-| `/admin` | Admin Dashboard | Admin | ✅ |
-| `/admin/analytics` | Analytics | Admin | ✅ |
+| Path | Page | Access |
+|------|------|--------|
+| `/` | Portfolio Landing | Public |
+| `/login` | Sign In | Public |
+| `/signup` | Create Account | Public |
+| `/forgot-password` | Reset Password | Public |
+| `/dashboard` | User Dashboard | Authenticated |
+| `/dashboard/chat` | AI Chat | Authenticated |
+| `/dashboard/profile` | Profile Settings | Authenticated |
+| `/dashboard/settings` | App Settings | Authenticated |
+| `/dashboard/subscription` | Plans & Billing | Authenticated |
+| `/admin` | Admin Dashboard | Admin |
+| `/admin/analytics` | Analytics | Admin |
+| `*` | 404 Not Found | Public |
 
 ---
 
-## 5. Features
+## 5. Featured Projects
 
-### ✅ Completed (SaaS Features)
-- Supabase Auth — email/password signup & signin
-- Supabase Auth — Google OAuth
-- Password reset flow
-- AuthGuard / AdminGuard route protection
-- AuthContext with user state, profile, role management
-- ThemeContext — dark/light theme toggle
-- Dashboard layout with responsive sidebar
-- User Dashboard with stats and quick actions
-- AI Chat page with placeholder integration
-- Profile page with editable fields
-- Settings page with notification toggles
-- Subscription page with pricing cards and Stripe placeholders
-- Admin Dashboard with user management table
-- Analytics page with Recharts (bar, line, pie)
-- Enhanced landing page (pricing, testimonials, FAQ, blog, CTA)
-- Sign In / Get Started buttons in Navbar
-- Reusable UI components (Button, Input, GlassCard)
-- Production-ready folder structure
-- Complete DOCS.md (15 sections)
+| Project | Type | Status | Tech Stack |
+|---------|------|--------|------------|
+| **Medical Referral Agent** | AI-Based Diagnostic & Specialist Referral System (FYP) | Final Year Project | Flutter, Python, FastAPI, TensorFlow Lite, PostgreSQL |
+| **Gohar Medical Trust** | Hospital & Trust Management System | Production | Flutter, React, Node.js, Express, PostgreSQL, Redis, Twilio |
+| **AI SaaS Starter Kit** | Production-Ready SaaS Foundation | Open Source | React 19, Vite 8, Supabase, Stripe, Recharts |
+| **Personal Portfolio** | This website — premium dev portfolio | Live | React 19, Vite, Tailwind CSS, Framer Motion, Supabase |
 
-### ✅ Completed (Portfolio Features)
-- All original portfolio sections preserved
-- Dark/Light dual theme system
-- Glassmorphism design with golden accent palette
-- Scroll-reveal animations
-- Responsive design
-- Supabase dynamic project fetching
-- Contact form integration
-
-### ✅ Completed (Portfolio Refinement)
-- Hero: Code-style `<Full Stack Developer />` badge, refined tagline, cleaner stats (10+ Projects, 3+ Years, 100% Dedication)
-- About: Redesigned with personal info grid (Experience, Location, Nationality, Born) — matching fawadiqbal.dev
-- Skills: Converted from progress bars to clean emoji tech grid with category groups
-- Career Journey: Combined timeline (work experience + education) with golden dots
-- Certifications: New section with professional certifications grid + stats
-- Contact: Refined header to "Let's Connect" with cleaner layout
-- Landing: Updated section order, removed standalone Education, integrated CareerJourney + Certifications
-
-### 🔄 In Progress
-- Email confirmation handling (Supabase Auth setting)
-- Admin role assignment
-
-### ✅ Completed (2026-07-22 — Projects Redesign + Color Polish)
-- **Projects section completely redesigned** with 4 real projects with premium cards:
-  - Medical Referral Agent — AI-Based Diagnostic & Specialist Referral System (Final Year Project)
-  - Gohar Medical Trust Management System (Production hospital management)
-  - AI SaaS Starter Kit (this project itself, open source)
-  - Personal Portfolio (with detailed case study: design, architecture, tech, challenges)
-- **Each project card** includes: image with gradient overlay, status badge, year, role, description, tech stack, GitHub link, expandable case study (features, architecture highlights, key challenges)
-- **4 new gradient SVG placeholder images** created for all projects, easy to replace with real screenshots
-- **All remaining gold color references** (`rgba(212,165,34)`, `#d4a522`, `#e8b92e`) replaced with teal/cyan palette across Landing.jsx, CareerJourney.jsx, Certifications.jsx
-- Build passes with zero errors
-- Preview restarted and working
-
-### 📋 Planned
-- Stripe checkout integration
-- AI provider API connection (OpenAI/Anthropic/Gemini)
-- User profile avatar upload (Supabase Storage)
-- Blog admin management
-- Google OAuth refinement
+Each project includes a full case study modal with: Problem, Background, Objectives, Features, Architecture, Tech Stack, Development Process, Challenges & Solutions, Results, Future Improvements.
 
 ---
 
@@ -263,155 +142,49 @@ MyPortfolio/
 
 ### Auth Flow
 1. User signs up → Profile auto-created via `handle_new_user()` DB trigger
-2. Email confirmation (can be disabled in Supabase Auth settings)
-3. User signs in → AuthContext populates user + profile state
-4. Protected routes check auth via AuthGuard / AdminGuard
+2. User signs in → AuthContext populates user + profile state
+3. Protected routes check auth via AuthGuard / AdminGuard
 
 ### Role-Based Access
 - `user` — standard authenticated user (dashboard, chat, profile, settings)
 - `admin` — elevated access (admin dashboard, analytics, user management)
 
-### Making a User Admin
-```sql
-UPDATE profiles SET role = 'admin' WHERE email = 'user@example.com';
-```
-
 ---
 
-## 7. Supabase Configuration
-
-### Supabase Project: spfsnxfvyvebwcldhknm
-- URL: `https://spfsnxfvyvebwcldhknm.supabase.co`
-- Anon Key: Hardcoded in `frontend/src/supabase.js` (falls back to .env vars)
-
-### Required Auth Setting
-- **Email Confirmations**: Currently ON by default — disable in Supabase Dashboard → Authentication → Settings → "Confirm email" → OFF
-
-### Required Tables
-```sql
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users PRIMARY KEY,
-  email TEXT,
-  full_name TEXT,
-  avatar_url TEXT,
-  bio TEXT,
-  role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### RLS Policies (configure in Supabase Dashboard)
-- Users can SELECT own profile
-- Users can UPDATE own profile
-- Admins can SELECT all profiles
-- Admins can UPDATE any profile
-
----
-
-## 8. UI / UX Design System
+## 7. Design System
 
 ### Color Palette
 | Token | Dark Mode | Light Mode |
 | :--- | :--- | :--- |
-| Primary | `#d4a522` (Golden Yellow) | `#a17700` |
-| Background | `#0a0a0f` | `#f8f7f4` |
-| Surface | `#111119` | `#ffffff` |
-| Text Primary | `#f1f5f9` | `#1a1a2e` |
+| Primary | `#14b8a6` (Teal) | `#0d9488` |
+| Background | `#030712` | `#f8fafc` |
+| Surface | `#0a0f1a` | `#ffffff` |
+| Text Primary | `#f3f4f6` | `#111827` |
 
 ### Typography
 - **Primary**: Outfit (headings & body)
-- **Fallback**: Inter
 - **Monospace**: Fira Code
 
-### Key Utility Classes
-- `.glass` — glassmorphism
-- `.gradient-text` — golden gradient
-- `.btn-primary` / `.btn-outline` — buttons
-- `.golden-border` — golden borders
-- `.reveal` → `.revealed` — scroll animation
+### Key UX Upgrades
+- Canvas-based aurora background animation (GPU-accelerated)
+- Custom animation hooks: typewriter, 3D tilt, count-up, parallax, scroll-reveal
+- Premium button micro-interactions (::before overlay, scale on press)
+- Full reduced-motion support for accessibility
+- Responsive from 320px to 2560px
 
 ---
 
-## 9. Current Project State
+## 8. Work Log
 
-| Field | Value |
+| Date | Summary |
 | :--- | :--- |
-| **Last Completed Task** | Converted portfolio to full AI SaaS starter kit |
-| **Current Focus** | User onboarding (auth, admin setup) |
-| **Blockers** | Supabase email confirmation needs to be disabled |
-
-### Next Recommended Tasks (Priority Order)
-1. **Disable email confirmation** in Supabase Auth settings
-2. **Test signup flow** — create an account
-3. **Make admin** — run `UPDATE profiles SET role = 'admin' WHERE email = '...'`
-4. **Create portfolio tables** — `cv_profile`, `projects`, `contacts` in Supabase
-
----
-
-## 10. Premium UX Upgrades (2026-07-18)
-
-### 🎨 Animated Background
-- `AuroraBackground.jsx` — Canvas-based dynamic aurora/mesh gradient animation
-- 4 morphing color blobs respond to dark/light theme
-- GPU-accelerated with requestAnimationFrame
-- Zero external dependencies
-
-### 🎭 Animation Hooks Library
-| Hook | Purpose |
-| :--- | :--- |
-| `useTypewriter` | Typing animation for role text |
-| `useTilt` | 3D perspective tilt on hover (Fitts's Law optimized) |
-| `useCountUp` | Animated number counters with ease-out cubic |
-| `useParallax` | Scroll-based parallax offset |
-| `useInView` | IntersectionObserver-based visibility trigger |
-| `useScrollReveal` | Enhanced .reveal → .revealed with RAF |
-
-### 🖌 Premium Design System
-- Refined CSS variables with deeper dark mode (`#07070d`) and warmer light mode
-- 3-tier glow effects (glow-sm/md/lg)
-- Shimmer loading skeleton animations
-- Scale, left, right scroll-reveal variants
-- gradient-shift animation for dynamic gradients
-- Premium button micro-interactions (::before overlay, scale on active)
-- Focus-visible ring for keyboard accessibility
-
-### 👤 Hero Section Redesign
-- **Typing animation**: Multi-role typewriter with delete/type cycle
-- **3D tilt**: useTilt hook on profile photo with perspective transform
-- **Floating animation**: Subtle float + glow ring + decorative dots
-- **Animated stats**: useCountUp with IntersectionObserver trigger
-- **Availability badge**: Green pulse dot + glass pill
-- **Full Sophie Wilson-style staggered fade-in**
-
-### 📊 Navbar Upgrade
-- Reading progress indicator (golden gradient bar at bottom)
-- Refined glass morphism with smoother transitions
-- btn-ghost class for subtle hover states
-- Scale/fade scroll-to-top button
-
----
-
-## 11. Work Log
-
-| Date | Files Modified | Summary |
-| :--- | :--- | :--- |
-| 2026-07-14 | Multiple | Created AI_CONTEXT.md, initialized Supabase client |
-| 2026-07-18 | 25+ new files, 4 modified | **Major SaaS conversion**: React Router, auth pages, dashboard, admin panel, AI chat, analytics, enhanced landing, updated Navbar with auth links, fixed supabase.js for missing env vars, hardcoded Supabase credentials |
-| 2026-07-18 | AuroraBackground, hooks.js, index.css, Hero, Navbar, Landing | **Premium UX overhaul**: Animated aurora background, animation hooks (typewriter, tilt, count-up, parallax), premium design system, redesigned hero with 3D tilt + typing effect, reading progress navbar |
-| 2026-07-18 | api/ai.js, AdminDashboard, AiChat, index.html, robots.txt, sitemap.xml | **AI provider system + SEO + Admin CMS**: Multi-provider AI abstraction (OpenAI, Anthropic, Gemini, Groq, OpenRouter), streaming support, conversation management. Full admin CMS with tabs (Overview, Users, Projects, Messages, Settings). SEO meta tags (OG, Twitter, Schema.org), robots.txt, sitemap.xml. |
-| 2026-07-18 | validation.js, PageTransition.jsx, App.jsx, vite.config.js | **Security + Performance + QA**: Input validation/sanitization utilities (XSS prevention, email/password/name validation, contact form validation). PageTransition for smooth route animations. Code-splitting via React.lazy + Suspense. Vite chunk optimization. Build passes with zero errors, zero warnings. |
-| 2026-07-18 | Hero, About, Skills, CareerJourney, Certifications, Contact, Landing, Navbar, Footer | **Portfolio refinement (fawadiqbal.dev style)**: Hero with code-style role badge, refined tagline, cleaner stats. About with personal info grid. Skills as emoji tech grid. Career Journey timeline. New Certifications section. Updated section order in Landing. |
-| 2026-07-18 | api/ai.js, supabase.js, App.jsx, ErrorBoundary, NotFound, Subscription, index.css | **CTO audit — 18 issues fixed**: Removed hardcoded API keys. Added ErrorBoundary for crash prevention. Added 404 page with catch-all route. Replaced alert() with inline modal. Added prefers-reduced-motion support. Fixed useCallback deps. ARIA labels added. |
-
----
-
-## 11. AI Notes — Architecture Decisions
-
-### Decision: Hardcoded Supabase keys (2026-07-18)
-- **Context**: Freebuff env var system blocked both `freebuff-env` and direct `.env` file writes
-- **Decision**: Added Supabase URL and anon key as fallback values directly in `supabase.js`
-- **Rationale**: These are public keys by design (anon key). The env var pattern still works for the API Keys tab. Hardcoded values provide a working development setup.
-- **Impact**: Users can override via `.env` or API Keys tab. Works out of box without config.
-
-### Decision: Keep Express backend
-- The Express backend is preserved but optional. All data operations use Supabase JS client directly from the frontend.
+| 2026-07-14 | Created AI_CONTEXT.md, initialized Supabase |
+| 2026-07-18 | SaaS conversion: React Router, auth, dashboard, admin, AI chat, analytics |
+| 2026-07-18 | Premium UX: aurora background, animation hooks, redesigned hero |
+| 2026-07-18 | AI provider system + SEO + admin CMS |
+| 2026-07-18 | Security, validation, code-splitting, performance optimization |
+| 2026-07-18 | Portfolio refinement (fawadiqbal.dev style) |
+| 2026-07-18 | CTO audit — 18 issues fixed |
+| 2026-07-22 | Projects redesign with 4 real projects + case studies |
+| 2026-07-22 | UX polish: micro-interactions, scroll effects, loading states |
+| **2026-07-24** | **Portfolio refactor: removed SaaS template content (pricing, testimonials, FAQ, fake blog). Updated Hero/About. Replaced generic blog with real technical articles.** |

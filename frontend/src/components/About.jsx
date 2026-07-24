@@ -44,14 +44,15 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
-              I&apos;m a Software Engineering student with a keen interest in web, mobile development,
-              cloud computing, and turning complex ideas into impactful applications.
-              Active in the tech community and always exploring new tools, technologies, and frameworks
-              that push the boundary of what&apos;s possible in software engineering.
+              I&apos;m a Software Engineering student at Iqra University Islamabad, passionate about building
+              AI-powered healthcare systems, cross-platform mobile applications, and scalable cloud
+              solutions. My work bridges the gap between cutting-edge technology and real-world impact
+              — from digitizing hospital operations to developing intelligent medical diagnostic tools.
             </p>
             <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-              Currently focused on expanding my knowledge in Cloud Computing, DevOps, and modern
-              software architecture while continuously building production-ready applications.
+              Currently focused on expanding my expertise in Cloud Computing (AWS/GCP), DevOps
+              automation, and production-grade full-stack development. I believe in building software
+              that not only works beautifully but makes a tangible difference in people&apos;s lives.
             </p>
           </motion.div>
 

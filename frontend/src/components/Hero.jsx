@@ -3,10 +3,10 @@ import profilePhoto from '../assets/profile-photo.png';
 import { useTilt } from '../lib/hooks';
 
 const roles = [
-  'Software Engineering Student',
+  'Full-Stack Software Engineer',
+  'AI & Healthcare Systems',
   'Cloud & DevOps Engineer',
-  'Full Stack Developer',
-  'UI/UX Enthusiast',
+  'Open Source Contributor',
 ];
 
 function TypewriterRoles() {
@@ -167,7 +167,7 @@ export default function Hero() {
               className="animate-fade-in-up delay-300 max-w-xl text-base sm:text-lg leading-relaxed mb-8"
               style={{ color: 'var(--theme-text-secondary)' }}
             >
-              Crafting exceptional digital experiences through cloud-native architectures and modern software engineering.
+              Full-Stack Software Engineer specializing in AI-powered healthcare systems, cloud computing, cross-platform mobile apps (Flutter), and scalable SaaS platforms using React, FastAPI, and modern DevOps practices.
             </p>
 
             {/* CTA Buttons */}
@@ -200,7 +200,7 @@ export default function Hero() {
             {/* Hero Stats */}
             <div className="animate-fade-in-up delay-500 mt-10 grid grid-cols-3 gap-6 sm:gap-10 max-w-sm lg:max-w-none mx-auto lg:mx-0">
               <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">10+</div>
+                <div className="text-xl sm:text-2xl font-bold gradient-text">4+</div>
                 <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Projects</div>
               </div>
               <div className="text-center lg:text-left">
@@ -209,7 +209,7 @@ export default function Hero() {
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-xl sm:text-2xl font-bold gradient-text">100%</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Dedication</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Commitment</div>
               </div>
             </div>
           </div>
