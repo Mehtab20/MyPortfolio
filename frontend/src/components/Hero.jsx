@@ -173,11 +173,11 @@ export default function Hero() {
             {/* CTA Buttons */}
             <div className="animate-fade-in-up delay-400 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
               <a
-                href="#about"
-                onClick={(e) => handleScroll(e, '#about')}
+                href="#projects"
+                onClick={(e) => handleScroll(e, '#projects')}
                 className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-primary text-sm font-semibold"
               >
-                <span>Get To Know Me</span>
+                <span>View Projects</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                   fill="none"
@@ -189,27 +189,42 @@ export default function Hero() {
                 </svg>
               </a>
               <a
-                href="#projects"
-                onClick={(e) => handleScroll(e, '#projects')}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-outline text-sm font-semibold"
               >
-                <span>View My Work</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <span>Download Resume</span>
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => handleScroll(e, '#contact')}
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-ghost text-sm font-semibold"
+              >
+                <span>Hire Me</span>
               </a>
             </div>
 
             {/* Hero Stats */}
-            <div className="animate-fade-in-up delay-500 mt-10 grid grid-cols-3 gap-6 sm:gap-10 max-w-sm lg:max-w-none mx-auto lg:mx-0">
+            <div className="animate-fade-in-up delay-500 mt-10 grid grid-cols-4 gap-4 sm:gap-6 max-w-sm lg:max-w-none mx-auto lg:mx-0">
               <div className="text-center lg:text-left">
                 <div className="text-xl sm:text-2xl font-bold gradient-text">4+</div>
                 <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Projects</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-xl sm:text-2xl font-bold gradient-text">3+</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Years Active</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Years Coding</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">100%</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Commitment</div>
+                <div className="text-xl sm:text-2xl font-bold gradient-text">8+</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Tech Stacks</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-xl sm:text-2xl font-bold gradient-text">₹0</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Revenue Saved</div>
               </div>
             </div>
           </div>

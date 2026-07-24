@@ -23,6 +23,7 @@ const Settings = lazy(() => import('./pages/dashboard/Settings'));
 const Subscription = lazy(() => import('./pages/dashboard/Subscription'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const Analytics = lazy(() => import('./pages/admin/Analytics'));
+const Resume = lazy(() => import('./pages/Resume'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSuspense({ children }) {
@@ -79,6 +80,9 @@ export default function App() {
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><AdminDashboard /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
             <Route path="/admin/analytics" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><Analytics /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
+
+            {/* Resume */}
+            <Route path="/resume" element={<SuspenseRoute><Resume /></SuspenseRoute>} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<SuspenseRoute><NotFound /></SuspenseRoute>} />

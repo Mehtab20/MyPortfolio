@@ -90,7 +90,7 @@ export const projects = [
       'Successfully passed university capstone evaluation with distinction',
     ],
 
-    github: 'https://github.com/Mehtab20',
+    github: 'https://github.com/Mehtab20/final_year_project',
     demo: null,
 
     future: [

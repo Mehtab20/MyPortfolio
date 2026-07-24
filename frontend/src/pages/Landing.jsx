@@ -6,6 +6,9 @@ import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import CareerJourney from '../components/CareerJourney';
 import Certifications from '../components/Certifications';
+import Philosophy from '../components/Philosophy';
+import CurrentlyBuilding from '../components/CurrentlyBuilding';
+import GitHubHighlights from '../components/GitHubHighlights';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import AuroraBackground from '../components/AuroraBackground';
@@ -130,6 +133,9 @@ export default function Landing({ theme, toggleTheme }) {
           <Projects />
           <CareerJourney />
           <Certifications />
+          <Philosophy />
+          <CurrentlyBuilding />
+          <GitHubHighlights />
           <Blog />
           <Contact />
         </main>

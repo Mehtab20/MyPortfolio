@@ -2,49 +2,80 @@ import { motion } from 'framer-motion';
 
 const skillCategories = [
   {
-    key: 'languages',
-    label: 'Languages',
+    key: 'fullstack',
+    label: 'Full Stack Development',
+    context: 'Building production web apps with React, Node.js, and scalable APIs for hospital systems and SaaS platforms.',
     skills: [
-      { name: 'Python', icon: '🐍' },
-      { name: 'Java', icon: '☕' },
-      { name: 'JavaScript', icon: '⚡' },
-      { name: 'C++', icon: '🔧' },
-      { name: 'Dart', icon: '🎯' },
-      { name: 'SQL', icon: '🗄️' },
-    ],
-  },
-  {
-    key: 'frameworks',
-    label: 'Frameworks',
-    skills: [
-      { name: 'Flutter', icon: '📱' },
       { name: 'React', icon: '⚛️' },
-      { name: 'Tailwind CSS', icon: '🎨' },
       { name: 'Node.js', icon: '🟢' },
       { name: 'Express.js', icon: '🚂' },
       { name: 'REST APIs', icon: '🔗' },
+      { name: 'Next.js', icon: '▲' },
+      { name: 'Tailwind CSS', icon: '🎨' },
+    ],
+  },
+  {
+    key: 'mobile',
+    label: 'Mobile & Cross-Platform',
+    context: 'Shipping cross-platform mobile apps with Flutter/Dart covering patient-facing healthcare interfaces and real-time dashboards.',
+    skills: [
+      { name: 'Flutter', icon: '📱' },
+      { name: 'Dart', icon: '🎯' },
+      { name: 'Material Design 3', icon: '🎨' },
+      { name: 'Firebase', icon: '🔥' },
+      { name: 'TensorFlow Lite', icon: '🧠' },
+    ],
+  },
+  {
+    key: 'ai',
+    label: 'AI & Machine Learning',
+    context: 'Building production ML pipelines — symptom classification models achieving 92% accuracy, deployed on-device via TensorFlow Lite.',
+    skills: [
+      { name: 'Python', icon: '🐍' },
+      { name: 'FastAPI', icon: '⚡' },
+      { name: 'TensorFlow', icon: '🧠' },
+      { name: 'NLP', icon: '💬' },
+      { name: 'Transfer Learning', icon: '🔄' },
+      { name: 'Data Pipelines', icon: '📊' },
+    ],
+  },
+  {
+    key: 'cloud',
+    label: 'Cloud & DevOps',
+    context: 'Deploying and monitoring production systems on AWS/GCP with Docker, CI/CD pipelines, and Linux server management.',
+    skills: [
+      { name: 'Docker', icon: '🐳' },
+      { name: 'AWS/GCP', icon: '☁️' },
+      { name: 'CI/CD', icon: '🔄' },
+      { name: 'Linux', icon: '🐧' },
+      { name: 'Git & GitHub', icon: '🐙' },
+      { name: 'PostgreSQL', icon: '🐘' },
     ],
   },
   {
     key: 'databases',
-    label: 'Databases',
+    label: 'Databases & Backend',
+    context: 'Designing normalized schemas, encrypted health records, and optimized queries handling 500+ concurrent users in production.',
     skills: [
-      { name: 'MySQL', icon: '🐬' },
       { name: 'PostgreSQL', icon: '🐘' },
-      { name: 'Firebase', icon: '🔥' },
-      { name: 'MongoDB', icon: '🍃' },
-      { name: 'Oracle', icon: '🏛️' },
+      { name: 'MySQL', icon: '🐬' },
+      { name: 'Redis', icon: '🔴' },
+      { name: 'Supabase', icon: '🔥' },
+      { name: 'Prisma', icon: '🔗' },
+      { name: 'SQL', icon: '🗄️' },
     ],
   },
   {
-    key: 'tools',
-    label: 'Tools & DevOps',
+    key: 'languages',
+    label: 'Programming Languages',
+    context: 'Professional proficiency across the stack — from systems programming to scripting and data analysis.',
     skills: [
-      { name: 'Git & GitHub', icon: '🐙' },
-      { name: 'Docker', icon: '🐳' },
-      { name: 'Linux', icon: '🐧' },
-      { name: 'CI/CD', icon: '🔄' },
-      { name: 'Cloud', icon: '☁️' },
+      { name: 'Python', icon: '🐍' },
+      { name: 'JavaScript', icon: '⚡' },
+      { name: 'Dart', icon: '🎯' },
+      { name: 'Java', icon: '☕' },
+      { name: 'C++', icon: '🔧' },
+      { name: 'SQL', icon: '🗄️' },
     ],
   },
 ];
@@ -80,17 +111,26 @@ export default function Skills() {
         </motion.div>
 
         {skillCategories.map((category) => (
-          <div key={category.key} className="mb-12 last:mb-0">
-            <motion.h3
-              className="text-xs font-bold uppercase tracking-widest mb-5"
-              style={{ color: 'var(--theme-text-muted)' }}
+          <div key={category.key} className="mb-14 last:mb-0">
+            <motion.div
+              className="mb-5"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
-              {category.label}
-            </motion.h3>
+              <h3
+                className="text-xs font-bold uppercase tracking-widest mb-2"
+                style={{ color: 'var(--theme-text-muted)' }}
+              >
+                {category.label}
+              </h3>
+              {category.context && (
+                <p className="text-xs leading-relaxed max-w-lg" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {category.context}
+                </p>
+              )}
+            </motion.div>
             <motion.div
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
               variants={containerVariants}
