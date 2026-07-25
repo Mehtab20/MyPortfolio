@@ -4,9 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  build: {
-    assetsInlineLimit: 0,
-  },
   plugins: [react(), tailwindcss()],
   server: {
     host: '0.0.0.0',
@@ -14,6 +11,7 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
+    assetsInlineLimit: 0,
     chunkSizeWarningLimit: 1000, // 1MB — acceptable for Recharts and vendor bundles
     rollupOptions: {
       output: {

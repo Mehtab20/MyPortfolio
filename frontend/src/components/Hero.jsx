@@ -221,8 +221,8 @@ export default function Hero() {
                 <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Tech Stacks</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">₹0</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Revenue Saved</div>
+                <div className="text-xl sm:text-2xl font-bold gradient-text">10+</div>
+                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Open Source</div>
               </div>
             </div>
           </div>

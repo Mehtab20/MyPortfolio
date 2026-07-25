@@ -11,7 +11,7 @@
 | **Project Name** | Mehtab Akbar Portfolio |
 | **Purpose** | Premium software engineering portfolio showcasing real-world projects in AI/Healthcare, hospital management, SaaS platforms, and full-stack development. Includes Supabase auth, dashboard, admin panel, AI chat, and analytics. |
 | **Target Audience** | Tech recruiters, engineering managers, startup founders, collaborators |
-| **Completion** | ~90% |
+| **Completion** | ~95% |
 
 ### Main Objectives
 1. Showcase 4 flagship projects with professional case studies (Medical Referral Agent, Gohar Medical Trust, AI SaaS Starter Kit, this portfolio)
@@ -188,3 +188,4 @@ Each project includes a full case study modal with: Problem, Background, Objecti
 | 2026-07-22 | Projects redesign with 4 real projects + case studies |
 | 2026-07-22 | UX polish: micro-interactions, scroll effects, loading states |
 | **2026-07-24** | **Portfolio refactor: removed SaaS template content (pricing, testimonials, FAQ, fake blog). Updated Hero/About. Replaced generic blog with real technical articles.** |
+| **2026-07-24** | **Production readiness audit: Fixed duplicate `build:` key in vite.config.js, removed old placeholder assets, fixed ₹0 stat → Open Source, cleaned src/assets/, verified all images/routes/auth/DB. Updated DOCS.md, CHANGELOG.md. 2 low-risk npm audit vulns noted.** |
