@@ -1,14 +1,9 @@
-import projectMedRef from '../assets/project-medref.svg';
-import projectGohar from '../assets/project-gohar.svg';
-import projectSaaS from '../assets/project-saas.svg';
-import projectPortfolio from '../assets/project-portfolio.svg';
-
 export const projects = [
   {
     id: 'medref',
     title: 'Medical Referral Agent',
     tagline: 'AI-Based Diagnostic & Specialist Referral System',
-    image: projectMedRef,
+    image: '/assets/project-medref.svg',
     gradient: 'from-teal-500/20 via-cyan-500/10 to-transparent',
     status: 'Final Year Project',
     statusColor: '#14b8a6',
@@ -106,7 +101,7 @@ export const projects = [
     id: 'gohar',
     title: 'Gohar Medical Trust',
     tagline: 'Hospital & Trust Management System',
-    image: projectGohar,
+    image: '/assets/project-gohar.svg',
     gradient: 'from-violet-500/20 via-purple-500/10 to-transparent',
     status: 'Production',
     statusColor: '#8b5cf6',
@@ -206,7 +201,7 @@ export const projects = [
     id: 'saas',
     title: 'AI SaaS Starter Kit',
     tagline: 'Production-Ready AI SaaS Foundation',
-    image: projectSaaS,
+    image: '/assets/project-saas.png',
     gradient: 'from-cyan-500/20 via-teal-500/10 to-transparent',
     status: 'Open Source',
     statusColor: '#06b6d4',
@@ -302,7 +297,7 @@ export const projects = [
     id: 'portfolio',
     title: 'Personal Portfolio',
     tagline: 'Premium Developer Portfolio & Case Study',
-    image: projectPortfolio,
+    image: '/assets/project-portfolio.png',
     gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
     status: 'Live',
     statusColor: '#10b981',
