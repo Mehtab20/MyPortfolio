@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import Logo from '../../components/Logo';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -28,14 +29,10 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: 'var(--theme-bg)' }}>
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 rounded-full overflow-hidden">
-            <img src="/assets/profile-photo.png" alt="Mehtab Akbar" className="w-full h-full object-cover" />
-          </div>
-          <span className="text-xl font-bold" style={{ color: 'var(--theme-text)' }}>
-            Mehtab<span className="gradient-text ml-1">Akbar</span>
-          </span>
-        </Link>
+        {/* Logo with animated ring */}
+        <div className="flex justify-center mb-8">
+          <Logo size={12} />
+        </div>
 
         <div className="card-surface rounded-2xl p-6 sm:p-8 golden-border">
           {sent ? (
