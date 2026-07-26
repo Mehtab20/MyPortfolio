@@ -23,6 +23,7 @@ const Settings = lazy(() => import('./pages/dashboard/Settings'));
 const Subscription = lazy(() => import('./pages/dashboard/Subscription'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const Analytics = lazy(() => import('./pages/admin/Analytics'));
+const CMSPage = lazy(() => import('./pages/admin/cms/CMSPage'));
 const Resume = lazy(() => import('./pages/Resume'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -80,6 +81,7 @@ export default function App() {
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><AdminDashboard /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
             <Route path="/admin/analytics" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><Analytics /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
+            <Route path="/admin/cms" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><CMSPage /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
 
             {/* Resume */}
             <Route path="/resume" element={<SuspenseRoute><Resume /></SuspenseRoute>} />
