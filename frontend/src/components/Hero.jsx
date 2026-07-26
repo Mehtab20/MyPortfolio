@@ -51,14 +51,27 @@ function ProfileImage({ imageSrc }) {
 
   return (
     <div className="relative flex-shrink-0">
-      {/* Glow ring */}
+      {/* Multi-layer glow effect */}
       <div
-        className={`absolute -inset-4 rounded-full transition-all duration-1000 ${
-          isHovered ? 'opacity-60 scale-110' : 'opacity-20 scale-100'
+        className={`absolute -inset-6 rounded-full transition-all duration-1000 ${
+          isHovered ? 'opacity-70 scale-110' : 'opacity-30 scale-100'
         }`}
         style={{
-          background: 'radial-gradient(circle, rgba(20,184,166,0.3), transparent 70%)',
-          filter: 'blur(20px)',
+          background: 'radial-gradient(circle, rgba(20,184,166,0.25), rgba(212,165,34,0.1), transparent 70%)',
+          filter: 'blur(25px)',
+          animation: 'pulse 4s ease-in-out infinite',
+        }}
+      />
+
+      {/* Secondary gold glow */}
+      <div
+        className={`absolute -inset-3 rounded-full transition-all duration-1000 ${
+          isHovered ? 'opacity-50' : 'opacity-15'
+        }`}
+        style={{
+          background: 'radial-gradient(circle at 30% 40%, rgba(212,165,34,0.2), transparent 60%)',
+          filter: 'blur(15px)',
+          animation: 'pulse 4s ease-in-out infinite 2s',
         }}
       />
 
@@ -72,21 +85,26 @@ function ProfileImage({ imageSrc }) {
           className="relative cursor-pointer"
           style={style}
         >
-          {/* Golden ring */}
+          {/* Photo dimensions container — does NOT rotate */}
           <div
-            className={`w-52 h-52 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-full p-[3px] transition-all duration-700 ${
+            className={`w-52 h-52 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-full transition-all duration-700 ${
               isHovered ? 'scale-105' : 'scale-100'
             }`}
-            style={{
-              background: isHovered
-                ? 'linear-gradient(135deg, #2dd4bf, #14b8a6, #06b6d4, #14b8a6)'
-                : 'linear-gradient(135deg, #14b8a6, #2dd4bf, #14b8a6)',
-              backgroundSize: '200% 200%',
-              animation: isHovered ? 'gradient-shift 2s ease infinite' : 'none',
-            }}
           >
+            {/* Rotating ring — absolutely positioned, does NOT wrap the photo */}
             <div
-              className="w-full h-full rounded-full p-[3px] overflow-hidden"
+              className="absolute -inset-[3px] sm:-inset-[3.5px] lg:-inset-[4px] rounded-full pointer-events-none"
+              style={{
+                background: 'conic-gradient(from 0deg, #14b8a6, #d4a522, #2dd4bf, #06b6d4, #d4a522, #14b8a6)',
+                mask: 'radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))',
+                WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))',
+                animation: 'spin-slow 6s linear infinite',
+              }}
+            />
+
+            {/* Photo container */}
+            <div
+              className="w-full h-full rounded-full overflow-hidden relative"
               style={{ backgroundColor: 'var(--theme-bg)' }}
             >
               <img
@@ -95,8 +113,42 @@ function ProfileImage({ imageSrc }) {
                 className="w-full h-full rounded-full object-cover transition-transform duration-700 hover:scale-110"
                 loading="eager"
               />
+              {/* Seamless edge blend overlay — melts photo background into dark theme */}
+              <div
+                className="absolute inset-0 rounded-full pointer-events-none"
+                style={{
+                  background: 'radial-gradient(circle at 50% 45%, transparent 35%, var(--theme-bg) 85%)',
+                }}
+              />
+              {/* Hover overlay */}
+              <div
+                className={`absolute inset-0 rounded-full transition-all duration-500 ${
+                  isHovered ? 'opacity-40' : 'opacity-0'
+                }`}
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(20,184,166,0.15), transparent 70%)',
+                }}
+              />
             </div>
           </div>
+
+          {/* Golden sparkle particle */}
+          <div
+            className="absolute -top-2 -right-2 w-4 h-4 rounded-full animate-float-slow"
+            style={{
+              background: 'radial-gradient(circle, rgba(212,165,34,0.8), transparent)',
+              filter: 'blur(2px)',
+              animationDelay: '1s',
+            }}
+          />
+          <div
+            className="absolute -bottom-1 -left-1 w-3 h-3 rounded-full animate-float-slow"
+            style={{
+              background: 'radial-gradient(circle, rgba(20,184,166,0.6), transparent)',
+              filter: 'blur(2px)',
+              animationDelay: '2.5s',
+            }}
+          />
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import PageTransition from './components/layout/PageTransition';
 // ─── Eager-loaded (critical path) ──
 import Landing from './pages/Landing';
 import ErrorBoundary from './components/ErrorBoundary';
+import LoadingScreen from './components/layout/LoadingScreen';
 
 // ─── Lazy-loaded (code-split) ──
 const Login = lazy(() => import('./pages/auth/Login'));
@@ -29,14 +30,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSuspense({ children }) {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--theme-bg)' }}>
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: 'var(--color-primary)', borderTopColor: 'transparent' }} />
-          <p className="text-sm" style={{ color: 'var(--theme-text-muted)' }}>Loading…</p>
-        </div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingScreen />}>
       {children}
     </Suspense>
   );

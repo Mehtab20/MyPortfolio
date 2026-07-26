@@ -53,10 +53,10 @@ function Blog() {
       tags: ['Full Stack', 'React', 'PostgreSQL', 'Healthcare IT'],
     },
     {
-      title: 'From Idea to Open Source: Architecting a Production-Ready AI SaaS Starter Kit',
-      excerpt: 'Lessons learned from building a complete AI SaaS foundation with multi-provider support, auth, subscriptions, and analytics — and what I\'d do differently next time.',
+      title: 'Containerization & DevOps: Dockerizing React Apps for Production',
+      excerpt: 'A practical guide to containerizing React applications with Docker, setting up CI/CD pipelines with GitHub Actions, and deploying to cloud platforms for scalable, production-ready workflows.',
       date: '2026',
-      tags: ['SaaS', 'Architecture', 'Supabase', 'React'],
+      tags: ['DevOps', 'Docker', 'CI/CD', 'Cloud'],
     },
   ];
 

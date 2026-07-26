@@ -47,11 +47,11 @@ export default function Login() {
       >
         {/* Logo Link */}
         <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-[#111119] border border-primary/30 flex items-center justify-center font-bold text-sm">
-            <span className="gradient-text">AI</span>
+          <div className="w-10 h-10 rounded-full overflow-hidden">
+            <img src="/assets/profile-photo.png" alt="Mehtab Akbar" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl font-bold" style={{ color: 'var(--theme-text)' }}>
-            AI<span className="gradient-text ml-1">SaaS</span>
+            Mehtab<span className="gradient-text ml-1">Akbar</span>
           </span>
         </Link>
 

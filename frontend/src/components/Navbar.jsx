@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import profilePhoto from '../assets/profile-photo.png';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -99,8 +100,40 @@ export default function Navbar({ theme, toggleTheme }) {
             className="relative group flex items-center gap-2"
             aria-label="Mehtab Akbar - Home"
           >
-            <div className="w-9 h-9 rounded-lg bg-[#0a0f1a] border border-primary/30 flex items-center justify-center font-bold text-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
-              <span className="gradient-text">MA</span>
+            {/* Animated ring around profile photo */}
+            <div className="relative w-9 h-9 flex-shrink-0">
+              {/* Outer glow - visible on hover */}
+              <div
+                className="absolute -inset-1.5 rounded-full opacity-0 group-hover:opacity-40 transition-all duration-700 scale-75 group-hover:scale-100"
+                style={{
+                  background: 'radial-gradient(circle, rgba(20,184,166,0.3), transparent 70%)',
+                  filter: 'blur(6px)',
+                }}
+              />
+              {/* Rotating gradient ring */}
+              <div
+                className="absolute -inset-[2px] rounded-full animate-spin-slow"
+                style={{
+                  background: 'conic-gradient(from 0deg, #14b8a6, #d4a522, #2dd4bf, #14b8a6)',
+                  mask: 'radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px))',
+                  WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px))',
+                }}
+              />
+              {/* Photo container */}
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-transparent relative z-10">
+                <img
+                  src={profilePhoto}
+                  alt="Mehtab Akbar"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                {/* Subtle edge blend overlay */}
+                <div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(circle at 50% 45%, transparent 30%, var(--theme-bg) 100%)',
+                  }}
+                />
+              </div>
             </div>
             <span className="text-lg font-semibold hidden sm:block" style={{ color: 'var(--theme-text)' }}>
               Mehtab
