@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { projects } from '../data/projects';
+import { projects as fallbackProjects } from '../data/projects';
+import { useProjects } from '../hooks/useCmsData';
 import ProjectDetailModal from './ProjectDetailModal';
 
 /* ── Animation Variants ── */
@@ -191,7 +192,36 @@ function ProjectCard({ project, index, onOpen }) {
 
 /* ── Main Projects Section ── */
 export default function Projects() {
+  const { data: cmsProjects, loading } = useProjects();
   const [selectedProject, setSelectedProject] = useState(null);
+  
+  // Use CMS projects if available, otherwise fallback to hardcoded
+  const projects = Array.isArray(cmsProjects) && cmsProjects.length > 0
+    ? cmsProjects.map(p => ({
+        id: p.id || p.slug,
+        title: p.title,
+        tagline: p.tagline || '',
+        image: p.image || '/assets/project-placeholder.svg',
+        gradient: p.gradient || 'from-teal-500/20 via-cyan-500/10 to-transparent',
+        status: p.status || 'Complete',
+        statusColor: p.status_color || '#14b8a6',
+        year: p.year || '',
+        role: p.role_text || '',
+        summary: p.summary || '',
+        problem: p.problem || '',
+        background: p.background || '',
+        objectives: p.objectives || [],
+        features: p.features || [],
+        architecture: p.architecture || [],
+        techStack: p.tech_stack || [],
+        process: p.process || [],
+        challenges: p.challenges || [],
+        results: p.results || [],
+        github: p.github || '',
+        demo: p.demo || '',
+        future: p.future || [],
+      }))
+    : fallbackProjects;
 
   return (
     <>

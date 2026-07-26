@@ -1,31 +1,5 @@
 import { motion } from 'framer-motion';
-
-const journey = [
-  {
-    type: 'work',
-    title: 'Freelance Full Stack Developer',
-    organization: 'Self-Employed',
-    period: '2024 – Present',
-    description: 'Building web and mobile applications for clients using React, Flutter, Node.js, and cloud deployment.',
-    highlights: ['Delivered 5+ production applications', 'Cloud deployment on Vercel & Netlify', 'Full-stack architecture & API design'],
-  },
-  {
-    type: 'education',
-    title: 'B.Sc. Software Engineering',
-    organization: 'Iqra University, Islamabad Campus',
-    period: '2022 – Present (Expected 2026)',
-    description: 'Pursuing a degree in Software Engineering with a focus on cloud computing, HCI, and modern software architecture.',
-    highlights: ['8+ CGPA Maintained', 'Active in tech community & events', 'Relevant coursework: DSA, DBMS, HCI, Design Patterns'],
-  },
-  {
-    type: 'education',
-    title: 'Intermediate in Computer Science',
-    organization: 'Punjab College, Rawalpindi',
-    period: '2020 – 2022',
-    description: 'Completed intermediate education with a focus on computer science fundamentals.',
-    highlights: ['Strong foundation in programming', 'Developed interest in software development', 'Built first programming projects'],
-  },
-];
+import { useExperience } from '../hooks/useCmsData';
 
 function TimelineDot({ type }) {
   const color = type === 'work' ? 'var(--color-primary)' : 'var(--color-primary-light)';
@@ -52,7 +26,45 @@ function TimelineDot({ type }) {
   );
 }
 
+const fallbackJourney = [
+  {
+    type: 'work',
+    title: 'Freelance Full Stack Developer',
+    organization: 'Self-Employed',
+    period: '2024 – Present',
+    description: 'Building web and mobile applications for clients using React, Flutter, Node.js, and cloud deployment.',
+    highlights: ['Delivered 5+ production applications', 'Cloud deployment on Vercel & Netlify', 'Full-stack architecture & API design'],
+  },
+  {
+    type: 'education',
+    title: 'B.Sc. Software Engineering',
+    organization: 'Iqra University, Islamabad Campus',
+    period: '2022 – Present (Expected 2026)',
+    description: 'Pursuing a degree in Software Engineering with a focus on cloud computing, HCI, and modern software architecture.',
+    highlights: ['8+ CGPA Maintained', 'Active in tech community & events', 'Relevant coursework: DSA, DBMS, HCI, Design Patterns'],
+  },
+  {
+    type: 'education',
+    title: 'Intermediate in Computer Science',
+    organization: 'Punjab College, Rawalpindi',
+    period: '2020 – 2022',
+    description: 'Completed intermediate education with a focus on computer science fundamentals.',
+    highlights: ['Strong foundation in programming', 'Developed interest in software development', 'Built first programming projects'],
+  },
+];
+
 export default function CareerJourney() {
+  const { data: cmsExperience } = useExperience();
+  const journey = Array.isArray(cmsExperience) && cmsExperience.length > 0
+    ? cmsExperience.map(item => ({
+        type: item.type || 'education',
+        title: item.title,
+        organization: item.organization,
+        period: item.period,
+        description: item.description,
+        highlights: item.highlights || [],
+      }))
+    : fallbackJourney;
   return (
     <motion.section
       id="career"

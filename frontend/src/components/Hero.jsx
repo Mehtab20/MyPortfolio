@@ -1,28 +1,23 @@
 import { useState, useEffect } from 'react';
 import profilePhoto from '../assets/profile-photo.png';
 import { useTilt } from '../lib/hooks';
+import { useHero } from '../hooks/useCmsData';
 
-const roles = [
-  'Full-Stack Software Engineer',
-  'AI & Healthcare Systems',
-  'Cloud & DevOps Engineer',
-  'Open Source Contributor',
-];
-
-function TypewriterRoles() {
+function TypewriterRoles({ roles }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayRole, setDisplayRole] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const roleList = Array.isArray(roles) && roles.length > 0 ? roles : ['Full-Stack Software Engineer'];
 
   useEffect(() => {
-    const currentRole = roles[roleIndex];
+    const currentRole = roleList[roleIndex];
     let timeout;
 
     if (!isDeleting && displayRole === currentRole) {
       timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayRole === '') {
       setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % roles.length);
+      setRoleIndex((prev) => (prev + 1) % roleList.length);
     } else {
       timeout = setTimeout(
         () => {
@@ -37,7 +32,7 @@ function TypewriterRoles() {
     }
 
     return () => clearTimeout(timeout);
-  }, [displayRole, isDeleting, roleIndex]);
+  }, [displayRole, isDeleting, roleIndex, roleList]);
 
   return (
     <span className="inline-flex items-center">
@@ -50,7 +45,7 @@ function TypewriterRoles() {
   );
 }
 
-function ProfileImage() {
+function ProfileImage({ imageSrc }) {
   const { ref, style, handleMouseMove, handleMouseLeave } = useTilt(8);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -95,7 +90,7 @@ function ProfileImage() {
               style={{ backgroundColor: 'var(--theme-bg)' }}
             >
               <img
-                src={profilePhoto}
+                src={imageSrc || profilePhoto}
                 alt="Mehtab Akbar - Software Engineering Student"
                 className="w-full h-full rounded-full object-cover transition-transform duration-700 hover:scale-110"
                 loading="eager"
@@ -109,10 +104,39 @@ function ProfileImage() {
 }
 
 export default function Hero() {
+  const { data, loading } = useHero();
+  const hero = data || {};
+  const firstName = hero.first_name || 'Mehtab';
+  const lastName = hero.last_name || 'Akbar';
+  const tagline = hero.tagline || 'Full-Stack Software Engineer specializing in AI-powered healthcare systems, cloud computing, cross-platform mobile apps (Flutter), and scalable SaaS platforms using React, FastAPI, and modern DevOps practices.';
+  const heroStats = Array.isArray(hero.stats)
+    ? hero.stats
+    : [
+        { value: '4+', label: 'Projects' },
+        { value: '3+', label: 'Years Coding' },
+        { value: '8+', label: 'Tech Stacks' },
+        { value: '10+', label: 'Open Source' },
+      ];
+  const ctaButtons = Array.isArray(hero.cta_buttons)
+    ? hero.cta_buttons
+    : [
+        { label: 'View Projects', href: '#projects', variant: 'primary' },
+        { label: 'View Resume', href: '/resume', variant: 'outline' },
+        { label: 'Hire Me', href: '#contact', variant: 'ghost' },
+      ];
+  const isAvailable = hero.available_status !== false;
+  const profileImg = hero.profile_image || '';
+
   const handleScroll = (e, href) => {
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCtaClick = (e, href) => {
+    if (href.startsWith('#')) {
+      handleScroll(e, href);
+    }
   };
 
   return (
@@ -134,16 +158,18 @@ export default function Hero() {
           {/* ── Left: Text Content ── */}
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
             {/* Available badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium mb-5 glass animate-fade-in-up">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span style={{ color: 'var(--theme-text-muted)' }}>Available</span>
-            </div>
+            {isAvailable && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium mb-5 glass animate-fade-in-up">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span style={{ color: 'var(--theme-text-muted)' }}>Available</span>
+              </div>
+            )}
 
             {/* Name */}
             <h1 className="animate-fade-in-up delay-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 tracking-tight">
-              <span style={{ color: 'var(--theme-text)' }}>Mehtab</span>
+              <span style={{ color: 'var(--theme-text)' }}>{firstName}</span>
               <br className="sm:hidden" />
-              <span className="gradient-text"> Akbar</span>
+              <span className="gradient-text"> {lastName}</span>
             </h1>
 
             {/* Code-style role badge */}
@@ -157,7 +183,7 @@ export default function Hero() {
                 }}
               >
                 <span className="opacity-50" style={{ color: 'var(--theme-text-muted)' }}>&lt;</span>
-                <TypewriterRoles />
+                <TypewriterRoles roles={hero.roles} />
                 <span className="opacity-50" style={{ color: 'var(--theme-text-muted)' }}>/&gt;</span>
               </span>
             </div>
@@ -167,69 +193,60 @@ export default function Hero() {
               className="animate-fade-in-up delay-300 max-w-xl text-base sm:text-lg leading-relaxed mb-8"
               style={{ color: 'var(--theme-text-secondary)' }}
             >
-              Full-Stack Software Engineer specializing in AI-powered healthcare systems, cloud computing, cross-platform mobile apps (Flutter), and scalable SaaS platforms using React, FastAPI, and modern DevOps practices.
+              {tagline}
             </p>
 
             {/* CTA Buttons */}
             <div className="animate-fade-in-up delay-400 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-              <a
-                href="#projects"
-                onClick={(e) => handleScroll(e, '#projects')}
-                className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-primary text-sm font-semibold"
-              >
-                <span>View Projects</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <a
-                href="/resume"
-                className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-outline text-sm font-semibold"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
-                <span>View Resume</span>
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleScroll(e, '#contact')}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl btn-ghost text-sm font-semibold"
-              >
-                <span>Hire Me</span>
-              </a>
+              {ctaButtons.map((btn, i) => {
+                const btnClass = btn.variant === 'primary'
+                  ? 'btn-primary'
+                  : btn.variant === 'outline'
+                  ? 'btn-outline'
+                  : 'btn-ghost';
+                return (
+                  <a
+                    key={i}
+                    href={btn.href}
+                    onClick={(e) => handleCtaClick(e, btn.href)}
+                    className={`group inline-flex items-center gap-2 px-7 py-3 rounded-xl ${btnClass} text-sm font-semibold`}
+                  >
+                    <span>{btn.label}</span>
+                    {btn.variant === 'primary' && (
+                      <svg
+                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    )}
+                    {btn.variant === 'outline' && (
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                      </svg>
+                    )}
+                  </a>
+                );
+              })}
             </div>
 
             {/* Hero Stats */}
             <div className="animate-fade-in-up delay-500 mt-10 grid grid-cols-4 gap-4 sm:gap-6 max-w-sm lg:max-w-none mx-auto lg:mx-0">
-              <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">4+</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Projects</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">3+</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Years Coding</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">8+</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Tech Stacks</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-bold gradient-text">10+</div>
-                <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>Open Source</div>
-              </div>
+              {heroStats.map((stat, i) => (
+                <div key={i} className="text-center lg:text-left">
+                  <div className="text-xl sm:text-2xl font-bold gradient-text">{stat.value}</div>
+                  <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--theme-text-muted)' }}>{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* ── Right: Profile Photo ── */}
           <div className="animate-fade-in-up delay-200 order-1 lg:order-2">
-            <ProfileImage />
+            <ProfileImage imageSrc={profileImg} />
           </div>
         </div>
       </div>

@@ -1,30 +1,11 @@
 import { motion } from 'framer-motion';
+import { useCertifications } from '../hooks/useCmsData';
 
-const certifications = [
-  {
-    title: 'Google Cloud Digital Leader',
-    issuer: 'Google Cloud',
-    year: '2025',
-    icon: '☁️',
-  },
-  {
-    title: 'AWS Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    year: '2025',
-    icon: '📘',
-  },
-  {
-    title: 'Meta Front-End Developer',
-    issuer: 'Meta (Coursera)',
-    year: '2024',
-    icon: '⚛️',
-  },
-  {
-    title: 'GitHub Actions & CI/CD',
-    issuer: 'GitHub',
-    year: '2024',
-    icon: '🔄',
-  },
+const fallbackCerts = [
+  { title: 'Google Cloud Digital Leader', issuer: 'Google Cloud', year: '2025', icon: '☁️' },
+  { title: 'AWS Cloud Practitioner', issuer: 'Amazon Web Services', year: '2025', icon: '📘' },
+  { title: 'Meta Front-End Developer', issuer: 'Meta (Coursera)', year: '2024', icon: '⚛️' },
+  { title: 'GitHub Actions & CI/CD', issuer: 'GitHub', year: '2024', icon: '🔄' },
 ];
 
 const stats = [
@@ -34,6 +15,15 @@ const stats = [
 ];
 
 export default function Certifications() {
+  const { data: cmsCerts } = useCertifications();
+  const certifications = Array.isArray(cmsCerts) && cmsCerts.length > 0
+    ? cmsCerts.map(c => ({
+        title: c.title,
+        issuer: c.issuer,
+        year: c.year,
+        icon: c.icon || '📜',
+      }))
+    : fallbackCerts;
   return (
     <motion.section
       id="certifications" className="relative py-24 sm:py-32" aria-label="Certifications section"

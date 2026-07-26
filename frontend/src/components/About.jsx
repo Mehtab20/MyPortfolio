@@ -1,13 +1,24 @@
 import { motion } from 'framer-motion';
-
-const personalInfo = [
-  { label: 'Experience', value: '3+ Years' },
-  { label: 'Location', value: 'Rawalpindi, Pakistan' },
-  { label: 'Nationality', value: 'Pakistani' },
-  { label: 'Born', value: '2004' },
-];
+import { useAbout } from '../hooks/useCmsData';
 
 export default function About() {
+  const { data, loading } = useAbout();
+  const about = data || {};
+  const paragraphs = Array.isArray(about.bio_paragraphs) && about.bio_paragraphs.length > 0
+    ? about.bio_paragraphs
+    : [
+        "I'm a Software Engineering student at Iqra University Islamabad, passionate about building AI-powered healthcare systems, cross-platform mobile applications, and scalable cloud solutions. My work bridges the gap between cutting-edge technology and real-world impact — from digitizing hospital operations to developing intelligent medical diagnostic tools.",
+        "Currently focused on expanding my expertise in Cloud Computing (AWS/GCP), DevOps automation, and production-grade full-stack development. I believe in building software that not only works beautifully but makes a tangible difference in people's lives.",
+      ];
+  const info = Array.isArray(about.personal_info) && about.personal_info.length > 0
+    ? about.personal_info
+    : [
+        { label: 'Experience', value: '3+ Years' },
+        { label: 'Location', value: 'Rawalpindi, Pakistan' },
+        { label: 'Nationality', value: 'Pakistani' },
+        { label: 'Born', value: '2004' },
+      ];
+  const tagline = about.tagline || 'A passionate developer building exceptional digital experiences.';
   return (
     <section id="about" className="relative py-24 sm:py-32" aria-label="About section">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +35,7 @@ export default function About() {
             <span className="gradient-text">Me</span>
           </h2>
           <p className="max-w-lg mx-auto text-base" style={{ color: 'var(--theme-text-secondary)' }}>
-            A passionate developer building exceptional digital experiences.
+            {tagline}
           </p>
         </motion.div>
 
@@ -42,18 +53,11 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
-              I&apos;m a Software Engineering student at Iqra University Islamabad, passionate about building
-              AI-powered healthcare systems, cross-platform mobile applications, and scalable cloud
-              solutions. My work bridges the gap between cutting-edge technology and real-world impact
-              — from digitizing hospital operations to developing intelligent medical diagnostic tools.
-            </p>
-            <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-              Currently focused on expanding my expertise in Cloud Computing (AWS/GCP), DevOps
-              automation, and production-grade full-stack development. I believe in building software
-              that not only works beautifully but makes a tangible difference in people&apos;s lives.
-            </p>
+          >            {paragraphs.map((p, i) => (
+              <p key={i} className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
+                {p}
+              </p>
+            ))}
           </motion.div>
 
           {/* Personal Info Grid */}
@@ -65,7 +69,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            {personalInfo.map((info, i) => (
+            {info.map((info, i) => (
               <motion.div
                 key={info.label}
                 initial={{ opacity: 0, y: 20 }}

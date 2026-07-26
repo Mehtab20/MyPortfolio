@@ -1,81 +1,53 @@
 import { motion } from 'framer-motion';
+import { useSkills } from '../hooks/useCmsData';
 
-const skillCategories = [
+const fallbackSkills = [
   {
-    key: 'fullstack',
-    label: 'Full Stack Development',
+    key: 'fullstack', label: 'Full Stack Development',
     context: 'Building production web apps with React, Node.js, and scalable APIs for hospital systems and SaaS platforms.',
     skills: [
-      { name: 'React', icon: '⚛️' },
-      { name: 'Node.js', icon: '🟢' },
-      { name: 'Express.js', icon: '🚂' },
-      { name: 'REST APIs', icon: '🔗' },
-      { name: 'Next.js', icon: '▲' },
-      { name: 'Tailwind CSS', icon: '🎨' },
+      { name: 'React', icon: '⚛️' }, { name: 'Node.js', icon: '🟢' }, { name: 'Express.js', icon: '🚂' },
+      { name: 'REST APIs', icon: '🔗' }, { name: 'Next.js', icon: '▲' }, { name: 'Tailwind CSS', icon: '🎨' },
     ],
   },
   {
-    key: 'mobile',
-    label: 'Mobile & Cross-Platform',
+    key: 'mobile', label: 'Mobile & Cross-Platform',
     context: 'Shipping cross-platform mobile apps with Flutter/Dart covering patient-facing healthcare interfaces and real-time dashboards.',
     skills: [
-      { name: 'Flutter', icon: '📱' },
-      { name: 'Dart', icon: '🎯' },
-      { name: 'Material Design 3', icon: '🎨' },
-      { name: 'Firebase', icon: '🔥' },
-      { name: 'TensorFlow Lite', icon: '🧠' },
+      { name: 'Flutter', icon: '📱' }, { name: 'Dart', icon: '🎯' }, { name: 'Material Design 3', icon: '🎨' },
+      { name: 'Firebase', icon: '🔥' }, { name: 'TensorFlow Lite', icon: '🧠' },
     ],
   },
   {
-    key: 'ai',
-    label: 'AI & Machine Learning',
+    key: 'ai', label: 'AI & Machine Learning',
     context: 'Building production ML pipelines — symptom classification models achieving 92% accuracy, deployed on-device via TensorFlow Lite.',
     skills: [
-      { name: 'Python', icon: '🐍' },
-      { name: 'FastAPI', icon: '⚡' },
-      { name: 'TensorFlow', icon: '🧠' },
-      { name: 'NLP', icon: '💬' },
-      { name: 'Transfer Learning', icon: '🔄' },
-      { name: 'Data Pipelines', icon: '📊' },
+      { name: 'Python', icon: '🐍' }, { name: 'FastAPI', icon: '⚡' }, { name: 'TensorFlow', icon: '🧠' },
+      { name: 'NLP', icon: '💬' }, { name: 'Transfer Learning', icon: '🔄' }, { name: 'Data Pipelines', icon: '📊' },
     ],
   },
   {
-    key: 'cloud',
-    label: 'Cloud & DevOps',
+    key: 'cloud', label: 'Cloud & DevOps',
     context: 'Deploying and monitoring production systems on AWS/GCP with Docker, CI/CD pipelines, and Linux server management.',
     skills: [
-      { name: 'Docker', icon: '🐳' },
-      { name: 'AWS/GCP', icon: '☁️' },
-      { name: 'CI/CD', icon: '🔄' },
-      { name: 'Linux', icon: '🐧' },
-      { name: 'Git & GitHub', icon: '🐙' },
-      { name: 'PostgreSQL', icon: '🐘' },
+      { name: 'Docker', icon: '🐳' }, { name: 'AWS/GCP', icon: '☁️' }, { name: 'CI/CD', icon: '🔄' },
+      { name: 'Linux', icon: '🐧' }, { name: 'Git & GitHub', icon: '🐙' }, { name: 'PostgreSQL', icon: '🐘' },
     ],
   },
   {
-    key: 'databases',
-    label: 'Databases & Backend',
+    key: 'databases', label: 'Databases & Backend',
     context: 'Designing normalized schemas, encrypted health records, and optimized queries handling 500+ concurrent users in production.',
     skills: [
-      { name: 'PostgreSQL', icon: '🐘' },
-      { name: 'MySQL', icon: '🐬' },
-      { name: 'Redis', icon: '🔴' },
-      { name: 'Supabase', icon: '🔥' },
-      { name: 'Prisma', icon: '🔗' },
-      { name: 'SQL', icon: '🗄️' },
+      { name: 'PostgreSQL', icon: '🐘' }, { name: 'MySQL', icon: '🐬' }, { name: 'Redis', icon: '🔴' },
+      { name: 'Supabase', icon: '🔥' }, { name: 'Prisma', icon: '🔗' }, { name: 'SQL', icon: '🗄️' },
     ],
   },
   {
-    key: 'languages',
-    label: 'Programming Languages',
+    key: 'languages', label: 'Programming Languages',
     context: 'Professional proficiency across the stack — from systems programming to scripting and data analysis.',
     skills: [
-      { name: 'Python', icon: '🐍' },
-      { name: 'JavaScript', icon: '⚡' },
-      { name: 'Dart', icon: '🎯' },
-      { name: 'Java', icon: '☕' },
-      { name: 'C++', icon: '🔧' },
-      { name: 'SQL', icon: '🗄️' },
+      { name: 'Python', icon: '🐍' }, { name: 'JavaScript', icon: '⚡' }, { name: 'Dart', icon: '🎯' },
+      { name: 'Java', icon: '☕' }, { name: 'C++', icon: '🔧' }, { name: 'SQL', icon: '🗄️' },
     ],
   },
 ];
@@ -91,6 +63,17 @@ const cardVariants = {
 };
 
 export default function Skills() {
+  const { data: cmsSkills, loading } = useSkills();
+  
+  // Map CMS data to component format, with fallback
+  const skillCategories = Array.isArray(cmsSkills) && cmsSkills.length > 0
+    ? cmsSkills.map(cat => ({
+        key: cat.category_key || cat.id,
+        label: cat.category,
+        context: cat.context || '',
+        skills: Array.isArray(cat.skills) ? cat.skills : [],
+      }))
+    : fallbackSkills;
   return (
     <section id="skills" className="relative py-24 sm:py-32" aria-label="Skills section">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
