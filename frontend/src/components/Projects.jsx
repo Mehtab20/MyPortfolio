@@ -195,33 +195,46 @@ export default function Projects() {
   const { data: cmsProjects } = useProjects();
   const [selectedProject, setSelectedProject] = useState(null);
   
-  // Use CMS projects if available, otherwise fallback to hardcoded
-  const projects = Array.isArray(cmsProjects) && cmsProjects.length > 0
-    ? cmsProjects.map(p => ({
-        id: p.id || p.slug,
-        title: p.title,
-        tagline: p.tagline || '',
-        image: p.image || '/assets/project-placeholder.svg',
-        gradient: p.gradient || 'from-teal-500/20 via-cyan-500/10 to-transparent',
-        status: p.status || 'Complete',
-        statusColor: p.status_color || '#14b8a6',
-        year: p.year || '',
-        role: p.role_text || '',
-        summary: p.summary || '',
-        problem: p.problem || '',
-        background: p.background || '',
-        objectives: p.objectives || [],
-        features: p.features || [],
-        architecture: p.architecture || [],
-        techStack: p.tech_stack || [],
-        process: p.process || [],
-        challenges: p.challenges || [],
-        results: p.results || [],
-        github: p.github || '',
-        demo: p.demo || '',
-        future: p.future || [],
-      }))
-    : fallbackProjects;
+  // Merge CMS projects with fallback, deduplicating by id/title
+  // This ensures MehZu AI and any future hardcoded entries always appear
+  // while CMS-admin projects also show up
+  const mergedProjects = (() => {
+    const cmsMapped = (Array.isArray(cmsProjects) ? cmsProjects : []).map(p => ({
+      id: p.id || p.slug,
+      title: p.title,
+      tagline: p.tagline || '',
+      image: p.image || '/assets/project-placeholder.svg',
+      gradient: p.gradient || 'from-teal-500/20 via-cyan-500/10 to-transparent',
+      status: p.status || 'Complete',
+      statusColor: p.status_color || '#14b8a6',
+      year: p.year || '',
+      role: p.role_text || '',
+      summary: p.summary || '',
+      problem: p.problem || '',
+      background: p.background || '',
+      objectives: p.objectives || [],
+      features: p.features || [],
+      architecture: p.architecture || [],
+      techStack: p.tech_stack || [],
+      process: p.process || [],
+      challenges: p.challenges || [],
+      results: p.results || [],
+      github: p.github || '',
+      demo: p.demo || '',
+      future: p.future || [],
+    }));
+
+    // Collect IDs/titles already in CMS
+    const cmsIds = new Set(cmsMapped.map(p => p.id));
+    const cmsTitles = new Set(cmsMapped.map(p => p.title?.toLowerCase()));
+
+    // Append fallback projects not already covered by CMS
+    const extra = fallbackProjects.filter(p =>
+      !cmsIds.has(p.id) && !cmsTitles.has(p.title?.toLowerCase())
+    );
+
+    return [...cmsMapped, ...extra];
+  })();
 
   return (
     <>
@@ -253,7 +266,7 @@ export default function Projects() {
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
           >
-            {projects.map((project, index) => (
+            {mergedProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} onOpen={setSelectedProject} />
             ))}
           </motion.div>
