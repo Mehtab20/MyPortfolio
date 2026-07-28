@@ -168,7 +168,8 @@ Each project includes a full case study modal with: Problem, Background, Objecti
 - **Monospace**: Fira Code
 
 ### Key UX Upgrades
-- Canvas-based aurora background animation (GPU-accelerated)
+- Premium 7-layer background system (deep charcoal gradient, technical grid, golden hero glow, 45s ambient gradient, SVG noise texture, canvas particles, cursor light reflection)
+- All animations GPU-accelerated, respects prefers-reduced-motion
 - Custom animation hooks: typewriter, 3D tilt, count-up, parallax, scroll-reveal
 - Premium button micro-interactions (::before overlay, scale on press)
 - Full reduced-motion support for accessibility
@@ -192,3 +193,5 @@ Each project includes a full case study modal with: Problem, Background, Objecti
 | **2026-07-24** | **Portfolio refactor: removed SaaS template content (pricing, testimonials, FAQ, fake blog). Updated Hero/About. Replaced generic blog with real technical articles.** |
 | **2026-07-24** | **Production readiness audit: Fixed duplicate `build:` key in vite.config.js, removed old placeholder assets, fixed ₹0 stat → Open Source, cleaned src/assets/, verified all images/routes/auth/DB. Updated DOCS.md, CHANGELOG.md. 2 low-risk npm audit vulns noted.** |
 | **2026-07-28** | **Built complete Portfolio CMS: 11 database tables with RLS, 10 admin management pages (Hero, About, Skills, Projects, Blog, Contact, Resume, SEO, Settings, Experience, Certifications) with full CRUD, image upload via Supabase Storage, draft/publish workflow. Route at /admin/cms. Build passes 1.08s zero errors.** |
+| **2026-07-26** | **Lint cleanup: Fixed 10 lint errors across 8 portfolio component files. Hero.jsx: wrapped setState in setTimeout (fixed react-hooks/set-state-in-effect), wrapped roleList in useMemo (fixed exhaust-deps). Removed unused imports (motion from Contact.jsx) and unused loading variables (Hero, About, Projects, Skills). Fixed unused var warnings in AuroraBackground, LoadingScreen, CurrentlyBuilding, GitHubHighlights. Build passes 3.11s zero errors.** |
+| **2026-07-27** | **Branding refresh + Premium background redesign. Updated index.html: refreshed title/OG/Twitter/Schema markup, added theme-color, apple-touch-icon, OpenGraph image dimensions, sameAs social links. New favicon (dark teal M monogram). Updated sitemap.xml (added /resume), robots.txt. Created BackgroundEffects.jsx: deep charcoal gradient (#05070A→#0B0F14→#111827), 60px technical grid (4% slate), golden radial hero glow, 45s ambient gradient animation, SVG noise texture (3.5% opacity), 25 floating canvas particles, cursor light reflection (desktop only). All GPU-accelerated, respects prefers-reduced-motion. Replaced AuroraBackground with BackgroundEffects in Landing.jsx. Streamlined Landing to 8 core sections. Added CSS utilities: .ambient-gradient, .noise-overlay, .cursor-reflection, .grid-pattern, .hero-glow, .bg-charcoal-deep. Build passes 1.04s zero errors.** |

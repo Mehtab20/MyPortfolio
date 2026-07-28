@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import profilePhoto from '../assets/profile-photo.png';
 import { useTilt } from '../lib/hooks';
 import { useHero } from '../hooks/useCmsData';
@@ -7,7 +7,10 @@ function TypewriterRoles({ roles }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayRole, setDisplayRole] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const roleList = Array.isArray(roles) && roles.length > 0 ? roles : ['Full-Stack Software Engineer'];
+  const roleList = useMemo(
+    () => Array.isArray(roles) && roles.length > 0 ? roles : ['Full-Stack Software Engineer'],
+    [roles]
+  );
 
   useEffect(() => {
     const currentRole = roleList[roleIndex];
@@ -16,8 +19,10 @@ function TypewriterRoles({ roles }) {
     if (!isDeleting && displayRole === currentRole) {
       timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayRole === '') {
-      setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % roleList.length);
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roleList.length);
+      }, 0);
     } else {
       timeout = setTimeout(
         () => {
@@ -109,7 +114,7 @@ function ProfileImage({ imageSrc }) {
             >
               <img
                 src={imageSrc || profilePhoto}
-                alt="Mehtab Akbar - Software Engineering Student"
+                alt="Mehtab Akbar - Software Engineer & Full-Stack Developer"
                 className="w-full h-full rounded-full object-cover transition-transform duration-700 hover:scale-110"
                 loading="eager"
               />
@@ -156,11 +161,11 @@ function ProfileImage({ imageSrc }) {
 }
 
 export default function Hero() {
-  const { data, loading } = useHero();
+  const { data } = useHero();
   const hero = data || {};
   const firstName = hero.first_name || 'Mehtab';
   const lastName = hero.last_name || 'Akbar';
-  const tagline = hero.tagline || 'Full-Stack Software Engineer specializing in AI-powered healthcare systems, cloud computing, cross-platform mobile apps (Flutter), and scalable SaaS platforms using React, FastAPI, and modern DevOps practices.';
+  const tagline = hero.tagline || 'Building AI-powered healthcare systems, cross-platform mobile apps, and scalable cloud solutions. React • Flutter • Python • AWS.';
   const heroStats = Array.isArray(hero.stats)
     ? hero.stats
     : [

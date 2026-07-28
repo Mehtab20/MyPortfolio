@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useAbout } from '../hooks/useCmsData';
 
 export default function About() {
-  const { data, loading } = useAbout();
+  const { data } = useAbout();
   const about = data || {};
   const paragraphs = Array.isArray(about.bio_paragraphs) && about.bio_paragraphs.length > 0
     ? about.bio_paragraphs

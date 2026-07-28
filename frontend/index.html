@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#05070A" />
+    <meta name="color-scheme" content="dark" />
 
     <!-- Primary Meta Tags -->
-    <title>Mehtab Akbar | Full-Stack Software Engineer</title>
-    <meta name="title" content="Mehtab Akbar | Full-Stack Software Engineer" />
-    <meta name="description" content="Full-Stack Software Engineer specializing in Cloud Computing, DevOps, and AI-powered healthcare systems. Building scalable architectures with React, Flutter, Python, and Supabase." />
-    <meta name="keywords" content="Mehtab Akbar, Software Engineer, Portfolio, Cloud Computing, DevOps, React, Flutter, Python, Supabase, Full-Stack Developer" />
+    <title>Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud</title>
+    <meta name="title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
+    <meta name="description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps with Flutter, and cloud-native solutions. React, Python, FastAPI, AWS, DevOps. Based in Islamabad, Pakistan." />
+    <meta name="keywords" content="Mehtab Akbar, Software Engineer, React Developer, Flutter Developer, AI Engineer, Cloud DevOps Engineer, Full-Stack Developer, Python, FastAPI, AWS, Docker, Portfolio, Islamabad, Pakistan" />
     <meta name="author" content="Mehtab Akbar" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
@@ -18,16 +21,20 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mehtabakbar.com" />
-    <meta property="og:title" content="Mehtab Akbar | Full-Stack Software Engineer" />
-    <meta property="og:description" content="Full-Stack Software Engineer specializing in Cloud Computing, DevOps, and AI-powered healthcare systems." />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:site_name" content="Mehtab Akbar" />
+    <meta property="og:title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
+    <meta property="og:description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps, and cloud-native solutions. React • Flutter • Python • AWS." />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://mehtabakbar.com" />
-    <meta property="twitter:title" content="Mehtab Akbar | Full-Stack Software Engineer" />
-    <meta property="twitter:description" content="Full-Stack Software Engineer specializing in Cloud Computing, DevOps, and AI-powered healthcare systems." />
-    <meta property="twitter:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://mehtabakbar.com" />
+    <meta name="twitter:title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
+    <meta name="twitter:description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps, and cloud-native solutions." />
+    <meta name="twitter:image" content="/og-image.svg" />
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -35,19 +42,40 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Mehtab Akbar",
+      "givenName": "Mehtab",
+      "familyName": "Akbar",
       "url": "https://mehtabakbar.com",
+      "image": "/og-image.svg",
       "jobTitle": "Software Engineer",
-      "knowsAbout": ["Cloud Computing", "DevOps", "React", "Python", "Flutter", "Supabase"],
+      "knowsAbout": [
+        "Cloud Computing",
+        "DevOps",
+        "Full-Stack Development",
+        "React",
+        "Python",
+        "Flutter",
+        "FastAPI",
+        "AWS",
+        "Docker",
+        "PostgreSQL",
+        "Supabase",
+        "AI/ML",
+        "Healthcare Technology"
+      ],
       "email": "mehtabakbar5656@gmail.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Rawalpindi",
         "addressCountry": "Pakistan"
-      }
+      },
+      "sameAs": [
+        "https://github.com/Mehtab20",
+        "https://linkedin.com/in/mehtab-akbar-385024267"
+      ]
     }
     </script>
 
-    <!-- Preconnect for fonts -->
+    <!-- Font preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -55,14 +83,13 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mehtabakbar.com" />
 
-    <!-- Prevent FOUC: apply saved theme instantly before React loads -->
+    <!-- Prevent FOUC -->
     <script>
       (function() {
         var saved = localStorage.getItem('theme');
         if (saved) {
           document.documentElement.setAttribute('data-theme', saved);
         }
-        // Hide spinner once React mounts
         var observer = new MutationObserver(function() {
           var root = document.getElementById('root');
           if (root && root.children.length > 1) {
@@ -83,7 +110,7 @@
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background: #030712;
+          background: #05070A;
         }
         #root:empty::after {
           content: '';

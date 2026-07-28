@@ -192,7 +192,7 @@ function ProjectCard({ project, index, onOpen }) {
 
 /* ── Main Projects Section ── */
 export default function Projects() {
-  const { data: cmsProjects, loading } = useProjects();
+  const { data: cmsProjects } = useProjects();
   const [selectedProject, setSelectedProject] = useState(null);
   
   // Use CMS projects if available, otherwise fallback to hardcoded

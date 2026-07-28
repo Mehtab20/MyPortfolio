@@ -99,7 +99,7 @@ export default function CurrentlyBuilding() {
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
           }}
         >
-          {currentProjects.map((project, i) => (
+          {currentProjects.map((project) => (
             <motion.div
               key={project.title}
               className="card-surface rounded-2xl p-6 golden-border-hover"

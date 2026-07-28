@@ -75,7 +75,7 @@ export default function GitHubHighlights() {
             visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
           }}
         >
-          {repos.map((repo, i) => (
+          {repos.map((repo) => (
             <motion.a
               key={repo.name}
               href={repo.url}

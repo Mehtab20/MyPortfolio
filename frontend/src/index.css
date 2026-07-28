@@ -39,6 +39,9 @@
   --theme-accent: #06b6d4;
 
   --theme-bg: #030712;
+  --theme-bg-gradient-start: #05070A;
+  --theme-bg-gradient-mid: #080B10;
+  --theme-bg-gradient-end: #0A0F1A;
   --theme-surface: #0a0f1a;
   --theme-surface-light: #111827;
   --theme-surface-lighter: #1f2937;
@@ -51,7 +54,8 @@
   --theme-border: rgba(20, 184, 166, 0.10);
   --theme-border-strong: rgba(20, 184, 166, 0.22);
 
-  --theme-overlay: rgba(3, 7, 18, 0.85);
+  --theme-grid-color: rgba(26, 59, 66, 0.12);
+  --theme-overlay: rgba(3, 7, 18, 0.08);
   --theme-glass-bg: rgba(10, 15, 26, 0.55);
   --theme-glass-strong-bg: rgba(10, 15, 26, 0.82);
   --theme-card-bg: rgba(15, 23, 42, 0.55);
@@ -78,19 +82,23 @@
   --theme-accent: #0891b2;
 
   --theme-bg: #f8fafc;
+  --theme-bg-gradient-start: #f8fafc;
+  --theme-bg-gradient-mid: #f1f5f9;
+  --theme-bg-gradient-end: #e2e8f0;
   --theme-surface: #ffffff;
   --theme-surface-light: #f1f5f9;
   --theme-surface-lighter: #e2e8f0;
-  --theme-surface-card: rgba(255, 255, 255, 0.8);
+  --theme-surface-card: rgba(255, 255, 255, 0.9);
 
-  --theme-text: #111827;
-  --theme-text-secondary: #4b5563;
-  --theme-text-muted: #6b7280;
+  --theme-text: #000000;
+  --theme-text-secondary: #1f2937;
+  --theme-text-muted: #374151;
 
   --theme-border: rgba(13, 148, 136, 0.12);
   --theme-border-strong: rgba(13, 148, 136, 0.25);
 
-  --theme-overlay: rgba(248, 250, 252, 0.80);
+  --theme-grid-color: rgba(168, 213, 217, 0.35);
+  --theme-overlay: rgba(248, 250, 252, 0.08);
   --theme-glass-bg: rgba(255, 255, 255, 0.60);
   --theme-glass-strong-bg: rgba(255, 255, 255, 0.82);
   --theme-card-bg: rgba(255, 255, 255, 0.80);
@@ -514,6 +522,57 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* ============================================
+   FLOATING PARTICLES — 4 distinct drift paths
+   ============================================ */
+
+@keyframes particle-drift-1 {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(35px, -20px); }
+  50%  { transform: translate(60px, 10px); }
+  75%  { transform: translate(25px, 30px); }
+  100% { transform: translate(-10px, -5px); }
+}
+
+@keyframes particle-drift-2 {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(-25px, -30px); }
+  50%  { transform: translate(-50px, 5px); }
+  75%  { transform: translate(-20px, 35px); }
+  100% { transform: translate(15px, -10px); }
+}
+
+@keyframes particle-drift-3 {
+  0%   { transform: translate(0px, 0px); }
+  33%  { transform: translate(40px, 25px); }
+  66%  { transform: translate(-15px, -35px); }
+  100% { transform: translate(-30px, 15px); }
+}
+
+@keyframes particle-drift-4 {
+  0%   { transform: translate(0px, 0px); }
+  33%  { transform: translate(-35px, 20px); }
+  66%  { transform: translate(20px, -30px); }
+  100% { transform: translate(40px, 5px); }
+}
+
+/* ============================================
+   BACKGROUND — Dark Technical Canvas
+   ============================================ */
+
+/* ── Muted dark teal graph-paper grid utility ── */
+.grid-dark-teal {
+  background-image:
+    linear-gradient(var(--theme-grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Deep charcoal gradient background ── */
+.bg-charcoal {
+  background: linear-gradient(180deg, #05070A 0%, #080B10 50%, #0A0F1A 100%);
 }
 
 /* ── Accessibility: Reduced Motion ── */

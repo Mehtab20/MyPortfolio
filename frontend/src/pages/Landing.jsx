@@ -6,12 +6,9 @@ import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import CareerJourney from '../components/CareerJourney';
 import Certifications from '../components/Certifications';
-import Philosophy from '../components/Philosophy';
-import CurrentlyBuilding from '../components/CurrentlyBuilding';
-import GitHubHighlights from '../components/GitHubHighlights';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
-import AuroraBackground from '../components/AuroraBackground';
+import BackgroundEffects from '../components/BackgroundEffects';
 import { useScrollReveal } from '../lib/hooks';
 
 /* ── Scroll-to-Top ── */
@@ -113,12 +110,12 @@ export default function Landing({ theme, toggleTheme }) {
 
   return (
     <div className="relative min-h-screen font-sans">
-      {/* Dynamic animated background */}
-      <AuroraBackground />
+      {/* Premium layered background system */}
+      <BackgroundEffects />
 
-      {/* Theme overlay */}
+      {/* Theme overlay for light mode */}
       <div
-        className="fixed inset-0 z-[1] pointer-events-none transition-colors duration-500"
+        className="fixed inset-0 z-[6] pointer-events-none transition-colors duration-500"
         style={{ backgroundColor: 'var(--theme-overlay)' }}
         aria-hidden="true"
       />
@@ -133,9 +130,6 @@ export default function Landing({ theme, toggleTheme }) {
           <Projects />
           <CareerJourney />
           <Certifications />
-          <Philosophy />
-          <CurrentlyBuilding />
-          <GitHubHighlights />
           <Blog />
           <Contact />
         </main>

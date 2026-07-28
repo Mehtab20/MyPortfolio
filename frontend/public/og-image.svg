@@ -1,0 +1,58 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#030712"/>
+  <rect width="1200" height="630" fill="url(#grad)" opacity="0.8"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1200" y2="630">
+      <stop offset="0%" stop-color="#05070A"/>
+      <stop offset="50%" stop-color="#0a0f1a"/>
+      <stop offset="100%" stop-color="#0d0d1a"/>
+    </linearGradient>
+  </defs>
+  <!-- Grid pattern -->
+  <g opacity="0.08">
+    <line x1="0" y1="0" x2="0" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="60" y1="0" x2="60" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="120" y1="0" x2="120" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="180" y1="0" x2="180" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="240" y1="0" x2="240" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="360" y1="0" x2="360" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="420" y1="0" x2="420" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="540" y1="0" x2="540" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="660" y1="0" x2="660" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="720" y1="0" x2="720" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="780" y1="0" x2="780" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="840" y1="0" x2="840" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="1020" y1="0" x2="1020" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="1080" y1="0" x2="1080" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="1140" y1="0" x2="1140" y2="630" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="60" x2="1200" y2="60" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="120" x2="1200" y2="120" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="180" x2="1200" y2="180" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="240" x2="1200" y2="240" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="360" x2="1200" y2="360" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="420" x2="1200" y2="420" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="480" x2="1200" y2="480" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1200" y2="540" stroke="#14b8a6" stroke-width="1"/>
+    <line x1="0" y1="600" x2="1200" y2="600" stroke="#14b8a6" stroke-width="1"/>
+  </g>
+  <!-- Teal glow -->
+  <ellipse cx="400" cy="200" rx="400" ry="300" fill="rgba(20,184,166,0.04)" filter="blur(80px)"/>
+  <ellipse cx="900" cy="450" rx="300" ry="200" fill="rgba(6,182,212,0.03)" filter="blur(60px)"/>
+  <!-- Name -->
+  <text x="600" y="260" text-anchor="middle" font-family="Outfit, sans-serif" font-size="64" font-weight="800" fill="#f3f4f6">Mehtab</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Outfit, sans-serif" font-size="64" font-weight="800">
+    <tspan fill="#14b8a6">Akbar</tspan>
+  </text>
+  <!-- Tagline -->
+  <text x="600" y="400" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" fill="#9ca3af" font-weight="400">Software Engineer &amp; Full-Stack Developer</text>
+  <!-- Badge -->
+  <rect x="500" y="440" width="200" height="36" rx="18" fill="rgba(20,184,166,0.1)" stroke="rgba(20,184,166,0.2)" stroke-width="1"/>
+  <text x="600" y="464" text-anchor="middle" font-family="Fira Code, monospace" font-size="13" fill="#2dd4bf">mehtabakbar.com</text>
+</svg>

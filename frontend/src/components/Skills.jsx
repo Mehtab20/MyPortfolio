@@ -63,7 +63,7 @@ const cardVariants = {
 };
 
 export default function Skills() {
-  const { data: cmsSkills, loading } = useSkills();
+  const { data: cmsSkills } = useSkills();
   
   // Map CMS data to component format, with fallback
   const skillCategories = Array.isArray(cmsSkills) && cmsSkills.length > 0

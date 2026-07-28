@@ -24,7 +24,7 @@ const LOADING_MESSAGES = [
   'Optimizing the universe...',
 ];
 
-export default function LoadingScreen({ text = 'Loading...', fullScreen = true }) {
+export default function LoadingScreen({ text: _text = 'Loading...', fullScreen = true }) {
   const [messageIndex, setMessageIndex] = useState(0);
   const [patternIndex, setPatternIndex] = useState(0);
 
