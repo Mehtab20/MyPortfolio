@@ -1,5 +1,113 @@
 export const projects = [
   {
+    id: 'mehzu',
+    title: 'MehZu AI',
+    tagline: 'AI Personal Operating System — Your Life Companion',
+    image: '/assets/project-mehzu.svg',
+    gradient: 'from-teal-500/20 via-cyan-500/10 to-transparent',
+    status: 'In Development',
+    statusColor: '#14b8a6',
+    year: '2025–2026',
+    role: 'Creator & Lead Architect',
+    summary:
+      'A privacy-first AI Personal Operating System designed to become a lifelong digital companion. MehZu AI helps users understand and improve every aspect of their lives — physical health, mental well-being, productivity, spirituality, relationships, finances, and personal growth — through intelligent tracking, long-term memory, personalized insights, and AI-powered coaching.',
+
+    problem:
+      'Existing life-tracking apps focus on isolated areas — fitness, productivity, or mood — but no single platform connects all dimensions of a person\'s life into a unified, intelligent system. Users are forced to juggle multiple apps, none of which retain long-term memory or offer truly personalized, context-aware coaching. Most critically, privacy is often an afterthought, with user data being mined for advertising rather than used exclusively for the user\'s benefit.',
+
+    background:
+      'The vision for MehZu AI emerged from observing how people struggled to maintain consistency across different areas of self-improvement. As someone who tracked fitness, prayers, journaling, and habits across separate apps, I recognized the need for a unified AI companion that connects the dots. The project began as a personal experiment in combining React, Convex, and AI into a cohesive life OS. The name "MehZu" represents the calm, human, and premium experience at the heart of the design philosophy.',
+
+    objectives: [
+      'Build a unified AI Personal Operating System that tracks health, fitness, habits, spirituality, and journaling in one place',
+      'Implement privacy-first architecture where user data belongs exclusively to the user, with zero third-party data sharing',
+      'Create an intelligent AI companion with long-term memory that understands user patterns and provides personalized coaching',
+      'Design a calm, human-centered interface that feels like a personal sanctuary rather than a productivity dashboard',
+      'Achieve complete auth, state management, and real-time sync across all modules',
+      'Support future extensibility for predictive AI, wearable integration, and multi-device sync',
+    ],
+
+    features: [
+      'AI Companion with intelligent conversations, personalized coaching, daily reflections, and context-aware responses (long-term memory planned)',
+      'Personal Journal with daily entries, mood tracking, gratitude journaling, AI reflections, and searchable history',
+      'Health & Wellness: daily mood check-ins, sleep tracking, energy tracking, and wellness insights',
+      'Fitness: workout logging, exercise tracking, progress monitoring, and personal fitness goals',
+      'Habits: habit creation, daily tracking, streaks, and progress analytics with visual charts',
+      'Prayer & Spirituality: five daily prayer tracking, extra prayers, Quran reading progress, and reflection notes',
+      'AI Insights: personalized recommendations, pattern recognition, habit analysis, wellness trends, and daily summaries (planned)',
+      'Complete Profile & Settings: personal profile, theme customization, privacy controls, and AI preferences',
+    ],
+
+    architecture: [
+      'Frontend: React 19 single-page application with TypeScript and component-based architecture',
+      'Styling: Tailwind CSS with a calm, premium design system emphasizing human-centered HCI principles',
+      'Backend: Convex for real-time database, serverless functions, and automatic data synchronization',
+      'Authentication: Secure user authentication via Convex Auth with profile management',
+      'AI Layer: OpenAI-ready architecture with provider-agnostic design for future AI integrations',
+      'State Management: Convex reactive queries with optimistic updates for instant UI feedback',
+      'Theming: Comprehensive dark/light theme engine with CSS custom properties and smooth transitions',
+    ],
+
+    techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Convex', 'OpenAI', 'Framer Motion', 'React Router'],
+
+    process: [
+      { phase: 'Foundation & Design System', period: 'Late 2025', details: ['Project scaffolding with React + TypeScript + Vite', 'Convex backend configuration and database schema design', 'Design system creation with CSS custom properties', 'Theme engine with dark/light mode support', 'Calm, human-centered HCI design principles applied to all components'] },
+      { phase: 'Core Modules', period: 'Early 2026', details: ['Authentication system with Convex Auth', 'User profile management and preferences', 'Dashboard with multi-module card layout and quick stats', 'Journal module with rich text entries and mood tracking', 'Habit tracker with creation, tracking, streak counting'] },
+      { phase: 'Health & Spirituality', period: '2026', details: ['Workout tracker with exercise logging and progress monitoring', 'Prayer tracker for five daily prayers, extra prayers, and Quran reading', 'Health & Wellness dashboard with mood, sleep, and energy insights', 'AI Insights engine for pattern recognition and recommendations'] },
+      { phase: 'AI Companion', period: '2026', details: ['AI chat interface with streaming responses and conversation history', 'Context-aware coaching based on user data across all modules', 'Provider-agnostic AI architecture supporting multiple models', 'Personalized daily reflections and recommendations'] },
+      { phase: 'Polish & Scale', period: '2026', details: ['Error, loading, and empty states for every component', 'Accessibility audit and improvements (ARIA, keyboard nav, screen readers)', 'Responsive design across desktop, tablet, and mobile', 'Relaxation mode and premium micro-interactions', 'Chat persistence, AI memory, and predictive insights (in progress)'] },
+    ],
+
+    challenges: [
+      {
+        problem: 'Designing a unified data model that connects journaling, habits, fitness, prayer, and health data into a cohesive personal knowledge graph',
+        solution: 'Created a modular database schema with Convex where each domain (journal, habits, fitness, prayer, health) has its own table but shares a common user reference and timestamp format. Built cross-module queries that can correlate data across domains — for example, correlating prayer consistency with mood scores, or workout frequency with energy levels. This enables the AI to recognize patterns across different life dimensions.',
+      },
+      {
+        problem: 'Building an AI companion that provides genuinely personalized coaching without sending private user data to third-party servers',
+        solution: 'Designed a two-tier AI architecture: local context aggregation (compiles relevant user data into structured prompts client-side) + cloud AI inference with a clear privacy boundary. User data never leaves the Convex database raw — only anonymized, context-specific summaries are sent for AI processing. The provider-agnostic design allows future migration to on-device AI models.',
+      },
+      {
+        problem: 'Creating a calm, non-addictive interface that encourages healthy usage patterns while still being engaging enough for daily use',
+        solution: 'Applied HCI design principles from calm technology theory: no notification badges, no streaks-for-streaks-sake, no doom-scrolling feeds. Instead, the UI uses gentle color cues, subtle micro-interactions, and an intentionally sparse layout that reduces cognitive load. Features like Relaxation Mode further reduce visual complexity. The design prioritizes long-term consistency over short-term engagement metrics.',
+      },
+      {
+        problem: 'Maintaining instant UI responsiveness across multiple interconnected modules with real-time data synchronization',
+        solution: 'Leveraged Convex\'s reactive queries and optimistic updates to ensure all module interactions feel instant. Each module operates independently while sharing a common auth and theme context. Local state management handles UI transitions while Convex handles persistence in the background. Error, loading, and empty states are built for every component to ensure the app never feels broken.',
+      },
+    ],
+
+    results: [
+      'Completed 8 core modules: Auth, Dashboard, Journal, Habits, Workout, Prayer, Insights, Profile',
+      'Privacy-first architecture with zero third-party data sharing — user data stored securely in Convex',
+      'Comprehensive dark/light theme system with smooth transitions across all components',
+      'Provider-agnostic AI layer ready for OpenAI and future AI integrations',
+      'Calm, human-centered design system applied consistently across all interfaces',
+      'Full accessibility support with ARIA labels, keyboard navigation, and screen reader compatibility',
+      'Responsive UI optimized for desktop, tablet, and mobile viewports',
+      'Error, loading, and empty states implemented for every component for robust UX',
+      'AI Insights engine capable of cross-module pattern recognition and personalized recommendations',
+    ],
+
+    github: 'https://github.com/Mehtab20/Mehzu-Ai',
+    demo: null,
+
+    future: [
+      'Persistent AI Chat with long-term memory and conversation history',
+      'AI Memory Engine for retained user context across sessions',
+      'Journal Timeline with visual chronological browsing and filtering',
+      'AI Daily Summary with personalized insights and recommendations',
+      'Smart Notifications with context-aware timing (not addictive badges)',
+      'Predictive AI for proactive habit suggestions and health trend forecasting',
+      'Calendar Integration for time-blocking and event correlation',
+      'Family & Relationship Management with shared goals and privacy controls',
+      'Financial Tracking with AI-powered budgeting insights',
+      'Wearable Device Integration for automatic health data sync',
+      'Voice AI Assistant for hands-free journaling and check-ins',
+      'Offline-First Experience with local data caching and sync on reconnect',
+    ],
+  },
+  {
     id: 'medref',
     title: 'Medical Referral Agent',
     tagline: 'AI-Based Diagnostic & Specialist Referral System',
