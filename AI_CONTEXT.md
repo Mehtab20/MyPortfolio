@@ -179,6 +179,12 @@ Each project includes a full case study modal with: Problem, Background, Objecti
 
 ## 8. Work Log
 
+### 2026-11-18 — Editorial redesign (branch `redesign/editorial-portfolio`)
+- Public site rebuilt with a scoped design system (`src/styles/site.css`) and components in `src/components/site/`. Content lives in `src/data/site.js`.
+- Featured work is now MehZu AI, MedRef, Gohar Medical Trust HMS and Imad Block Factory, with case studies at `/work/:slug`.
+- **Accuracy rule:** public content must match what the repositories show. The earlier Gohar/MedRef figures (500+ daily patients, 92% accuracy, production status, Node/Redis/Twilio stack) were not supported by the repos and were removed. The Gohar repo is React + TypeScript + Convex, in development (phase 3.1, lab system). MedRef is FastAPI + Flutter with optional trained models.
+- The landing page no longer reads hero/about/certifications from the CMS (contact details still do). `resume.pdf` and `/resume` still contain the old figures and need updating.
+
 | Date | Summary |
 | :--- | :--- |
 | 2026-07-14 | Created AI_CONTEXT.md, initialized Supabase |

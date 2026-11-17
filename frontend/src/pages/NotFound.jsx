@@ -1,29 +1,25 @@
 import { Link } from 'react-router-dom';
+import SiteLayout from '../components/site/SiteLayout';
+import { usePageMeta } from '../components/site/hooks';
+import { Arrow } from '../components/site/Icons';
 
 export default function NotFound() {
+  usePageMeta({ title: 'Page not found — Mehtab Akbar' });
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{ backgroundColor: 'var(--theme-bg)' }}
-    >
-      <div className="max-w-md text-center">
-        <div className="text-8xl font-bold gradient-text mb-4">404</div>
-        <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--theme-text)' }}>
-          Page Not Found
+    <SiteLayout>
+      <section className="s-container s-cs-hero" style={{ minHeight: '70vh' }}>
+        <p className="s-label" style={{ marginBottom: 20 }}>Error 404</p>
+        <h1 className="s-cs-title">
+          This page <span className="s-serif">doesn’t exist.</span>
         </h1>
-        <p className="text-sm mb-8" style={{ color: 'var(--theme-text-secondary)' }}>
-          The page you're looking for doesn't exist or has been moved.
+        <p className="s-lead" style={{ marginTop: 24, maxWidth: '40ch' }}>
+          The link may be old, or the page may have moved. The work is still where it was.
         </p>
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl btn-primary text-sm font-semibold"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
-          Back to Home
-        </Link>
-      </div>
-    </div>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 36 }}>
+          <Link to="/" className="s-btn">Back to home <Arrow /></Link>
+          <Link to="/#work" className="s-btn s-btn--ghost">Selected work</Link>
+        </div>
+      </section>
+    </SiteLayout>
   );
 }

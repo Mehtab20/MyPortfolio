@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-11-18 — Editorial redesign of the public site (branch `redesign/editorial-portfolio`)
+
+### Added
+- New public-site design system in `frontend/src/styles/site.css` (scoped to `.site`; dashboard/admin styling untouched): warm ink/paper palette, single accent (#ff6a3d dark / #d9481c light), Inter + Instrument Serif + JetBrains Mono, 12-column editorial grid, light/dark themes, reduced-motion support.
+- `frontend/src/components/site/*`: SiteLayout, SiteNav (scroll-aware, active section, accessible mobile menu), SiteFooter, Hero, Work, About, Toolkit, Journey, Contact, ProjectDiagram (SVG architecture schematics with a mobile layout), hooks.
+- Case study pages at `/work/:slug` (MehZu AI, MedRef, Gohar Medical Trust HMS): problem, approach, architecture, engineering decisions, contribution, built vs next.
+- `frontend/src/data/site.js`: all public content, written from the project repositories.
+- PNG social image (`public/og-image.png`), WebP portrait, updated sitemap.
+
+### Changed
+- `Landing.jsx` rebuilt on the new components; `NotFound.jsx` restyled; `/work/:slug` route added in `App.jsx`.
+- `index.html`: new title/description/OG tags, fonts, theme-color, and the no-flash theme script now reads the same `portfolio-theme` key as ThemeContext (it read `theme` before, so the saved theme flashed).
+
+### Removed from the public page
+- Unverifiable metrics (e.g. "92% accuracy", "500+ daily patients", "35% donor increase", "99.9% uptime"), placeholder blog posts with no articles, hero stat counters, the AI SaaS Starter Kit card, Login/Sign-up buttons in the public nav. Certifications are hidden until confirmed.
+- Old landing components (Hero.jsx, Projects.jsx, etc.) are no longer used by the landing page but are left in place.
+
 ## 2026-07-24 — Portfolio Refactor: Removed SaaS Template Content
 
 ### Removed
