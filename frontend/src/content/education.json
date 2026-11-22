@@ -1,0 +1,24 @@
+[
+  {
+    "degree": "BS Software Engineering",
+    "school": "Iqra University, Islamabad",
+    "when": "2022 – 2026",
+    "where": "Islamabad, Pakistan",
+    "body": "Software engineering degree. Final year project: MedRef, an AI-assisted diagnosis and specialist-referral system.",
+    "courses": [
+      "Data Structures",
+      "Databases",
+      "Human-Computer Interaction",
+      "Software Architecture",
+      "Design Patterns"
+    ]
+  },
+  {
+    "degree": "Intermediate in Computer Science (ICS)",
+    "school": "Punjab College",
+    "when": "2020 – 2022",
+    "where": "Rawalpindi, Pakistan",
+    "body": "Where I wrote my first programs and decided to study software engineering.",
+    "courses": []
+  }
+]

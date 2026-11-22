@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Frontend Development",
+    "icon": "code",
+    "note": "Web apps with design systems, accessible components and motion where it helps.",
+    "items": [
+      "React 19",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Framer Motion",
+      "Vite",
+      "React Router"
+    ]
+  },
+  {
+    "name": "Mobile Development",
+    "icon": "smartphone",
+    "note": "Cross-platform clients for Android, web and desktop.",
+    "items": [
+      "Flutter",
+      "Dart"
+    ]
+  },
+  {
+    "name": "Backend & Data",
+    "icon": "server",
+    "note": "APIs, real-time backends, auth and role-based access.",
+    "items": [
+      "Convex",
+      "Python",
+      "FastAPI",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "SQLite",
+      "SQLAlchemy",
+      "Supabase",
+      "JWT auth"
+    ]
+  },
+  {
+    "name": "AI & ML",
+    "icon": "brain",
+    "note": "LLM features grounded in user data, plus classic ML for vision and text.",
+    "items": [
+      "LLM integration (OpenAI, Gemini, Groq, OpenRouter)",
+      "Context & memory design",
+      "TensorFlow / Keras CNNs",
+      "scikit-learn",
+      "spaCy NLP",
+      "Hugging Face Inference"
+    ]
+  },
+  {
+    "name": "Tools & Workflow",
+    "icon": "wrench",
+    "note": "How the work gets shipped and maintained.",
+    "items": [
+      "Git & GitHub",
+      "Docker",
+      "Vercel",
+      "Bun / npm",
+      "Architecture docs",
+      "AI-assisted development"
+    ]
+  },
+  {
+    "name": "Currently Learning",
+    "icon": "rocket",
+    "note": "Where I’m deliberately going deeper.",
+    "items": [
+      "Cloud (AWS)",
+      "DevOps & CI/CD",
+      "Monitoring"
+    ],
+    "learning": true
+  }
+]

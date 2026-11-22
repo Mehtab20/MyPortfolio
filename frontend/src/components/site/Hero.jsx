@@ -12,7 +12,7 @@ export default function Hero() {
     <section id="hero" className="s-hero" aria-labelledby="hero-title">
       <div className="s-container s-hero__inner">
         <div className="s-hero__photo s-enter" style={{ '--d': '0.05s' }}>
-          <img src={portrait} alt={`Portrait of ${profile.name}`} width="200" height="200" fetchpriority="high" />
+          <img src={portrait} alt={`Portrait of ${profile.name}`} width="200" height="200" fetchPriority="high" />
         </div>
 
         <p className="s-hero__role s-enter" style={{ '--d': '0.15s' }}>

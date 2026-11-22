@@ -1,0 +1,57 @@
+{
+  "paragraphs": [
+    "I'm a software engineer from Rawalpindi, Pakistan. I studied Software Engineering at Iqra University in Islamabad, and most of what I know comes from building complete systems: a hospital management system, an AI-assisted medical referral app, and an AI companion for everyday life.",
+    "I care about the part of software that comes before the screens. That means understanding the domain, modelling the data and roles properly, and then deciding where AI actually helps. I build across the stack with React, Flutter, FastAPI and Convex, and I write the architecture down as I go.",
+    "I work with AI coding tools every day and treat them as a fast collaborator. The product decisions, the architecture and the review stay with me."
+  ],
+  "principles": [
+    {
+      "title": "Model the domain first",
+      "body": "Schemas, roles and workflows come before UI. Most product bugs are really modelling bugs.",
+      "proof": "Gohar HMS: 21-table schema, 9 roles × 13 modules"
+    },
+    {
+      "title": "Ground the AI in real data",
+      "body": "AI features should work from the user’s actual data, checked for ownership, not from generic prompts.",
+      "proof": "MehZu AI: context assembly + memory layer"
+    },
+    {
+      "title": "Degrade gracefully",
+      "body": "When a model file or an API key is missing, the product should still work at a lower level instead of failing.",
+      "proof": "MedRef: keyword NLP when trained models are absent"
+    },
+    {
+      "title": "Write it down",
+      "body": "Architecture notes, decision logs and roadmaps live next to the code, for teammates and for AI tools.",
+      "proof": "MehZu AI: 24 design & architecture documents"
+    }
+  ],
+  "glance": [
+    {
+      "icon": "pin",
+      "k": "Based in",
+      "v": "Rawalpindi, Pakistan (UTC+5)"
+    },
+    {
+      "icon": "graduation",
+      "k": "Education",
+      "v": "BS Software Engineering, Iqra University"
+    },
+    {
+      "icon": "target",
+      "k": "Focus",
+      "v": "AI-native products and healthcare software"
+    },
+    {
+      "icon": "rocket",
+      "k": "Now building",
+      "v": "MehZu AI",
+      "href": "/work/mehzu-ai"
+    },
+    {
+      "icon": "file",
+      "k": "Working style",
+      "v": "Documentation-first, AI-assisted"
+    }
+  ]
+}
