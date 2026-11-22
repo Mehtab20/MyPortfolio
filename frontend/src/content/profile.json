@@ -1,0 +1,21 @@
+{
+  "name": "Mehtab Akbar",
+  "positioning": [
+    "Software Engineer",
+    "AI Product Builder",
+    "Full-Stack Developer"
+  ],
+  "location": "Rawalpindi, Pakistan",
+  "timeZone": "Asia/Karachi",
+  "email": "mehtabakbar5656@gmail.com",
+  "phone": "+92 340 8575834",
+  "github": "https://github.com/Mehtab20",
+  "linkedin": "https://linkedin.com/in/mehtab-akbar-385024267",
+  "resume": "/resume",
+  "education": "BS Software Engineering, Iqra University",
+  "nowBuilding": {
+    "label": "MehZu AI",
+    "href": "/work/mehzu-ai"
+  },
+  "tagline": "I build AI-native products and full-stack systems, from the data model to the screen."
+}

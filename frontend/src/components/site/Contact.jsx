@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { submitContactMessage } from '../../api/index.js';
-import { useContact } from '../../hooks/useCmsData';
+import { useEffect, useRef, useState } from 'react';
 import { profile } from '../../data/site';
 import SectionHead from './SectionHead';
 import { Icon } from './Icons';
@@ -8,11 +6,14 @@ import { Icon } from './Icons';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Contact() {
-  const { data: cms } = useContact();
-  const email = cms?.email || profile.email;
-  const phone = cms?.phone || profile.phone;
+  const email = profile.email;
+  const phone = profile.phone;
+  const startedAt = useRef(0);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
   const [state, setState] = useState({ status: 'idle', msg: '' });
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -24,8 +25,17 @@ export default function Contact() {
     }
     setState({ status: 'sending', msg: '' });
     try {
-      await submitContactMessage({ ...form, subject: form.subject.trim() || 'Portfolio enquiry' });
-      setForm({ name: '', email: '', subject: '', message: '' });
+      const r = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, startedAt: startedAt.current }),
+      });
+      if (r.status === 429) {
+        setState({ status: 'error', msg: 'Too many messages in a short time. Please try again in a few minutes.' });
+        return;
+      }
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      setForm({ name: '', email: '', subject: '', message: '', company: '' });
       setState({ status: 'ok', msg: 'Thanks. Your message has been sent, and I’ll reply by email.' });
     } catch (err) {
       console.error(err);
@@ -78,6 +88,11 @@ export default function Contact() {
 
           <form className="s-card s-form" onSubmit={onSubmit} noValidate data-reveal style={{ '--d': '0.1s' }}>
             <h3 className="s-h3">Send a Message</h3>
+            {/* Spam trap: hidden from people, filled in by bots. */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+              <label htmlFor="c-company">Company</label>
+              <input id="c-company" name="company" tabIndex={-1} autoComplete="off" value={form.company} onChange={onChange} />
+            </div>
             <div className="s-form__row">
               <div className="s-field">
                 <label htmlFor="c-name">Name</label>

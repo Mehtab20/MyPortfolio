@@ -1,0 +1,46 @@
+[
+  {
+    "emoji": "💻",
+    "title": "Full-Stack Web Apps",
+    "body": "Web applications built from the data model up, with React and TypeScript on the front and Convex, FastAPI or Node behind it.",
+    "points": [
+      "Responsive React + TypeScript interfaces",
+      "REST APIs and real-time backends",
+      "Database design with roles and permissions",
+      "Deployment on Vercel or Docker"
+    ]
+  },
+  {
+    "emoji": "🤖",
+    "title": "AI Product Features",
+    "body": "LLM features that work from your users’ own data instead of generic chat, plus classic ML where it fits better.",
+    "points": [
+      "LLM integration across providers",
+      "Context assembly and long-term memory",
+      "Vision and text models (CNN, NLP)",
+      "Fallbacks when a model is unavailable"
+    ]
+  },
+  {
+    "emoji": "📱",
+    "title": "Cross-Platform Mobile",
+    "body": "Flutter apps for Android, web and desktop that connect to your API and handle real-world input like the camera.",
+    "points": [
+      "Flutter + Dart clients",
+      "Auth and role-based flows",
+      "Camera and image upload",
+      "Environment-aware API configuration"
+    ]
+  },
+  {
+    "emoji": "🏥",
+    "title": "Systems for Real Operations",
+    "body": "Software for clinics, hospitals and small businesses that replaces paper registers with records people can actually find.",
+    "points": [
+      "Workflow and requirements mapping",
+      "Role-based access for staff",
+      "Records, scheduling and inventory modules",
+      "Phased delivery with documentation"
+    ]
+  }
+]

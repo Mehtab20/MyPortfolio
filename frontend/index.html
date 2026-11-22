@@ -88,6 +88,7 @@
     <!-- Prevent FOUC -->
     <script>
       (function() {
+        document.documentElement.classList.add('js');
         var saved = null;
         try { saved = localStorage.getItem('portfolio-theme'); } catch (e) {}
         if (saved) {
