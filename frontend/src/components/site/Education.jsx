@@ -4,7 +4,7 @@ import { Icon } from './Icons';
 
 export default function Education() {
   return (
-    <section id="education" className="s-section" aria-labelledby="education-title">
+    <section id="education" className="s-section s-section--plain" aria-labelledby="education-title">
       <div className="s-container">
         <SectionHead
           id="education-title"

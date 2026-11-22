@@ -4,7 +4,7 @@ import { Icon } from './Icons';
 
 export default function Skills() {
   return (
-    <section id="skills" className="s-section" aria-labelledby="skills-title">
+    <section id="skills" className="s-section s-section--plain" aria-labelledby="skills-title">
       <div className="s-container">
         <SectionHead
           id="skills-title"

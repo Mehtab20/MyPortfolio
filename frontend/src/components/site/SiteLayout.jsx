@@ -35,6 +35,11 @@ export default function SiteLayout({ children }) {
 
   return (
     <div className="site" id="top">
+      <div className="s-orbs" aria-hidden="true">
+        <span className="s-orb s-orb--a" />
+        <span className="s-orb s-orb--b" />
+        <span className="s-orb s-orb--c" />
+      </div>
       <div ref={barRef} className="s-progress" aria-hidden="true" />
       <a href="#main" className="s-skip">Skip to content</a>
       <SiteNav theme={theme} toggleTheme={toggleTheme} />

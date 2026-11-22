@@ -21,11 +21,13 @@
   --s-g1: #2dd4bf;
   --s-g2: #22d3ee;
   --s-grid: rgba(148, 163, 184, 0.06);
-  --s-glow: rgba(45, 212, 191, 0.12);
+  --s-glow: rgba(45, 212, 191, 0.09);
   --s-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   --s-shadow-hover: 0 18px 40px -18px rgba(45, 212, 191, 0.25);
   --s-nav-bg: rgba(9, 15, 22, 0.82);
   --s-drawer: #080b13;
+  --s-band: #0b1219;
+  --s-orb-o: 0.06;
   color-scheme: dark;
 }
 
@@ -50,6 +52,8 @@
   --s-shadow-hover: 0 18px 40px -18px rgba(20, 184, 166, 0.3);
   --s-nav-bg: rgba(253, 253, 252, 0.85);
   --s-drawer: #fdfdfc;
+  --s-band: #fafaf9;
+  --s-orb-o: 0.09;
   color-scheme: light;
 }
 
@@ -62,12 +66,9 @@
   --s-radius: 20px;
 
   position: relative;
+  isolation: isolate;
   min-height: 100vh;
   background-color: var(--s-bg);
-  background-image:
-    linear-gradient(var(--s-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--s-grid) 1px, transparent 1px);
-  background-size: 70px 70px;
   color: var(--s-text);
   font-family: var(--s-font);
   font-size: 16px;
@@ -500,3 +501,58 @@ textarea.s-input { min-height: 140px; resize: vertical; }
   .s-project__media { aspect-ratio: auto; min-height: 220px; }
   .s-project__media > svg { position: relative; height: auto; }
 }
+
+
+/* ---------- Background: grid + glow orbs (matches reference) ---------- */
+
+/* Grid lives on each section (as a masked layer) and fades out at the edges. */
+.s-hero::after,
+.s-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--s-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--s-grid) 1px, transparent 1px);
+  background-size: 70px 70px;
+  background-position: center top;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+.s-hero::after {
+  /* grid disappears into the glow behind the photo, strongest at the bottom */
+  -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 25%, transparent 0%, rgba(0,0,0,.35) 45%, #000 80%);
+  mask-image: radial-gradient(ellipse 75% 60% at 50% 25%, transparent 0%, rgba(0,0,0,.35) 45%, #000 80%);
+}
+
+/* Plain band (no grid), like the reference's testimonials band. */
+.s-section--plain { background-color: color-mix(in srgb, var(--s-band) 70%, transparent); }
+.s-section--plain::after { display: none; }
+
+/* Soft glow behind every section header */
+.s-head { position: relative; }
+.s-head::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 40%;
+  width: min(560px, 90vw);
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, var(--s-glow), transparent);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* Page-wide drifting orbs */
+.s-orbs { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.s-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: var(--s-orb-o); will-change: transform; }
+.s-orb--a { width: 46vmax; height: 46vmax; top: -14vmax; right: -12vmax; background: var(--s-g1); animation: s-drift-a 26s ease-in-out infinite alternate; }
+.s-orb--b { width: 38vmax; height: 38vmax; bottom: -16vmax; left: -14vmax; background: var(--s-g2); animation: s-drift-b 32s ease-in-out infinite alternate; }
+.s-orb--c { width: 24vmax; height: 24vmax; top: 42%; left: 55%; background: #8b5cf6; opacity: calc(var(--s-orb-o) * 0.5); animation: s-drift-c 38s ease-in-out infinite alternate; }
+@keyframes s-drift-a { to { transform: translate(-8vmax, 10vmax) scale(1.08); } }
+@keyframes s-drift-b { to { transform: translate(10vmax, -8vmax) scale(1.1); } }
+@keyframes s-drift-c { to { transform: translate(-14vmax, -6vmax) scale(0.9); } }
