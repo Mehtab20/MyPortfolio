@@ -74,7 +74,7 @@ function edgePath(a, b, dir) {
   return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
 }
 
-export default function ProjectDiagram({ project }) {
+export default function ProjectDiagram({ project, hideCaption = false }) {
   const narrow = useMediaQuery('(max-width: 640px)');
   const titleId = useId();
   const { diagram } = project;
@@ -86,13 +86,10 @@ export default function ProjectDiagram({ project }) {
 
   if (!diagram || !L) {
     return (
-      <div className="s-placeholder-visual">
-        <div>
-          <p className="s-label">{project.index} / {project.title}</p>
-          <p className="s-serif" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', margin: '14px 0 0', color: 'var(--s-ink-2)' }}>
-            Write-up in progress
-          </p>
-        </div>
+      <div className="s-placeholder" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" />
+        </svg>
       </div>
     );
   }
@@ -125,9 +122,11 @@ export default function ProjectDiagram({ project }) {
         Array.from({ length: 9 }).map((_, i) => (
           <line key={i} className="pv-grid" x1={(L.W / 8) * i} y1="0" x2={(L.W / 8) * i} y2={L.H} opacity="0.5" />
         ))}
-      <text className="pv-caption" x={L.dir === 'x' ? 36 : 20} y={L.dir === 'x' ? 48 : 34} style={{ fontSize: 10.5 * fs }}>
-        {project.index} — {diagram.caption}
-      </text>
+      {!hideCaption && (
+        <text className="pv-caption" x={L.dir === 'x' ? 36 : 20} y={L.dir === 'x' ? 48 : 34} style={{ fontSize: 10.5 * fs }}>
+          {project.index} — {diagram.caption}
+        </text>
+      )}
       {L.labels.map((l) => (
         <text key={l.text} className="pv-col-label" x={l.x} y={l.y} style={{ fontSize: 10.5 * fs }}>
           {l.text}

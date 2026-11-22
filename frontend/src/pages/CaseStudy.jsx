@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SiteLayout from '../components/site/SiteLayout';
 import ProjectDiagram from '../components/site/ProjectDiagram';
-import { Arrow } from '../components/site/Icons';
+import { StatusBadge } from '../components/site/Work';
+import { Icon } from '../components/site/Icons';
 import { useReveal, usePageMeta } from '../components/site/hooks';
 import { getProject, work } from '../data/site';
 
-function Block({ label, children }) {
+function Section({ icon, title, children }) {
   return (
-    <section className="s-grid s-cs-block" data-reveal>
-      <h2 className="s-label s-cs-block__label">{label}</h2>
-      <div className="s-cs-block__body">{children}</div>
+    <section className="s-card s-cs__section" data-reveal>
+      <h2><span className="s-iconbox"><Icon name={icon} /></span>{title}</h2>
+      {children}
     </section>
   );
 }
@@ -26,81 +27,63 @@ export default function CaseStudy() {
     path: `/work/${slug}`,
   });
   useReveal([slug]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  if (!project || !cs) return <Navigate to="/#work" replace />;
+  if (!project || !cs) return <Navigate to="/#projects" replace />;
 
   const withStudies = work.filter((p) => p.caseStudy);
   const next = withStudies[(withStudies.findIndex((p) => p.slug === slug) + 1) % withStudies.length];
-  const tone = project.status.tone === 'live' ? ' s-status--live' : project.status.tone === 'done' ? ' s-status--done' : '';
 
   return (
     <SiteLayout>
-      <article>
-        <header className="s-container s-cs-hero">
-          <Link to="/#work" className="s-cs-back s-link">
-            <Arrow dir="left" /> All work
-          </Link>
-          <p className="s-label s-fade-in" style={{ '--d': '0.05s', marginBottom: 20 }}>
-            Case study {project.index} — {project.year}
-          </p>
-          <h1 className="s-cs-title">
-            <span className="s-rise"><span style={{ '--d': '0.1s' }}>{project.title}</span></span>
-          </h1>
-          <p className="s-cs-kind s-serif s-fade-in" style={{ '--d': '0.3s' }}>{project.kind}</p>
+      <article className="s-container s-cs">
+        <Link to="/#projects" className="s-cs__back"><Icon name="arrowLeft" /> Back to projects</Link>
 
-          <ul className="s-cs-facts s-fade-in" style={{ '--d': '0.45s' }}>
-            <li>
-              <p className="s-label">Role</p>
-              <p className="s-meta__value">{project.role}</p>
-            </li>
-            <li>
-              <p className="s-label">Timeline</p>
-              <p className="s-meta__value">{project.year}</p>
-            </li>
-            <li>
-              <p className="s-label">Status</p>
-              <p className="s-meta__value"><span className={`s-status${tone}`} style={{ fontSize: 14, color: 'var(--s-ink)' }}>{project.status.label}</span></p>
-            </li>
-            <li>
-              <p className="s-label">Links</p>
-              <p className="s-meta__value" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
+        <header className="s-card s-cs__hero s-enter">
+          <div className="s-project__media">
+            <ProjectDiagram project={project} />
+          </div>
+          <div className="s-cs__head">
+            <p className="s-eyebrow" style={{ marginBottom: 0 }}>Case study {project.index}</p>
+            <h1 className="s-cs__title">{project.title}</h1>
+            <p className="s-cs__kind">{project.kind}</p>
+            <div className="s-meta-row" style={{ margin: '4px 0 0' }}>
+              <span className="s-pill"><Icon name="calendar" /> {project.year}</span>
+              <span className="s-pill"><Icon name="user" /> {project.role}</span>
+              <StatusBadge status={project.status} />
+            </div>
+            <ul className="s-chips">
+              {project.stack.map((t) => <li key={t} className="s-chip s-chip--teal">{t}</li>)}
+            </ul>
+            {project.links.length > 0 && (
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 6 }}>
                 {project.links.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="s-link s-link--underlined">
-                    {l.label} <Arrow dir="ne" />
+                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="s-btn s-btn--outline s-btn--sm">
+                    <Icon name="github" /> {l.label}
                   </a>
                 ))}
-              </p>
-            </li>
-          </ul>
+              </div>
+            )}
+          </div>
         </header>
 
-        <div className="s-container">
-          <div className="s-cs-visual s-fade-in" style={{ '--d': '0.55s' }}>
-            <div className="s-card__frame">
-              <ProjectDiagram project={project} />
-            </div>
+        <div className="s-cs__sections">
+          <Section icon="info" title="Overview">
+            <p className="s-body" style={{ color: 'var(--s-text)', fontSize: 17 }}>{project.summary}</p>
+          </Section>
+
+          <div className="s-grid-2">
+            <Section icon="flag" title="The Problem">
+              {cs.problem.map((p, i) => <p key={i} className="s-body">{p}</p>)}
+            </Section>
+            <Section icon="target" title="The Approach">
+              {cs.approach.map((p, i) => <p key={i} className="s-body">{p}</p>)}
+            </Section>
           </div>
 
-          <Block label="Overview">
-            <p className="s-lead" style={{ color: 'var(--s-ink)' }}>{project.summary}</p>
-            <ul className="s-tags" aria-label="Technologies">
-              {project.stack.map((t) => <li key={t} className="s-tag">{t}</li>)}
-            </ul>
-          </Block>
-
-          <Block label="The problem">
-            {cs.problem.map((p, i) => <p key={i} className="s-body" style={{ fontSize: 17 }}>{p}</p>)}
-          </Block>
-
-          <Block label="The approach">
-            {cs.approach.map((p, i) => <p key={i} className="s-body" style={{ fontSize: 17 }}>{p}</p>)}
-          </Block>
-
-          <Block label="Architecture">
+          <Section icon="layers" title="Architecture">
             <ul className="s-arch">
               {cs.architecture.map((a) => (
                 <li key={a.layer}>
@@ -109,54 +92,48 @@ export default function CaseStudy() {
                 </li>
               ))}
             </ul>
-          </Block>
+          </Section>
 
-          <Block label="Engineering decisions">
+          <Section icon="wrench" title="Engineering Decisions">
             <div className="s-decisions">
               {cs.decisions.map((d) => (
                 <div key={d.title} className="s-decision">
-                  <h3 className="s-h4">{d.title}</h3>
-                  <p className="s-body" style={{ fontSize: 15 }}>{d.body}</p>
+                  <h3>{d.title}</h3>
+                  <p>{d.body}</p>
                 </div>
               ))}
             </div>
-          </Block>
+          </Section>
 
-          <Block label="What I did">
-            <ul className="s-list">
-              {cs.contribution.map((c) => <li key={c}>{c}</li>)}
-            </ul>
-          </Block>
-
-          <Block label="Where it stands">
-            <div className="s-split">
-              <div>
-                <h3 className="s-h4" style={{ marginBottom: 16 }}>Built</h3>
-                <ul className="s-list s-list--check">
-                  {cs.built.map((c) => <li key={c}>{c}</li>)}
-                </ul>
-              </div>
-              <div>
-                <h3 className="s-h4" style={{ marginBottom: 16 }}>Next</h3>
-                <ul className="s-list s-list--next">
-                  {cs.next.map((c) => <li key={c}>{c}</li>)}
-                </ul>
-              </div>
-            </div>
-            {cs.note && <p className="s-note">{cs.note}</p>}
-          </Block>
-        </div>
-
-        {next && next.slug !== slug && (
-          <div className="s-container">
-            <Link to={`/work/${next.slug}`} className="s-next-project">
-              <span className="s-label">Next case study</span>
-              <span className="s-next-project__title">
-                {next.title} <Arrow />
-              </span>
-            </Link>
+          <div className="s-grid-2">
+            <Section icon="user" title="My Contribution">
+              <ul className="s-checks">
+                {cs.contribution.map((c) => <li key={c}><span className="s-check"><Icon name="check" /></span>{c}</li>)}
+              </ul>
+            </Section>
+            <Section icon="list" title="Where It Stands">
+              <p className="s-label-caps" style={{ marginBottom: 12 }}>Built</p>
+              <ul className="s-checks">
+                {cs.built.map((c) => <li key={c}><span className="s-check"><Icon name="check" /></span>{c}</li>)}
+              </ul>
+              <p className="s-label-caps" style={{ margin: '20px 0 12px' }}>Next</p>
+              <ul className="s-checks">
+                {cs.next.map((c) => <li key={c}><span className="s-check"><Icon name="arrowRight" /></span>{c}</li>)}
+              </ul>
+              {cs.note && <p className="s-note" style={{ marginTop: 18 }}>{cs.note}</p>}
+            </Section>
           </div>
-        )}
+
+          {next && next.slug !== slug && (
+            <Link to={`/work/${next.slug}`} className="s-card s-card--hover s-cs__next">
+              <div>
+                <p className="s-eyebrow" style={{ marginBottom: 0 }}>Next case study</p>
+                <p className="s-h3">{next.title}</p>
+              </div>
+              <Icon name="arrowRight" />
+            </Link>
+          )}
+        </div>
       </article>
     </SiteLayout>
   );

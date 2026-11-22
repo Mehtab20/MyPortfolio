@@ -18,7 +18,100 @@ export const profile = {
   resume: '/resume',
   education: 'BS Software Engineering, Iqra University',
   nowBuilding: { label: 'MehZu AI', href: '/work/mehzu-ai' },
+  tagline: 'I build AI-native products and full-stack systems, from the data model to the screen.',
 };
+
+export const glance = [
+  { icon: 'pin', k: 'Based in', v: 'Rawalpindi, Pakistan (UTC+5)' },
+  { icon: 'graduation', k: 'Education', v: 'BS Software Engineering, Iqra University' },
+  { icon: 'target', k: 'Focus', v: 'AI-native products and healthcare software' },
+  { icon: 'rocket', k: 'Now building', v: 'MehZu AI', href: '/work/mehzu-ai' },
+  { icon: 'file', k: 'Working style', v: 'Documentation-first, AI-assisted' },
+];
+
+export const services = [
+  {
+    emoji: '💻',
+    title: 'Full-Stack Web Apps',
+    body: 'Web applications built from the data model up, with React and TypeScript on the front and Convex, FastAPI or Node behind it.',
+    points: ['Responsive React + TypeScript interfaces', 'REST APIs and real-time backends', 'Database design with roles and permissions', 'Deployment on Vercel or Docker'],
+  },
+  {
+    emoji: '🤖',
+    title: 'AI Product Features',
+    body: 'LLM features that work from your users’ own data instead of generic chat, plus classic ML where it fits better.',
+    points: ['LLM integration across providers', 'Context assembly and long-term memory', 'Vision and text models (CNN, NLP)', 'Fallbacks when a model is unavailable'],
+  },
+  {
+    emoji: '📱',
+    title: 'Cross-Platform Mobile',
+    body: 'Flutter apps for Android, web and desktop that connect to your API and handle real-world input like the camera.',
+    points: ['Flutter + Dart clients', 'Auth and role-based flows', 'Camera and image upload', 'Environment-aware API configuration'],
+  },
+  {
+    emoji: '🏥',
+    title: 'Systems for Real Operations',
+    body: 'Software for clinics, hospitals and small businesses that replaces paper registers with records people can actually find.',
+    points: ['Workflow and requirements mapping', 'Role-based access for staff', 'Records, scheduling and inventory modules', 'Phased delivery with documentation'],
+  },
+];
+
+export const education = [
+  {
+    degree: 'BS Software Engineering',
+    school: 'Iqra University, Islamabad',
+    when: '2022 – 2026',
+    where: 'Islamabad, Pakistan',
+    body: 'Software engineering degree. Final year project: MedRef, an AI-assisted diagnosis and specialist-referral system.',
+    courses: ['Data Structures', 'Databases', 'Human-Computer Interaction', 'Software Architecture', 'Design Patterns'],
+  },
+  {
+    degree: 'Intermediate in Computer Science (ICS)',
+    school: 'Punjab College',
+    when: '2020 – 2022',
+    where: 'Rawalpindi, Pakistan',
+    body: 'Where I wrote my first programs and decided to study software engineering.',
+    courses: [],
+  },
+];
+
+export const experience = [
+  {
+    title: 'Creator & Engineer',
+    org: 'MehZu AI, independent product',
+    when: '2025 – Present',
+    where: 'Rawalpindi, Pakistan',
+    body: 'Designing and building an AI-native life-management system end to end: product docs, design system, Convex backend and an AI layer with context assembly, memory and a daily briefing.',
+    tags: ['React 19', 'TypeScript', 'Convex', 'LLM integration', 'Tailwind CSS'],
+    href: '/work/mehzu-ai',
+  },
+  {
+    title: 'Full-Stack Developer',
+    org: 'Gohar Medical Trust HMS',
+    when: '2026',
+    where: 'Buner, Khyber Pakhtunkhwa',
+    body: 'Building a phased hospital management system: a 21-table Convex schema, role-based access for 9 staff roles, and modules for patients, appointments, admissions, medical records and the lab.',
+    tags: ['React', 'TypeScript', 'Convex', 'RBAC', 'shadcn/ui'],
+    href: '/work/gohar-hms',
+  },
+  {
+    title: 'Final Year Project: MedRef',
+    org: 'Iqra University',
+    when: '2025 – 2026',
+    where: 'Islamabad, Pakistan',
+    body: 'An AI-assisted diagnosis and specialist-referral system: FastAPI backend, NLP and CNN models with graceful fallbacks, and a Flutter client with patient, doctor and admin roles.',
+    tags: ['Flutter', 'FastAPI', 'TensorFlow', 'scikit-learn', 'PostgreSQL'],
+    href: '/work/medref',
+  },
+  {
+    title: 'Freelance Full-Stack Developer',
+    org: 'Self-directed',
+    when: '2024 – Present',
+    where: 'Rawalpindi, Pakistan',
+    body: 'Web and mobile work outside coursework, including business and inventory software for small organisations.',
+    tags: ['React', 'Node.js', 'Express', 'Supabase', 'Flutter'],
+  },
+];
 
 export const about = {
   paragraphs: [
@@ -52,32 +145,32 @@ export const about = {
 
 export const toolkit = [
   {
-    name: 'Interfaces',
+    name: 'Frontend Development', icon: 'code',
     note: 'Web apps with design systems, accessible components and motion where it helps.',
     items: ['React 19', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'shadcn/ui', 'Framer Motion', 'Vite', 'React Router'],
   },
   {
-    name: 'Mobile',
+    name: 'Mobile Development', icon: 'smartphone',
     note: 'Cross-platform clients for Android, web and desktop.',
     items: ['Flutter', 'Dart'],
   },
   {
-    name: 'Backend & data',
+    name: 'Backend & Data', icon: 'server',
     note: 'APIs, real-time backends, auth and role-based access.',
     items: ['Convex', 'Python', 'FastAPI', 'Node.js', 'Express', 'PostgreSQL', 'SQLite', 'SQLAlchemy', 'Supabase', 'JWT auth'],
   },
   {
-    name: 'AI & ML',
+    name: 'AI & ML', icon: 'brain',
     note: 'LLM features grounded in user data, plus classic ML for vision and text.',
     items: ['LLM integration (OpenAI, Gemini, Groq, OpenRouter)', 'Context & memory design', 'TensorFlow / Keras CNNs', 'scikit-learn', 'spaCy NLP', 'Hugging Face Inference'],
   },
   {
-    name: 'Workflow',
+    name: 'Tools & Workflow', icon: 'wrench',
     note: 'How the work gets shipped and maintained.',
     items: ['Git & GitHub', 'Docker', 'Vercel', 'Bun / npm', 'Architecture docs', 'AI-assisted development'],
   },
   {
-    name: 'Learning now',
+    name: 'Currently Learning', icon: 'rocket',
     note: 'Where I’m deliberately going deeper.',
     items: ['Cloud (AWS)', 'DevOps & CI/CD', 'Monitoring'],
     learning: true,
@@ -129,6 +222,7 @@ export const journey = [
 export const work = [
   {
     slug: 'mehzu-ai',
+    featured: true,
     index: '01',
     title: 'MehZu AI',
     kind: 'An AI-native personal life-management system',
@@ -191,6 +285,7 @@ export const work = [
   },
   {
     slug: 'medref',
+    featured: true,
     index: '02',
     title: 'MedRef',
     kind: 'AI-assisted diagnosis and specialist referral',
@@ -251,6 +346,7 @@ export const work = [
   },
   {
     slug: 'gohar-hms',
+    featured: true,
     index: '03',
     title: 'Gohar Medical Trust HMS',
     kind: 'Hospital management for a community hospital',

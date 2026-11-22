@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { CloseIcon, MenuIcon, MoonIcon, SunIcon, Arrow } from './Icons';
+import { Icon } from './Icons';
 import { profile } from '../../data/site';
+import portrait from '../../assets/portrait.webp';
 
 export const NAV_ITEMS = [
-  { id: 'work', label: 'Work' },
-  { id: 'about', label: 'About' },
-  { id: 'journey', label: 'Journey' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'top', label: 'Home', icon: 'home' },
+  { id: 'about', label: 'About', icon: 'userCircle' },
+  { id: 'services', label: 'Services', icon: 'layers' },
+  { id: 'skills', label: 'Skills', icon: 'code' },
+  { id: 'projects', label: 'Projects', icon: 'folder' },
+  { id: 'experience', label: 'Experience', icon: 'briefcase' },
+  { id: 'education', label: 'Education', icon: 'graduation' },
+  { id: 'contact', label: 'Contact', icon: 'mail' },
 ];
 
 /** Scroll to a section on the landing page, or navigate there from another page. */
@@ -16,68 +21,55 @@ export function useSectionNav() {
   const navigate = useNavigate();
   return (e, id) => {
     if (location.pathname === '/') {
-      const el = document.getElementById(id);
-      if (el) {
-        e?.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.history.replaceState(null, '', `#${id}`);
-      }
+      e?.preventDefault();
+      if (id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+      else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.replaceState(null, '', id === 'top' ? '/' : `#${id}`);
     } else {
       e?.preventDefault();
-      navigate(`/#${id}`);
+      navigate(id === 'top' ? '/' : `/#${id}`);
     }
   };
 }
 
+function Brand({ onClick }) {
+  return (
+    <Link to="/" className="s-brand" onClick={onClick} aria-label={`${profile.name}, home`}>
+      <span className="s-avatar"><img src={portrait} alt="" width="40" height="40" /></span>
+      <span className="s-brand__name s-gradient-text">{profile.name}</span>
+    </Link>
+  );
+}
+
 export default function SiteNav({ theme, toggleTheme }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('top');
   const location = useLocation();
   const goTo = useSectionNav();
-  const menuRef = useRef(null);
+  const drawerRef = useRef(null);
   const btnRef = useRef(null);
   const isHome = location.pathname === '/';
+  const isDark = theme !== 'light';
 
-  // Background on scroll; hide while scrolling down, show when scrolling up.
-  useEffect(() => {
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 12);
-      setHidden(y > 480 && y > lastY + 4);
-      if (y < lastY - 4 || y < 480) setHidden(false);
-      lastY = y;
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Active section (landing only).
+  // Active section while scrolling the landing page.
   useEffect(() => {
     if (!isHome || !('IntersectionObserver' in window)) return undefined;
-    const sections = NAV_ITEMS.map((n) => document.getElementById(n.id)).filter(Boolean);
+    const els = NAV_ITEMS.map((n) => (n.id === 'top' ? document.getElementById('hero') : document.getElementById(n.id))).filter(Boolean);
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id === 'hero' ? 'top' : e.target.id)),
       { rootMargin: '-45% 0px -50% 0px' },
     );
-    sections.forEach((s) => io.observe(s));
+    els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [isHome]);
 
-  // Close menu on route change.
-  useEffect(() => setOpen(false), [location.pathname, location.hash]);
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
-  // Lock scroll, close on Escape, move focus into the menu.
+  // Drawer: lock scroll, Escape to close, focus inside.
   useEffect(() => {
     if (!open) return undefined;
-    const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e) => {
       if (e.key === 'Escape') {
@@ -86,9 +78,9 @@ export default function SiteNav({ theme, toggleTheme }) {
       }
     };
     window.addEventListener('keydown', onKey);
-    const t = setTimeout(() => menuRef.current?.querySelector('a')?.focus(), 60);
+    const t = setTimeout(() => drawerRef.current?.querySelector('button, a')?.focus(), 60);
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
       clearTimeout(t);
     };
@@ -96,93 +88,85 @@ export default function SiteNav({ theme, toggleTheme }) {
 
   const onItem = (e, id) => {
     if (!open) return goTo(e, id);
-    // Menu is open and the page is scroll-locked: close first, then scroll.
     e.preventDefault();
     setOpen(false);
     document.body.style.overflow = '';
     setTimeout(() => goTo(null, id), 30);
   };
 
-  const isDark = theme !== 'light';
+  const current = (id) => (isHome && active === id ? 'true' : undefined);
 
   return (
     <>
-      <header className={`s-nav${scrolled || open ? ' is-scrolled' : ''}${hidden && !open ? ' is-hidden' : ''}`}>
+      <header className="s-nav">
         <nav className="s-container s-nav__inner" aria-label="Main">
-          <Link to="/" className="s-wordmark" aria-label={`${profile.name}, home`} onClick={() => isHome && window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <span className="s-wordmark__mark" aria-hidden="true">ma</span>
-            <span>{profile.name}</span>
-          </Link>
+          <Brand onClick={(e) => isHome && onItem(e, 'top')} />
 
           <ul className="s-nav__links">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`/#${item.id}`}
-                  className="s-nav__link"
-                  aria-current={isHome && active === item.id ? 'true' : undefined}
-                  onClick={(e) => onItem(e, item.id)}
-                >
-                  {item.label}
+            {NAV_ITEMS.filter((n) => n.id !== 'top').map((n) => (
+              <li key={n.id}>
+                <a href={`/#${n.id}`} className="s-nav__link" aria-current={current(n.id)} onClick={(e) => onItem(e, n.id)}>
+                  {n.label}
                 </a>
               </li>
             ))}
-            <li>
-              <Link to={profile.resume} className="s-nav__link">Résumé</Link>
-            </li>
           </ul>
 
           <div className="s-nav__actions">
-            <button
-              type="button"
-              className="s-icon-btn"
-              onClick={toggleTheme}
-              aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-              title={isDark ? 'Light theme' : 'Dark theme'}
-            >
-              {isDark ? <SunIcon /> : <MoonIcon />}
+            <button type="button" className="s-icon-btn s-nav__theme" onClick={toggleTheme} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>
+              <Icon name={isDark ? 'sun' : 'moon'} />
             </button>
-            <a href="/#contact" className="s-btn s-nav__cta" onClick={(e) => onItem(e, 'contact')}>
-              Get in touch
-            </a>
+            <Link to={profile.resume} className="s-icon-btn" aria-label="Résumé" title="Résumé">
+              <Icon name="user" />
+            </Link>
             <button
               ref={btnRef}
               type="button"
               className="s-icon-btn s-nav__menu-btn"
               aria-expanded={open}
-              aria-controls="site-menu"
-              aria-label={open ? 'Close menu' : 'Open menu'}
-              onClick={() => setOpen((v) => !v)}
+              aria-controls="site-drawer"
+              aria-label="Open menu"
+              onClick={() => setOpen(true)}
             >
-              {open ? <CloseIcon /> : <MenuIcon />}
+              <Icon name="menu" />
             </button>
           </div>
         </nav>
       </header>
 
-      <div id="site-menu" ref={menuRef} className={`s-menu${open ? ' is-open' : ''}`} aria-hidden={!open} inert={!open}>
-        <ul className="s-menu__list">
-          {NAV_ITEMS.map((item, i) => (
-            <li className="s-menu__item" key={item.id}>
-              <a href={`/#${item.id}`} className="s-menu__link" onClick={(e) => onItem(e, item.id)}>
-                {item.label}
-                <span className="s-label">0{i + 1}</span>
-              </a>
-            </li>
-          ))}
-          <li className="s-menu__item">
-            <Link to={profile.resume} className="s-menu__link">
-              Résumé
-              <span className="s-label">CV</span>
-            </Link>
-          </li>
-        </ul>
-        <div className="s-menu__foot">
-          <a className="s-link s-link--underlined" href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a className="s-link s-link--underlined" href={profile.github} target="_blank" rel="noreferrer">GitHub <Arrow dir="ne" /></a>
-          <a className="s-link s-link--underlined" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow dir="ne" /></a>
+      <div className={`s-scrim${open ? ' is-open' : ''}`} onClick={() => setOpen(false)} aria-hidden="true" />
+      <aside
+        id="site-drawer"
+        ref={drawerRef}
+        className={`s-drawer${open ? ' is-open' : ''}`}
+        aria-label="Menu"
+        aria-hidden={!open}
+        inert={!open}
+      >
+        <div className="s-drawer__head">
+          <Brand onClick={(e) => onItem(e, 'top')} />
+          <button type="button" className="s-icon-btn" onClick={() => setOpen(false)} aria-label="Close menu">
+            <Icon name="close" />
+          </button>
         </div>
-      </div>
+        <nav className="s-drawer__nav" aria-label="Sections">
+          {NAV_ITEMS.map((n) => (
+            <a key={n.id} href={n.id === 'top' ? '/' : `/#${n.id}`} className="s-drawer__item" aria-current={current(n.id)} onClick={(e) => onItem(e, n.id)}>
+              <Icon name={n.icon} />
+              {n.label}
+              <span className="s-drawer__arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </nav>
+        <div className="s-drawer__foot">
+          <Link to={profile.resume} className="s-drawer__item">
+            <Icon name="file" /> Résumé
+          </Link>
+          <button type="button" className="s-drawer__item s-drawer__theme" onClick={toggleTheme}>
+            <Icon name={isDark ? 'sun' : 'moon'} /> Toggle theme
+          </button>
+        </div>
+      </aside>
     </>
   );
 }

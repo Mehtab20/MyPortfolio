@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-22 — Rebuilt to the reference design (fawadiqbal.dev)
+
+- Design system re-extracted from the reference screenshots: see `docs/DESIGN_SPEC.md` (colours sampled from pixels, Outfit + Fira Code, 70px grid background, teal→cyan gradient, card/chip/pill/button specs, per-section wireframes).
+- `site.css` rewritten to that spec; light (#f8f9f8) and dark (#090f16) themes.
+- New layout matching the reference: scroll progress bar, avatar + gradient-name navbar, left slide-in drawer, centred photo hero with mono role badge, About (What I bring + At a glance), Services, Skills cards, Featured Projects with All/Featured tabs and View Details, Experience timeline, Education cards, Let's Connect (info cards + form), footer, back-to-top button.
+- Case study pages restyled as card sections.
+- Not carried over: skill percentages, stat counters, testimonials, certifications and blog (no verified content).
+
 ## 2026-11-18 — Editorial redesign of the public site (branch `redesign/editorial-portfolio`)
 
 ### Added
