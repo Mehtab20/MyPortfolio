@@ -5,14 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#05070A" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#090f16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8f9f8" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
 
     <!-- Primary Meta Tags -->
-    <title>Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud</title>
-    <meta name="title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
-    <meta name="description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps with Flutter, and cloud-native solutions. React, Python, FastAPI, AWS, DevOps. Based in Islamabad, Pakistan." />
-    <meta name="keywords" content="Mehtab Akbar, Software Engineer, React Developer, Flutter Developer, AI Engineer, Cloud DevOps Engineer, Full-Stack Developer, Python, FastAPI, AWS, Docker, Portfolio, Islamabad, Pakistan" />
+    <title>Mehtab Akbar — Software Engineer, AI Product Builder, Full-Stack Developer</title>
+    <meta name="title" content="Mehtab Akbar — Software Engineer, AI Product Builder, Full-Stack Developer" />
+    <meta name="description" content="Mehtab Akbar is a software engineer in Pakistan who builds AI-native products and full-stack systems: MehZu AI, the MedRef referral system and a hospital management system for Gohar Medical Trust." />
+    <meta name="keywords" content="Mehtab Akbar, Software Engineer, AI Product Builder, Full-Stack Developer, React, TypeScript, Flutter, FastAPI, Convex, Pakistan" />
     <meta name="author" content="Mehtab Akbar" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
@@ -22,9 +23,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mehtabakbar.com" />
     <meta property="og:site_name" content="Mehtab Akbar" />
-    <meta property="og:title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
-    <meta property="og:description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps, and cloud-native solutions. React • Flutter • Python • AWS." />
-    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:title" content="Mehtab Akbar — Software Engineer, AI Product Builder, Full-Stack Developer" />
+    <meta property="og:description" content="AI-native products and full-stack systems, from schema to screen. Case studies: MehZu AI, MedRef and Gohar Medical Trust HMS." />
+    <meta property="og:image" content="https://mehtabakbar.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
@@ -32,9 +33,9 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://mehtabakbar.com" />
-    <meta name="twitter:title" content="Mehtab Akbar | Software Engineer — React, Flutter, AI &amp; Cloud" />
-    <meta name="twitter:description" content="Software Engineer building AI-powered healthcare systems, cross-platform mobile apps, and cloud-native solutions." />
-    <meta name="twitter:image" content="/og-image.svg" />
+    <meta name="twitter:title" content="Mehtab Akbar — Software Engineer, AI Product Builder, Full-Stack Developer" />
+    <meta name="twitter:description" content="AI-native products and full-stack systems, from schema to screen." />
+    <meta name="twitter:image" content="https://mehtabakbar.com/og-image.png" />
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -45,8 +46,9 @@
       "givenName": "Mehtab",
       "familyName": "Akbar",
       "url": "https://mehtabakbar.com",
-      "image": "/og-image.svg",
+      "image": "https://mehtabakbar.com/og-image.png",
       "jobTitle": "Software Engineer",
+      "description": "Software engineer building AI-native products and full-stack systems.",
       "knowsAbout": [
         "Cloud Computing",
         "DevOps",
@@ -86,7 +88,8 @@
     <!-- Prevent FOUC -->
     <script>
       (function() {
-        var saved = localStorage.getItem('theme');
+        var saved = null;
+        try { saved = localStorage.getItem('portfolio-theme'); } catch (e) {}
         if (saved) {
           document.documentElement.setAttribute('data-theme', saved);
         }
@@ -110,14 +113,14 @@
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background: #05070A;
+          background: #090f16;
         }
         #root:empty::after {
           content: '';
           width: 40px;
           height: 40px;
-          border: 3px solid rgba(20,184,166,0.2);
-          border-top-color: #14b8a6;
+          border: 2px solid rgba(238,235,228,0.12);
+          border-top-color: #2dd4bf;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
         }

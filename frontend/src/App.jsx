@@ -10,6 +10,7 @@ import PageTransition from './components/layout/PageTransition';
 
 // ─── Eager-loaded (critical path) ──
 import Landing from './pages/Landing';
+import CaseStudy from './pages/CaseStudy';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingScreen from './components/layout/LoadingScreen';
 
@@ -60,7 +61,8 @@ export default function App() {
           />
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<LandingWrapper />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/work/:slug" element={<CaseStudy />} />
             <Route path="/login" element={<SuspenseRoute><Login /></SuspenseRoute>} />
             <Route path="/signup" element={<SuspenseRoute><Signup /></SuspenseRoute>} />
             <Route path="/forgot-password" element={<SuspenseRoute><ForgotPassword /></SuspenseRoute>} />
@@ -91,13 +93,6 @@ export default function App() {
 }
 
 /* ── Helpers ── */
-import { useTheme } from './context/ThemeContext';
-
-function LandingWrapper() {
-  const { theme, toggleTheme } = useTheme();
-  return <Landing theme={theme} toggleTheme={toggleTheme} />;
-}
-
 function SuspenseRoute({ children }) {
   return <PageSuspense><PageTransition>{children}</PageTransition></PageSuspense>;
 }
