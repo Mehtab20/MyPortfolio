@@ -26,7 +26,7 @@ const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 // never flash the pre-rendered home page while the app loads.
 fs.writeFileSync(path.join(dist, 'app.html'), template);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const SITE = 'https://mehtabakbar.com';
+const SITE = 'https://www.mehtabakbar.com';
 
 function setMeta(html, re, replacement) {
   if (!re.test(html)) throw new Error(`Template is missing ${re}`);

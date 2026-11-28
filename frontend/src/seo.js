@@ -1,7 +1,7 @@
 /* Page metadata and structured data, shared by the client and the pre-renderer. */
 import { profile, work, toolkit, education } from './data/site';
 
-export const SITE_URL = 'https://mehtabakbar.com';
+export const SITE_URL = 'https://www.mehtabakbar.com';
 
 const HOME_TITLE = `${profile.name} — ${profile.positioning.join(', ')}`;
 const HOME_DESC =

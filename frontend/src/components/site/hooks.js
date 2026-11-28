@@ -74,7 +74,7 @@ export function usePageMeta({ title, description, path }) {
     setMeta('meta[name="twitter:title"]', 'content', title);
     setMeta('meta[name="twitter:description"]', 'content', description);
     if (path) {
-      const url = `https://mehtabakbar.com${path}`;
+      const url = `https://www.mehtabakbar.com${path}`;
       setMeta('link[rel="canonical"]', 'href', url);
       setMeta('meta[property="og:url"]', 'content', url);
     }
