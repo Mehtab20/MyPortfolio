@@ -42,7 +42,7 @@ export default function Resume() {
             <span aria-hidden="true"> · </span>
             <a href={profile.github}>github.com/Mehtab20</a>
             <span aria-hidden="true"> · </span>
-            <a href="https://mehtabakbar.com">mehtabakbar.com</a>
+            <a href="https://www.mehtabakbar.com">mehtabakbar.com</a>
           </p>
           <p className="s-cv__summary">{profile.tagline}</p>
         </header>
@@ -68,7 +68,7 @@ export default function Resume() {
             {work.map((p) => (
               <li key={p.slug}>
                 <strong>{p.title}</strong> — {p.status.label}
-                {p.caseStudy ? <> · <a href={`https://mehtabakbar.com/work/${p.slug}`}>case study</a></> : null}
+                {p.caseStudy ? <> · <a href={`https://www.mehtabakbar.com/work/${p.slug}`}>case study</a></> : null}
               </li>
             ))}
           </ul>

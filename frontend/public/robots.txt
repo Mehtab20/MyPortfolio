@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mehtabakbar.com/sitemap.xml
+Sitemap: https://www.mehtabakbar.com/sitemap.xml
