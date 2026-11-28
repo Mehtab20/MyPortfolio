@@ -17,7 +17,7 @@ function NowFlow({ project }) {
       ))}
       {cols.map((n, i) => (
         <g key={n.t}>
-          <rect className={`f-node${n.hot ? ' f-node--hot' : ''}`} x={4 + i * step} y="14" width={bw} height="36" />
+          <rect className={`f-node${n.hot ? ' f-node--hot' : ''}`} x={4 + i * step} y="14" width={bw} height="36" rx="10" />
           <text x={4 + i * step + bw / 2} y="36" textAnchor="middle">{n.t}</text>
         </g>
       ))}
@@ -60,7 +60,7 @@ export default function Hero() {
           {now && (
             <aside className="s-now s-enter" style={{ '--d': '0.5s' }} aria-label="Now building">
               <div className="s-now__head">
-                <span className="s-label">Now building</span>
+                <span className="s-ai-label"><span className="s-orb" aria-hidden="true" />Now building · AI</span>
                 <span className={`s-status s-status--${now.status.tone}`}>{now.status.label}</span>
               </div>
               <div className="s-now__body">
