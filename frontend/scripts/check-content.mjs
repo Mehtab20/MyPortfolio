@@ -26,6 +26,15 @@ for (const f of files) {
       for (const k of ['slug', 'title', 'kind', 'summary', 'status']) if (!p[k]) errors.push(`projects.json: ${p.slug || '?'} missing ${k}`);
       if (slugs.has(p.slug)) errors.push(`projects.json: duplicate slug ${p.slug}`);
       slugs.add(p.slug);
+      // Every architecture layer must state its evidence grade and, unless planned, where the code is.
+      for (const a of p.caseStudy?.architecture || []) {
+        if (!['verified', 'implemented', 'partial', 'planned'].includes(a.evidence)) errors.push(`projects.json: ${p.slug} / ${a.layer} has no valid evidence grade`);
+        if (a.evidence !== 'planned' && !/^https:\/\/github\.com\//.test(a.source || '')) errors.push(`projects.json: ${p.slug} / ${a.layer} needs a source link`);
+      }
+      for (const im of p.caseStudy?.gallery?.images || []) {
+        if (!fs.existsSync(path.join(root, 'public', im.src))) errors.push(`projects.json: ${p.slug} gallery image missing: ${im.src}`);
+        if (!im.alt) errors.push(`projects.json: ${p.slug} gallery image needs alt text: ${im.src}`);
+      }
     }
   }
 }

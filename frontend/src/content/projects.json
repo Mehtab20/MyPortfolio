@@ -24,8 +24,8 @@
     ],
     "links": [
       {
-        "label": "Public repository",
-        "href": "https://github.com/Mehtab20/Mehzu-Ai"
+        "label": "Repository",
+        "href": "https://github.com/Mehtab20/mehzu_ai"
       }
     ],
     "diagram": {
@@ -103,23 +103,33 @@
       "architecture": [
         {
           "layer": "Client",
-          "detail": "React 19 + TypeScript SPA with lazy-loaded routes, shadcn/ui on Tailwind CSS v4, Framer Motion and React Router v7."
+          "detail": "React 19 + TypeScript SPA with lazy-loaded routes, shadcn/ui on Tailwind CSS v4, Framer Motion and React Router v7.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/mehzu_ai/tree/main/src"
         },
         {
           "layer": "Backend",
-          "detail": "Convex queries, mutations and actions over 13 tables: users, preferences, journal entries, habits and logs, prayer and Quran logs, workout sessions and sets, goals, conversations, messages and AI memories."
+          "detail": "Convex queries, mutations and actions over 13 tables: users, preferences, journal entries, habits and logs, prayer and Quran logs, workout sessions and sets, goals, conversations, messages and AI memories.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/schema.ts"
         },
         {
           "layer": "Auth",
-          "detail": "Convex Auth with email one-time passcodes and a protected-route pattern that returns users to the page they asked for."
+          "detail": "Convex Auth with email one-time passcodes and a protected-route pattern that returns users to the page they asked for.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/auth/emailOtp.ts"
         },
         {
           "layer": "AI",
-          "detail": "A provider resolver picks the configured LLM (Groq, OpenRouter, Gemini or OpenAI), so chat and the daily briefing share one code path and switching models is a configuration change."
+          "detail": "A provider resolver picks the configured LLM (Groq, OpenRouter, Gemini or OpenAI), so chat and the daily briefing share one code path and switching models is a configuration change.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/aiProvider.ts"
         },
         {
           "layer": "Context",
-          "detail": "A central context builder gathers recent user data with ownership checks and bounded result sets, then hands a structured context to the prompt."
+          "detail": "A central context builder gathers recent user data with ownership checks and bounded result sets, then hands a structured context to the prompt.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/aiContext.ts"
         }
       ],
       "decisions": [
@@ -154,9 +164,31 @@
         "Daily briefing and data-based insights"
       ],
       "next": [
+        "Adding automated tests: there are none yet",
         "Working through the production launch checklist",
         "Deeper long-term memory and more proactive suggestions"
-      ]
+      ],
+      "gallery": {
+        "caption": "Design prototype with sample data, from the project repository. Not screens from a live deployment.",
+        "images": [
+          {
+            "src": "/work/mehzu/today-m.webp",
+            "alt": "MehZu Today screen on mobile, prototype with sample data"
+          },
+          {
+            "src": "/work/mehzu/habits-m.webp",
+            "alt": "MehZu habits screen on mobile, prototype with sample data"
+          },
+          {
+            "src": "/work/mehzu/briefing-m.webp",
+            "alt": "MehZu daily briefing on mobile, prototype with sample data"
+          },
+          {
+            "src": "/work/mehzu/memory-m.webp",
+            "alt": "MehZu memory screen on mobile, prototype with sample data"
+          }
+        ]
+      }
     }
   },
   {
@@ -171,7 +203,7 @@
       "tone": "done"
     },
     "role": "Final year project: backend, ML pipeline & mobile app",
-    "summary": "Patients describe symptoms in text or upload a skin or chest image. NLP and CNN models analyse the input, and the app suggests which kind of specialist to see, with nearby options and a saved history.",
+    "summary": "Patients describe symptoms in text or upload a skin or chest image, and the app suggests which kind of specialist to see, with a saved history. Text routing is rule-based NLP; image analysis can use trained CNNs when the model files are installed.",
     "stack": [
       "Flutter",
       "Dart",
@@ -180,18 +212,21 @@
       "SQLAlchemy",
       "TensorFlow / Keras",
       "scikit-learn",
-      "spaCy",
-      "PostgreSQL",
-      "Docker"
+      "SQLite",
+      "PostgreSQL"
     ],
     "links": [
       {
         "label": "Repository",
         "href": "https://github.com/Mehtab20/final_year_project"
+      },
+      {
+        "label": "MedRef AI repository",
+        "href": "https://github.com/Mehtab20/medref-ai"
       }
     ],
     "diagram": {
-      "caption": "Two-stage inference",
+      "caption": "Two input paths",
       "columns": [
         {
           "label": "Flutter app",
@@ -209,12 +244,12 @@
           "nodes": [
             {
               "t": "NLP service",
-              "s": "spaCy + classifier"
+              "s": "keyword rules + score",
+              "hot": true
             },
             {
               "t": "Image pipeline",
-              "s": "local CNN → HF fallback",
-              "hot": true
+              "s": "CNNs if installed"
             }
           ]
         },
@@ -223,7 +258,7 @@
           "nodes": [
             {
               "t": "Specialist service",
-              "s": "department + distance",
+              "s": "by department",
               "hot": true
             }
           ]
@@ -232,10 +267,11 @@
           "label": "Result",
           "nodes": [
             {
-              "t": "Risk-aware report"
+              "t": "Specialist report"
             },
             {
-              "t": "Nearby specialists"
+              "t": "Suggested contacts",
+              "s": "placeholder data"
             },
             {
               "t": "Saved history"
@@ -250,35 +286,55 @@
         "MedRef targets that first step: describe what’s wrong, or photograph it, and get a clear suggestion of which kind of specialist to see."
       ],
       "approach": [
-        "There are two input paths. Text symptoms go through an NLP service and a trained referral classifier. Images go through a two-stage pipeline: locally trained skin and chest CNNs run first, and the Hugging Face Inference API is used as a fallback. Both paths return a structured report that names a specialist, for example a dermatologist or a pulmonologist.",
-        "A specialist service then matches by department and distance, and every analysis is saved to the user’s history. A second iteration, MedRef AI, rebuilt the client in Flutter with patient, doctor and admin roles, so doctors can review and claim high-risk cases."
+        "There are two input paths. Text symptoms go through a rule-based NLP service that maps symptom keywords to a specialist. Images go through a pipeline that uses locally trained skin and chest CNNs when their model files are installed, and can call the Hugging Face Inference API instead. Both paths return a structured report naming a specialist, for example a dermatologist or a pulmonologist.",
+        "A second iteration, MedRef AI, replaced free text with a weighted symptom questionnaire and added patient, doctor and admin roles, so doctors can review and claim high-risk cases."
       ],
       "architecture": [
         {
           "layer": "Client",
-          "detail": "Flutter app for Android, web and desktop. It handles login, symptom input, image upload from camera or gallery, results and history, and detects the right API base URL for emulator, web or physical device."
+          "detail": "Flutter app for Android, web and desktop. It handles login, symptom input, image upload from camera or gallery, results and history, and picks the right API base URL for emulator, web or physical device.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/final_year_project/tree/main/frontend/lib"
         },
         {
           "layer": "API",
-          "detail": "FastAPI REST service: /auth (JWT), /analyze/text, /analyze/image and /history, with uploaded images served from /uploads."
+          "detail": "FastAPI REST service: /auth (JWT), /analyze/text, /analyze/image and /history, with uploaded images served from /uploads.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/final_year_project/tree/main/backend/app/api"
+        },
+        {
+          "layer": "NLP",
+          "detail": "Keyword rules map described symptoms to a specialist and return a rule score. I ran this service against sample inputs while reviewing the code.",
+          "evidence": "verified",
+          "source": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/services/nlp_service.py"
         },
         {
           "layer": "Models",
-          "detail": "Skin and chest CNNs (Keras .h5) and a scikit-learn referral classifier (.joblib), trained in a Colab notebook and loaded at startup."
+          "detail": "Loaders for skin and chest CNNs (Keras .h5) and a referral classifier (.joblib). The trained files are not in the repository; a script downloads them.",
+          "evidence": "partial",
+          "source": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/ai/model_loader.py"
         },
         {
           "layer": "Data",
-          "detail": "SQLAlchemy models for users, referrals and feedback, on SQLite in the first version and PostgreSQL in the MedRef AI rebuild. The backend has a Dockerfile."
+          "detail": "SQLAlchemy models for users, referrals and feedback on SQLite. The MedRef AI rebuild targets PostgreSQL and includes a Dockerfile.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/final_year_project/tree/main/backend/app/models"
+        },
+        {
+          "layer": "Questionnaire",
+          "detail": "MedRef AI sums weighted questionnaire answers into a risk level and flags high-risk cases for doctors. I ran this engine against sample answers while reviewing the code.",
+          "evidence": "verified",
+          "source": "https://github.com/Mehtab20/medref-ai/blob/main/backend/app/services/diagnosis_engine.py"
         }
       ],
       "decisions": [
         {
           "title": "Degrade, don’t fail",
-          "body": "If the trained model files are missing, the backend falls back to keyword NLP and heuristic image routing, so the app still runs end to end in development and demos."
+          "body": "When the trained model files are missing, the backend falls back to keyword rules and heuristic image routing, so the app still runs end to end in development and demos."
         },
         {
-          "title": "Local first, cloud as backup",
-          "body": "Image analysis tries the local CNNs before calling the Hugging Face Inference API. That keeps routine requests on the server, and it still returns an answer when a local model fails."
+          "title": "Honest confidence",
+          "body": "On the rule-based path, the confidence value is a rule score, not a model probability, and the report should be read that way."
         },
         {
           "title": "Every analysis is persisted",
@@ -286,23 +342,24 @@
         },
         {
           "title": "Roles that mirror a clinic",
-          "body": "In MedRef AI, patients, doctors and admins get separate flows. High-risk cases surface to doctors, who can claim them, and admins see system analytics."
+          "body": "In MedRef AI, patients, doctors and admins get separate flows. High-risk cases surface to doctors, who can claim them."
         }
       ],
       "contribution": [
         "FastAPI backend: auth, analysis endpoints, history and uploads",
-        "NLP and image-analysis services, plus the specialist-matching logic",
+        "Rule-based NLP service, image-analysis pipeline and specialist matching",
         "Model training notebook and model loading",
-        "Flutter client, including the role-based MedRef AI rebuild"
+        "Flutter client, and the questionnaire-based MedRef AI rebuild with clinical roles"
       ],
       "built": [
         "Text and image analysis with structured, specialist-tagged reports",
         "JWT authentication and per-user history",
-        "Specialist matching by department and distance",
-        "Patient, doctor and admin roles in the Flutter rebuild"
+        "Specialist suggestions by department (contact details are placeholder data)",
+        "Patient, doctor and admin roles in MedRef AI"
       ],
       "next": [
-        "Clinical validation. The models haven’t been evaluated in a clinical setting, so their output is guidance, not a diagnosis"
+        "Clinical validation. Nothing has been evaluated in a clinical setting, so the output is guidance, not a diagnosis",
+        "Replacing placeholder specialist data with a real directory"
       ],
       "note": "MedRef is an academic project. Its suggestions are not medical advice."
     }
@@ -362,7 +419,7 @@
           "nodes": [
             {
               "t": "RBAC matrix",
-              "s": "9 roles × 13 modules",
+              "s": "10 roles × 12 modules",
               "hot": true
             }
           ]
@@ -393,7 +450,7 @@
           "label": "Convex",
           "nodes": [
             {
-              "t": "21 tables",
+              "t": "20 tables",
               "s": "indexed, validated",
               "hot": true
             }
@@ -407,25 +464,33 @@
         "Each group of staff has its own pain points: reception, clinicians, nurses and administration. A system that fits only one of them wouldn’t be used."
       ],
       "approach": [
-        "I modelled the hospital before building screens. That meant a Convex schema with indexes and validation, and a role-based permission matrix of 9 staff roles across 13 modules.",
+        "I modelled the hospital before building screens. That meant a Convex schema with indexes and validation, and a role-based permission matrix of 10 staff roles across 12 modules.",
         "Delivery follows the clinical flow in phases: foundation, then patients, departments and rooms, appointments, admission/discharge/transfer, medical records and the lab system. Each phase is documented and finished before the next one starts."
       ],
       "architecture": [
         {
           "layer": "Client",
-          "detail": "React + TypeScript on Vite, with shadcn/ui and Tailwind. A responsive app shell has a fixed desktop sidebar and a mobile drawer, plus route guards with return-to redirects."
+          "detail": "React + TypeScript on Vite, with shadcn/ui and Tailwind. A responsive app shell has a fixed desktop sidebar and a mobile drawer, plus route guards with return-to redirects.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/Gohar-Medical-Trust/tree/main/src"
         },
         {
           "layer": "Backend",
-          "detail": "Convex serverless functions over a 21-table schema with indexes and validation."
+          "detail": "Convex serverless functions over a 20-table schema with indexes and validation.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/schema.ts"
         },
         {
           "layer": "Access",
-          "detail": "Convex Auth plus an RBAC permission matrix that checks every module against the user’s role."
+          "detail": "Convex Auth plus an RBAC permission matrix that checks every module against the user’s role.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/helpers/permissions.ts"
         },
         {
           "layer": "UI kit",
-          "detail": "Reusable DataTable (sortable and filterable), debounced SearchInput, StatusBadge and EmptyState components shared across modules."
+          "detail": "Reusable DataTable (sortable and filterable), debounced SearchInput, StatusBadge and EmptyState components shared across modules.",
+          "evidence": "implemented",
+          "source": "https://github.com/Mehtab20/Gohar-Medical-Trust/tree/main/src/components"
         }
       ],
       "decisions": [
