@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SiteLayout from '../components/site/SiteLayout';
-import ProjectDiagram from '../components/site/ProjectDiagram';
+import ProjectDiagram, { nodeId } from '../components/site/ProjectDiagram';
 import { StatusBadge } from '../components/site/Work';
 import { Icon } from '../components/site/Icons';
 import { useReveal, usePageMeta } from '../components/site/hooks';
@@ -86,6 +86,39 @@ function Explorer({ layers }) {
   );
 }
 
+/** The architecture diagram as an explorer: pick a part, read what it does and where the code is. */
+function DiagramExplorer({ project }) {
+  const cols = project.diagram.columns;
+  const all = cols.flatMap((c, ci) => c.nodes.map((n, ni) => ({ ...n, id: nodeId(ci, ni), col: c.label })));
+  const first = all.find((n) => n.hot) || all[0];
+  const [sel, setSel] = useState(first.id);
+  const n = all.find((x) => x.id === sel) || first;
+  return (
+    <div className="s-diagram">
+      <figure className="s-diagram__fig">
+        <ProjectDiagram project={project} selected={sel} onSelect={setSel} />
+        <figcaption className="s-label s-diagram__hint">Select any part of the diagram to see what it does</figcaption>
+      </figure>
+      <div className="s-diagram__panel" aria-live="polite">
+        <p className="s-label">{n.col}</p>
+        <h3>{n.t}</h3>
+        {n.d && <p>{n.d}</p>}
+        {n.why && <p className="s-diagram__why"><strong>Why</strong>{n.why}</p>}
+        {n.ev && (
+          <p style={{ fontSize: 14 }}>
+            <Grade level={n.ev} /> <span style={{ marginLeft: 8 }}>{GRADES[n.ev].note}</span>
+          </p>
+        )}
+        {n.src && (
+          <a className="s-explorer__src" href={n.src} target="_blank" rel="noreferrer">
+            <Icon name="github" /> {n.src.replace('https://github.com/Mehtab20/', '').replace(/\/(blob|tree)\/main\//, ' / ')}
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function CaseStudy() {
   const { slug } = useParams();
   const project = getProject(slug);
@@ -137,10 +170,10 @@ export default function CaseStudy() {
           </dl>
         </header>
 
-        <figure className="s-figure s-enter" style={{ '--d': '0.25s' }}>
-          <ProjectDiagram project={project} />
-          <figcaption className="s-label">Architecture · {project.stack.join(' · ')}</figcaption>
-        </figure>
+        <div className="s-enter" style={{ '--d': '0.25s' }}>
+          <DiagramExplorer project={project} />
+          <p className="s-label" style={{ marginTop: 12 }}>Stack · {project.stack.join(' · ')}</p>
+        </div>
 
         <Block n={num()} label="Context" title="Problem and approach">
           <div className="s-cs__prose s-cs__prose--2">
@@ -155,7 +188,7 @@ export default function CaseStudy() {
           </div>
         </Block>
 
-        <Block n={num()} label="Architecture" title="Explore the layers">
+        <Block n={num()} label="Architecture" title="Layer by layer">
           <Explorer layers={cs.architecture} />
         </Block>
 

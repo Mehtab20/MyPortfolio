@@ -76,10 +76,38 @@ function edgePath(a, b, dir) {
   return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
 }
 
-export default function ProjectDiagram({ project, hideCaption = false }) {
+/** Stable id for a node: "column-row". */
+export const nodeId = (ci, ni) => `${ci}-${ni}`;
+
+/**
+ * Edges: a column with several nodes funnels into the next column's hub
+ * (its hot node, or its first); a single-node column fans out to every node
+ * of the next column. Edges between two hot nodes are animated.
+ */
+function buildEdges(L) {
+  const edges = [];
+  for (let i = 0; i < L.nodes.length - 1; i++) {
+    const cur = L.nodes[i];
+    const next = L.nodes[i + 1];
+    if (cur.length > 1) {
+      const hi = Math.max(0, next.findIndex((n) => n.hot));
+      cur.forEach((n, ni) => edges.push({ d: edgePath(n, next[hi], L.dir), hot: Boolean(n.hot && next[hi].hot), a: nodeId(i, ni), b: nodeId(i + 1, hi) }));
+    } else {
+      next.forEach((n, ni) => edges.push({ d: edgePath(cur[0], n, L.dir), hot: Boolean(cur[0].hot && n.hot), a: nodeId(i, 0), b: nodeId(i + 1, ni) }));
+    }
+  }
+  return edges;
+}
+
+/**
+ * `selected` + `onSelect` make the nodes keyboard-focusable buttons; without
+ * them the diagram is a static picture.
+ */
+export default function ProjectDiagram({ project, hideCaption = false, selected = null, onSelect = null }) {
   const narrow = useMediaQuery('(max-width: 640px)');
   const titleId = useId();
   const { diagram } = project;
+  const interactive = typeof onSelect === 'function';
 
   const L = useMemo(
     () => (diagram ? (narrow ? layoutTall(diagram.columns) : layoutWide(diagram.columns)) : null),
@@ -96,26 +124,34 @@ export default function ProjectDiagram({ project, hideCaption = false }) {
     );
   }
 
-  // Edges: a column with several nodes funnels into the next column's hub
-  // (its hot node, or its first); a single-node column fans out to every
-  // node of the next column. Edges between two hot nodes are animated.
-  const edges = [];
-  for (let i = 0; i < L.nodes.length - 1; i++) {
-    const cur = L.nodes[i];
-    const next = L.nodes[i + 1];
-    if (cur.length > 1) {
-      const hub = next.find((n) => n.hot) || next[0];
-      cur.forEach((n) => edges.push({ d: edgePath(n, hub, L.dir), hot: Boolean(n.hot && hub.hot) }));
-    } else {
-      next.forEach((n) => edges.push({ d: edgePath(cur[0], n, L.dir), hot: Boolean(cur[0].hot && n.hot) }));
-    }
-  }
-
+  const edges = buildEdges(L);
   const fs = L.fontScale;
-  const flat = L.nodes.flat();
+  const flat = L.nodes.flatMap((col, ci) => col.map((n, ni) => ({ ...n, id: nodeId(ci, ni), col: diagram.columns[ci].label })));
+  const linked = new Set(selected ? edges.filter((e) => e.a === selected || e.b === selected).flatMap((e) => [e.a, e.b]) : []);
+  const order = flat.map((n) => n.id);
+
+  const onKey = (e, id) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect(id);
+      return;
+    }
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!step) return;
+    e.preventDefault();
+    const next = order[(order.indexOf(id) + step + order.length) % order.length];
+    onSelect(next);
+    e.currentTarget.ownerSVGElement?.querySelector(`[data-node="${next}"]`)?.focus();
+  };
 
   return (
-    <svg viewBox={`0 0 ${L.W} ${L.H}`} role="img" aria-labelledby={titleId} preserveAspectRatio="xMidYMid meet">
+    <svg
+      viewBox={`0 0 ${L.W} ${L.H}`}
+      role={interactive ? 'group' : 'img'}
+      aria-labelledby={titleId}
+      preserveAspectRatio="xMidYMid meet"
+      className={`${interactive ? 'pv-interactive' : ''}${selected ? ' pv-has-sel' : ''}`}
+    >
       <title id={titleId}>
         {`${project.title} architecture: ${diagram.columns.map((c) => `${c.label} (${c.nodes.map((n) => n.t).join(', ')})`).join(' → ')}`}
       </title>
@@ -134,28 +170,44 @@ export default function ProjectDiagram({ project, hideCaption = false }) {
           {l.text}
         </text>
       ))}
-      {edges.map((e, i) => (
-        <path key={i} className={`pv-edge${e.hot ? ' pv-edge--hot' : ''}`} d={e.d} />
-      ))}
-      {flat.map((n, i) => (
-        <g key={i}>
-          <rect className={`pv-node${n.hot ? ' pv-node--hot' : ''}`} x={n.x} y={n.y} width={n.w} height={n.h} rx="9" />
-          {n.hot && <circle className="pv-dot" cx={n.x + n.w - 12} cy={n.y + 12} r="3" />}
-          <text
-            className="pv-node-text"
-            x={n.x + 12}
-            y={n.y + (n.s && n.showSub ? 23 : n.h / 2 + 4.5)}
-            style={{ fontSize: 13 * fs }}
-          >
-            {n.t}
-          </text>
-          {n.s && n.showSub && (
-            <text className="pv-node-sub" x={n.x + 12} y={n.y + 41}>
-              {n.s}
+      {edges.map((e, i) => {
+        const on = selected && (e.a === selected || e.b === selected);
+        return <path key={i} className={`pv-edge${e.hot ? ' pv-edge--hot' : ''}${on ? ' pv-edge--on' : ''}`} d={e.d} />;
+      })}
+      {flat.map((n) => {
+        const sel = n.id === selected;
+        const cls = `pv-node${n.hot ? ' pv-node--hot' : ''}${sel ? ' pv-node--sel' : ''}`;
+        const body = (
+          <>
+            <rect className={cls} x={n.x} y={n.y} width={n.w} height={n.h} rx="9" />
+            {n.hot && <circle className="pv-dot" cx={n.x + n.w - 12} cy={n.y + 12} r="3" />}
+            <text className="pv-node-text" x={n.x + 12} y={n.y + (n.s && n.showSub ? 23 : n.h / 2 + 4.5)} style={{ fontSize: 13 * fs }}>
+              {n.t}
             </text>
-          )}
-        </g>
-      ))}
+            {n.s && n.showSub && (
+              <text className="pv-node-sub" x={n.x + 12} y={n.y + 41}>
+                {n.s}
+              </text>
+            )}
+          </>
+        );
+        if (!interactive) return <g key={n.id}>{body}</g>;
+        return (
+          <g
+            key={n.id}
+            data-node={n.id}
+            className={`pv-hit${sel ? ' is-sel' : ''}${selected && !sel && !linked.has(n.id) ? ' is-dim' : ''}`}
+            role="button"
+            tabIndex={sel || (!selected && n.id === order[0]) ? 0 : -1}
+            aria-pressed={sel}
+            aria-label={`${n.t}, ${n.col}`}
+            onClick={() => onSelect(n.id)}
+            onKeyDown={(e) => onKey(e, n.id)}
+          >
+            {body}
+          </g>
+        );
+      })}
     </svg>
   );
 }

@@ -35,19 +35,34 @@
           "label": "Life data",
           "nodes": [
             {
-              "t": "Journal & mood"
+              "t": "Journal & mood",
+              "d": "Daily entries with a mood score and tags, readable by date or ID. Every query resolves the signed-in user and only returns their own entries.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/journal.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Habits"
+              "t": "Habits",
+              "d": "Habits with a per-day toggle, plus a query that returns each habit with today’s completion status.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/habits.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Prayer & Quran"
+              "t": "Prayer & Quran",
+              "d": "Logs the five daily prayers, a streak, and pages of Quran read per day.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/prayer.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Workouts"
+              "t": "Workouts",
+              "d": "Workout sessions made of sets, with an active-session flow (start, add sets, complete or cancel) and per-exercise history.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/workout.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Goals"
+              "t": "Goals",
+              "d": "Goals with category, target date, progress and status. Reads and writes enforce ownership.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/goals.ts",
+              "ev": "implemented"
             }
           ]
         },
@@ -57,11 +72,19 @@
             {
               "t": "Context assembly",
               "s": "owner-checked, bounded",
-              "hot": true
+              "hot": true,
+              "d": "Builds the context string the AI sees: recent journal entries, moods, habits, prayers, workouts, goals and important memories. Each source is capped (for example 5 entries, 15 memories) and a failing source is skipped rather than breaking the reply.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/aiContext.ts",
+              "ev": "implemented",
+              "why": "Bounded, owner-checked queries keep prompts small and stop one user’s data leaking into another’s conversation."
             },
             {
               "t": "AI memories",
-              "s": "importance threshold"
+              "s": "importance threshold",
+              "d": "Facts the AI learns from conversations, each with an importance score. Only memories scoring 6 or more are fed back into context.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/aiMemories.ts",
+              "ev": "implemented",
+              "why": "The parsing helpers are pure functions with no Convex or OpenAI imports, so they can be tested without an API key."
             }
           ]
         },
@@ -71,7 +94,11 @@
             {
               "t": "Provider resolver",
               "s": "4 providers, one path",
-              "hot": true
+              "hot": true,
+              "d": "Picks the LLM from whichever API key is set on the deployment: Groq, OpenRouter, Google Gemini or OpenAI, in that order. All of them are called through the same OpenAI-compatible client.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/aiProvider.ts",
+              "ev": "implemented",
+              "why": "Switching model is a configuration change, and chat and the briefing share one code path."
             }
           ]
         },
@@ -79,13 +106,23 @@
           "label": "Experience",
           "nodes": [
             {
-              "t": "Companion chat"
+              "t": "Companion chat",
+              "d": "The chat action: builds the user’s context, calls the resolved provider and returns the reply. Conversations and messages are stored by a separate module.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/ai.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Daily briefing"
+              "t": "Daily briefing",
+              "d": "Computes signals (mood trend, streaks, open habits) first, then asks the model to write a short briefing from that compact block only, and validates the JSON it returns.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/briefing.ts",
+              "ev": "implemented",
+              "why": "Sending a few dozen tokens of pre-computed facts instead of raw tables keeps the prompt cheap and makes invented details easy to spot."
             },
             {
-              "t": "Insights"
+              "t": "Insights",
+              "d": "Daily insights computed directly from logged data, without a model. If there’s no data, there’s no insight.",
+              "src": "https://github.com/Mehtab20/mehzu_ai/blob/main/src/convex/insights.ts",
+              "ev": "implemented"
             }
           ]
         }
@@ -232,10 +269,16 @@
           "label": "Flutter app",
           "nodes": [
             {
-              "t": "Symptom text"
+              "t": "Symptom text",
+              "d": "The Flutter home screen where a patient types symptoms and sends them to /analyze/text.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/frontend/lib/screens/home_screen.dart",
+              "ev": "implemented"
             },
             {
-              "t": "Skin / chest image"
+              "t": "Skin / chest image",
+              "d": "A Flutter screen for picking or taking a photo and sending it to /analyze/image.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/frontend/lib/screens/image_deep_scan_screen.dart",
+              "ev": "implemented"
             }
           ]
         },
@@ -245,11 +288,19 @@
             {
               "t": "NLP service",
               "s": "keyword rules + score",
-              "hot": true
+              "hot": true,
+              "d": "Matches symptom keywords against per-specialty rule lists (cardiology, dermatology, pulmonology and others) and returns a specialist with a rule score. spaCy is used for tokenising when installed.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/services/nlp_service.py",
+              "ev": "verified",
+              "why": "Rules work without trained models, so the app stays usable end to end. The score is a rule score, not a probability."
             },
             {
               "t": "Image pipeline",
-              "s": "CNNs if installed"
+              "s": "CNNs if installed",
+              "d": "Runs up to three stages: a local CNN if its model file is installed, the Hugging Face Inference API, and a heuristic fallback. It prefers the local CNN result when that succeeds.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/ai/image_analysis_pipeline.py",
+              "ev": "partial",
+              "why": "The trained model files aren’t in the repository, so in a fresh checkout the pipeline falls back to the API or the heuristic."
             }
           ]
         },
@@ -259,7 +310,10 @@
             {
               "t": "Specialist service",
               "s": "by department",
-              "hot": true
+              "hot": true,
+              "d": "Looks up specialists for the suggested department. With the patient’s location and a Google Places key it searches nearby clinics; otherwise it uses a built-in sample list, sorted by distance when a location is given.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/services/specialist_service.py",
+              "ev": "implemented"
             }
           ]
         },
@@ -267,14 +321,23 @@
           "label": "Result",
           "nodes": [
             {
-              "t": "Specialist report"
+              "t": "Specialist report",
+              "d": "Turns a saved referral into the API response the app shows: specialist, explanation, score and analysis details.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/utils/referral_serializer.py",
+              "ev": "implemented"
             },
             {
               "t": "Suggested contacts",
-              "s": "placeholder data"
+              "s": "placeholder data",
+              "d": "Nearby clinics come from Google Places when it’s configured, but phone numbers are generated, and the fallback list is sample data. Not suitable for real patients yet.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/services/places_service.py",
+              "ev": "partial"
             },
             {
-              "t": "Saved history"
+              "t": "Saved history",
+              "d": "Every analysis is stored as a referral. The history API lists, opens and deletes a user’s past referrals, including uploaded images.",
+              "src": "https://github.com/Mehtab20/final_year_project/blob/main/backend/app/api/history.py",
+              "ev": "implemented"
             }
           ]
         }
@@ -401,16 +464,28 @@
           "label": "Staff",
           "nodes": [
             {
-              "t": "Reception"
+              "t": "Reception",
+              "d": "Receptionists register patients and book appointments. Roles are defined once in a shared constants file.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/constants.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Doctors & nurses"
+              "t": "Doctors & nurses",
+              "d": "Clinical roles with create and update rights on patients, appointments and medical records.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/constants.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Lab"
+              "t": "Lab",
+              "d": "Lab technicians run the lab module: sample collection and results entry.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/constants.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Admin"
+              "t": "Admin",
+              "d": "Super admin and admin roles manage staff, departments and rooms.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/constants.ts",
+              "ev": "implemented"
             }
           ]
         },
@@ -420,7 +495,11 @@
             {
               "t": "RBAC matrix",
               "s": "10 roles × 12 modules",
-              "hot": true
+              "hot": true,
+              "d": "A roles × modules table of create/read/update/delete rights. Every write function checks it. Some read queries, such as admissions and departments, don’t check it yet.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/constants.ts",
+              "ev": "partial",
+              "why": "Keeping permissions as data makes them easy to audit; the open read queries are the next thing to close."
             }
           ]
         },
@@ -429,20 +508,35 @@
           "nodes": [
             {
               "t": "Patients",
-              "s": "MRN GMT-YYYY-XXXXX"
+              "s": "MRN GMT-YYYY-XXXXX",
+              "d": "Registration, search, detail and editing. Medical record numbers look like GMT-2026-48213 and are regenerated until unique.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/patients/mutations.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Appointments"
+              "t": "Appointments",
+              "d": "Booking, rescheduling and status changes, with a check for time conflicts with the same doctor.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/appointments/mutations.ts",
+              "ev": "implemented"
             },
             {
-              "t": "ADT workflow"
+              "t": "ADT workflow",
+              "d": "Admit, discharge and transfer. Admission checks the patient isn’t already admitted and the room has a free bed.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/adt/mutations.ts",
+              "ev": "implemented"
             },
             {
-              "t": "Medical records"
+              "t": "Medical records",
+              "d": "Create, update and delete clinical records linked to a patient.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/medical_records/mutations.ts",
+              "ev": "implemented"
             },
             {
               "t": "Lab system",
-              "hot": true
+              "hot": true,
+              "d": "Lab orders from request through sample collection to results, with cancellation and status updates.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/lab/mutations.ts",
+              "ev": "implemented"
             }
           ]
         },
@@ -452,7 +546,10 @@
             {
               "t": "20 tables",
               "s": "indexed, validated",
-              "hot": true
+              "hot": true,
+              "d": "The Convex schema: 20 tables with indexes and validators, including some (billing, pharmacy, radiology) for modules not built yet.",
+              "src": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/schema.ts",
+              "ev": "implemented"
             }
           ]
         }
@@ -482,8 +579,8 @@
         },
         {
           "layer": "Access",
-          "detail": "Convex Auth plus an RBAC permission matrix that checks every module against the user’s role.",
-          "evidence": "implemented",
+          "detail": "Convex Auth plus a roles × modules permission matrix. Every write function checks it; some read queries don’t yet.",
+          "evidence": "partial",
           "source": "https://github.com/Mehtab20/Gohar-Medical-Trust/blob/main/convex/helpers/permissions.ts"
         },
         {
@@ -500,7 +597,7 @@
         },
         {
           "title": "Permissions as data",
-          "body": "Access is defined as a roles × modules matrix rather than scattered checks, which makes it easy to audit and to extend when new staff roles appear."
+          "body": "Access is defined as a roles × modules matrix rather than scattered checks, which makes it easy to audit. Writes are all checked against it; closing the remaining read queries is next."
         },
         {
           "title": "Build in clinical order",
@@ -524,6 +621,7 @@
         "Lab information system"
       ],
       "next": [
+        "Enforcing the permission matrix on every read query, not just writes",
         "Radiology and imaging (phase 3.2)",
         "Pharmacy, billing and finance, HR and reporting",
         "AI-assisted features once the core workflows are in daily use"
