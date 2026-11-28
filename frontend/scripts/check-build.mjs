@@ -21,7 +21,7 @@ for (const [file, must] of Object.entries(routes)) {
   const text = textOf(html);
   if (text.length < 1500) errors.push(`${file}: only ${text.length} chars of pre-rendered text`);
   if (!text.includes(must)) errors.push(`${file}: expected "${must}" in pre-rendered text`);
-  if (!/<link rel="canonical" href="https:\/\/mehtabakbar\.com/.test(html)) errors.push(`${file}: canonical missing`);
+  if (!/<link rel="canonical" href="https:\/\/www\.mehtabakbar\.com/.test(html)) errors.push(`${file}: canonical missing`);
   if (!html.includes('application/ld+json')) errors.push(`${file}: JSON-LD missing`);
   if (/modulepreload[^>]+supabase/.test(html)) errors.push(`${file}: Supabase is preloaded on a public page`);
 }
