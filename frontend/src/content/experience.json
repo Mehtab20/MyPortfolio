@@ -43,19 +43,5 @@
       "PostgreSQL"
     ],
     "href": "/work/medref"
-  },
-  {
-    "title": "Freelance Full-Stack Developer",
-    "org": "Self-directed",
-    "when": "2024 – Present",
-    "where": "Rawalpindi, Pakistan",
-    "body": "Web and mobile work outside coursework, including business and inventory software for small organisations.",
-    "tags": [
-      "React",
-      "Node.js",
-      "Express",
-      "Supabase",
-      "Flutter"
-    ]
   }
 ]

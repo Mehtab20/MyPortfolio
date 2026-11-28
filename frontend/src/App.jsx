@@ -1,98 +1,36 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './context/AuthContext';
-import AuthGuard from './components/auth/AuthGuard';
-import AdminGuard from './components/auth/AdminGuard';
-import DashboardLayout from './components/layout/DashboardLayout';
-import PageTransition from './components/layout/PageTransition';
-
-// ─── Eager-loaded (critical path) ──
 import Landing from './pages/Landing';
 import CaseStudy from './pages/CaseStudy';
 import ErrorBoundary from './components/ErrorBoundary';
-import LoadingScreen from './components/layout/LoadingScreen';
 
-// ─── Lazy-loaded (code-split) ──
-const Login = lazy(() => import('./pages/auth/Login'));
-const Signup = lazy(() => import('./pages/auth/Signup'));
-const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
-const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
-const AiChat = lazy(() => import('./pages/dashboard/AiChat'));
-const Profile = lazy(() => import('./pages/dashboard/Profile'));
-const Settings = lazy(() => import('./pages/dashboard/Settings'));
-const Subscription = lazy(() => import('./pages/dashboard/Subscription'));
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
-const Analytics = lazy(() => import('./pages/admin/Analytics'));
-const CMSPage = lazy(() => import('./pages/admin/cms/CMSPage'));
+/*
+ * Public site only.
+ *
+ * The template's auth, dashboard, admin and CMS pages (pages/auth, pages/dashboard,
+ * pages/admin, context/AuthContext, supabase.js…) are DORMANT: still in the repo,
+ * no longer routed, so Supabase is not loaded on public pages. See docs/LEGACY.md.
+ * Their old URLs fall through to the 404 page.
+ */
 const Resume = lazy(() => import('./pages/Resume'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-function PageSuspense({ children }) {
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      {children}
-    </Suspense>
-  );
-}
-
 export default function App() {
   return (
-    <BrowserRouter>
+    <ErrorBoundary>
       <ThemeProvider>
-        <AuthProvider>
-          <ErrorBoundary>
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'var(--theme-surface)',
-                color: 'var(--theme-text)',
-                border: '1px solid var(--theme-border)',
-                borderRadius: '12px',
-                fontSize: '13px',
-                backdropFilter: 'blur(12px)',
-              },
-              success: { iconTheme: { primary: '#14b8a6', secondary: '#030712' } },
-              error: { iconTheme: { primary: '#ef4444', secondary: '#030712' } },
-            }}
-          />
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Landing />} />
-            <Route path="/work/:slug" element={<CaseStudy />} />
-            <Route path="/login" element={<SuspenseRoute><Login /></SuspenseRoute>} />
-            <Route path="/signup" element={<SuspenseRoute><Signup /></SuspenseRoute>} />
-            <Route path="/forgot-password" element={<SuspenseRoute><ForgotPassword /></SuspenseRoute>} />
-
-            {/* Protected Dashboard Routes */}
-            <Route path="/dashboard" element={<AuthGuard><DashboardLayout><PageSuspense><PageTransition><Dashboard /></PageTransition></PageSuspense></DashboardLayout></AuthGuard>} />
-            <Route path="/dashboard/chat" element={<AuthGuard><DashboardLayout><PageSuspense><PageTransition><AiChat /></PageTransition></PageSuspense></DashboardLayout></AuthGuard>} />
-            <Route path="/dashboard/profile" element={<AuthGuard><DashboardLayout><PageSuspense><PageTransition><Profile /></PageTransition></PageSuspense></DashboardLayout></AuthGuard>} />
-            <Route path="/dashboard/settings" element={<AuthGuard><DashboardLayout><PageSuspense><PageTransition><Settings /></PageTransition></PageSuspense></DashboardLayout></AuthGuard>} />
-            <Route path="/dashboard/subscription" element={<AuthGuard><DashboardLayout><PageSuspense><PageTransition><Subscription /></PageTransition></PageSuspense></DashboardLayout></AuthGuard>} />
-
-            {/* Protected Admin Routes */}
-            <Route path="/admin" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><AdminDashboard /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
-            <Route path="/admin/analytics" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><Analytics /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
-            <Route path="/admin/cms" element={<AdminGuard><DashboardLayout><PageSuspense><PageTransition><CMSPage /></PageTransition></PageSuspense></DashboardLayout></AdminGuard>} />
-
-            {/* Resume */}
-            <Route path="/resume" element={<SuspenseRoute><Resume /></SuspenseRoute>} />
-
-            {/* 404 Catch-all */}
-            <Route path="*" element={<SuspenseRoute><NotFound /></SuspenseRoute>} />
-          </Routes>
-          </ErrorBoundary>
-        </AuthProvider>
+        <BrowserRouter>
+          <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/work/:slug" element={<CaseStudy />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
       </ThemeProvider>
-    </BrowserRouter>
+    </ErrorBoundary>
   );
-}
-
-/* ── Helpers ── */
-function SuspenseRoute({ children }) {
-  return <PageSuspense><PageTransition>{children}</PageTransition></PageSuspense>;
 }
