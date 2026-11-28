@@ -439,3 +439,26 @@ textarea.s-input { resize: vertical; min-height: 140px; }
   .s-cv__item { break-inside: avoid; }
   a { color: inherit !important; text-decoration: none; }
 }
+
+/* ── Interactive diagram (case studies) ───────────────── */
+.s-diagram { display: grid; border: 1px solid var(--s-line-2); background: var(--s-surface); }
+@media (min-width: 1000px) { .s-diagram { grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr); } }
+.s-diagram__fig svg { display: block; width: 100%; height: auto; }
+.s-diagram__hint { padding: 12px 16px; border-top: 1px solid var(--s-line); }
+.s-diagram__panel { display: grid; align-content: start; gap: 14px; padding: clamp(20px, 2.6vw, 28px); border-top: 1px solid var(--s-line-2); background: var(--s-raised); }
+@media (min-width: 1000px) { .s-diagram__panel { border-top: 0; border-left: 1px solid var(--s-line-2); } }
+.s-diagram__panel h3 { font-family: var(--s-serif); font-weight: 400; font-size: 34px; line-height: 1.05; }
+.s-diagram__panel p { color: var(--s-text-2); line-height: 1.7; font-size: 15px; }
+.s-diagram__why { padding-left: 14px; border-left: 2px solid var(--s-gold); }
+.s-diagram__why strong { display: block; margin-bottom: 4px; font-family: var(--s-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-gold); }
+.pv-interactive .pv-hit { cursor: pointer; outline: none; }
+.pv-interactive .pv-hit rect { transition: stroke 0.2s, fill 0.2s; }
+.pv-interactive .pv-hit:hover .pv-node { stroke: var(--s-gold); }
+.pv-interactive .pv-hit:focus-visible .pv-node { stroke: var(--s-gold); stroke-width: 2.5; }
+.pv-node--sel { fill: var(--s-gold) !important; stroke: var(--s-gold) !important; }
+.pv-hit.is-sel .pv-node-text, .pv-hit.is-sel .pv-node-sub { fill: var(--s-on-gold); }
+.pv-hit.is-sel .pv-dot { fill: var(--s-on-gold); }
+.pv-hit { transition: opacity 0.25s; }
+.pv-hit.is-dim { opacity: 0.42; }
+.pv-has-sel .pv-edge:not(.pv-edge--on) { opacity: 0.35; }
+.pv-edge--on { stroke: var(--s-gold); stroke-width: 1.6; }
