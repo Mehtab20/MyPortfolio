@@ -48,8 +48,10 @@ export function useLocalTime(timeZone) {
       return '';
     }
   };
-  const [time, setTime] = useState(fmt);
+  // Empty on the server and first client render, so prerendered HTML hydrates cleanly.
+  const [time, setTime] = useState('');
   useEffect(() => {
+    setTime(fmt());
     const id = setInterval(() => setTime(fmt()), 30000);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps

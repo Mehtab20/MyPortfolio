@@ -9,12 +9,14 @@ import { useMediaQuery } from './hooks';
 
 function layoutWide(columns) {
   const W = 800;
-  const H = 550;
   const mx = 36;
   const gap = 28;
   const colW = (W - mx * 2 - gap * (columns.length - 1)) / columns.length;
   const top = 128;
-  const bottom = H - 40;
+  // Height follows the tallest column, so the drawing has no dead space.
+  const tallest = Math.max(...columns.map((c) => c.nodes.reduce((a, n) => a + (n.s ? 56 : 42) + 12, -12)));
+  const H = Math.max(300, top + tallest + 48);
+  const bottom = H - 48;
   const nodes = columns.map((col, ci) => {
     const x = mx + ci * (colW + gap);
     const hs = col.nodes.map((n) => (n.s ? 56 : 42));

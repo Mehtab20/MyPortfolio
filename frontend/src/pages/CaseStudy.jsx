@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SiteLayout from '../components/site/SiteLayout';
 import ProjectDiagram from '../components/site/ProjectDiagram';
@@ -7,12 +7,82 @@ import { Icon } from '../components/site/Icons';
 import { useReveal, usePageMeta } from '../components/site/hooks';
 import { getProject, work } from '../data/site';
 
-function Section({ icon, title, children }) {
+export const GRADES = {
+  verified: { label: 'Verified · ran it', note: 'I ran this code against sample inputs while reviewing it.' },
+  implemented: { label: 'Implemented · not run here', note: 'The code is in the repository and was reviewed, but not run for this write-up.' },
+  partial: { label: 'Partial', note: 'Present in the code but incomplete or dependent on files that aren’t in the repository.' },
+  planned: { label: 'Planned', note: 'Designed or documented, not built yet.' },
+};
+
+export function Grade({ level }) {
+  const g = GRADES[level];
+  if (!g) return null;
+  return <span className={`s-grade s-grade--${level}`}>{g.label}</span>;
+}
+
+function Block({ n, label, title, children }) {
   return (
-    <section className="s-card s-cs__section" data-reveal>
-      <h2><span className="s-iconbox"><Icon name={icon} /></span>{title}</h2>
-      {children}
+    <section className="s-cs__block" data-reveal>
+      <header>
+        <p className="s-label"><b>{n}</b> — {label}</p>
+        {title && <h2 className="s-display">{title}</h2>}
+      </header>
+      <div>{children}</div>
     </section>
+  );
+}
+
+function Explorer({ layers }) {
+  const [picked, setPicked] = useState(0);
+  const cur = layers[picked];
+  const used = [...new Set(layers.map((l) => l.evidence).filter(Boolean))];
+  const onKey = (e) => {
+    if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+    e.preventDefault();
+    const d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1;
+    const next = (picked + d + layers.length) % layers.length;
+    setPicked(next);
+    e.currentTarget.querySelectorAll('[role="tab"]')[next]?.focus();
+  };
+  return (
+    <>
+      <div className="s-explorer">
+        <div className="s-explorer__list" role="tablist" aria-label="Architecture layers" aria-orientation="vertical" onKeyDown={onKey}>
+          {layers.map((l, i) => (
+            <button
+              key={l.layer}
+              type="button"
+              role="tab"
+              id={`layer-${i}`}
+              aria-selected={i === picked}
+              aria-controls="layer-panel"
+              tabIndex={i === picked ? 0 : -1}
+              className="s-layer"
+              onClick={() => setPicked(i)}
+            >
+              <span className="s-layer__name">{l.layer}</span>
+              <Grade level={l.evidence} />
+            </button>
+          ))}
+        </div>
+        <div className="s-explorer__panel" role="tabpanel" id="layer-panel" aria-labelledby={`layer-${picked}`}>
+          <p className="s-label">Layer {String(picked + 1).padStart(2, '0')} of {String(layers.length).padStart(2, '0')}</p>
+          <h3>{cur.layer}</h3>
+          <p>{cur.detail}</p>
+          {cur.evidence && <p style={{ fontSize: 14 }}><Grade level={cur.evidence} /> <span style={{ marginLeft: 8 }}>{GRADES[cur.evidence].note}</span></p>}
+          {cur.source && (
+            <a className="s-explorer__src" href={cur.source} target="_blank" rel="noreferrer">
+              <Icon name="github" /> {cur.source.replace('https://github.com/Mehtab20/', '').replace(/\/(blob|tree)\/main\//, ' / ')}
+            </a>
+          )}
+        </div>
+      </div>
+      {used.length > 0 && (
+        <p className="s-legend">
+          Evidence grades: {used.map((u) => <Grade key={u} level={u} />)}
+        </p>
+      )}
+    </>
   );
 }
 
@@ -31,109 +101,111 @@ export default function CaseStudy() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  if (!project || !cs) return <Navigate to="/#projects" replace />;
+  if (!project || !cs) return <Navigate to="/#work" replace />;
 
   const withStudies = work.filter((p) => p.caseStudy);
   const next = withStudies[(withStudies.findIndex((p) => p.slug === slug) + 1) % withStudies.length];
+  let n = 0;
+  const num = () => String(++n).padStart(2, '0');
 
   return (
     <SiteLayout>
       <article className="s-container s-cs">
-        <Link to="/#projects" className="s-cs__back"><Icon name="arrowLeft" /> Back to projects</Link>
+        <Link to="/#work" className="s-cs__back"><Icon name="arrowLeft" /> All work</Link>
 
-        <header className="s-card s-cs__hero s-enter">
-          <div className="s-project__media">
-            <ProjectDiagram project={project} />
+        <header className="s-cs__hero">
+          <div className="s-enter">
+            <p className="s-label"><b>{project.index}</b> — Case study</p>
+            <h1 className="s-display s-cs__title">{project.title}</h1>
+            <p className="s-lede s-cs__kind">{project.summary}</p>
           </div>
-          <div className="s-cs__head">
-            <p className="s-eyebrow" style={{ marginBottom: 0 }}>Case study {project.index}</p>
-            <h1 className="s-cs__title">{project.title}</h1>
-            <p className="s-cs__kind">{project.kind}</p>
-            <div className="s-meta-row" style={{ margin: '4px 0 0' }}>
-              <span className="s-pill"><Icon name="calendar" /> {project.year}</span>
-              <span className="s-pill"><Icon name="user" /> {project.role}</span>
-              <StatusBadge status={project.status} />
-            </div>
-            <ul className="s-chips">
-              {project.stack.map((t) => <li key={t} className="s-chip s-chip--teal">{t}</li>)}
-            </ul>
+          <dl className="s-cs__facts s-enter" style={{ '--d': '0.15s' }}>
+            <div><dt>What</dt><dd>{project.kind}</dd></div>
+            <div><dt>Role</dt><dd>{project.role}</dd></div>
+            <div><dt>When</dt><dd>{project.year}</dd></div>
+            <div><dt>Status</dt><dd><StatusBadge status={project.status} /></dd></div>
             {project.links.length > 0 && (
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 6 }}>
-                {project.links.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="s-btn s-btn--outline s-btn--sm">
-                    <Icon name="github" /> {l.label}
-                  </a>
-                ))}
+              <div>
+                <dt>Code</dt>
+                <dd style={{ display: 'grid', gap: 6 }}>
+                  {project.links.map((l) => (
+                    <a key={l.href} href={l.href} target="_blank" rel="noreferrer"><Icon name="github" /> {l.label}</a>
+                  ))}
+                </dd>
               </div>
             )}
-          </div>
+          </dl>
         </header>
 
-        <div className="s-cs__sections">
-          <Section icon="info" title="Overview">
-            <p className="s-body" style={{ color: 'var(--s-text)', fontSize: 17 }}>{project.summary}</p>
-          </Section>
+        <figure className="s-figure s-enter" style={{ '--d': '0.25s' }}>
+          <ProjectDiagram project={project} />
+          <figcaption className="s-label">Architecture · {project.stack.join(' · ')}</figcaption>
+        </figure>
 
-          <div className="s-grid-2">
-            <Section icon="flag" title="The Problem">
+        <Block n={num()} label="Context" title="Problem and approach">
+          <div className="s-cs__prose s-cs__prose--2">
+            <div>
+              <h3 className="s-label">The problem</h3>
               {cs.problem.map((p, i) => <p key={i} className="s-body">{p}</p>)}
-            </Section>
-            <Section icon="target" title="The Approach">
+            </div>
+            <div>
+              <h3 className="s-label">The approach</h3>
               {cs.approach.map((p, i) => <p key={i} className="s-body">{p}</p>)}
-            </Section>
+            </div>
           </div>
+        </Block>
 
-          <Section icon="layers" title="Architecture">
-            <ul className="s-arch">
-              {cs.architecture.map((a) => (
-                <li key={a.layer}>
-                  <span className="s-arch__layer">{a.layer}</span>
-                  <span className="s-arch__detail">{a.detail}</span>
-                </li>
-              ))}
-            </ul>
-          </Section>
+        <Block n={num()} label="Architecture" title="Explore the layers">
+          <Explorer layers={cs.architecture} />
+        </Block>
 
-          <Section icon="wrench" title="Engineering Decisions">
-            <div className="s-decisions">
-              {cs.decisions.map((d) => (
-                <div key={d.title} className="s-decision">
-                  <h3>{d.title}</h3>
-                  <p>{d.body}</p>
-                </div>
+        {cs.gallery && (
+          <Block n={num()} label="Screens" title="Prototype screens">
+            <div className="s-gallery" tabIndex={0} role="region" aria-label="Prototype screens, scrollable">
+              {cs.gallery.images.map((im) => (
+                <figure key={im.src}><img src={im.src} alt={im.alt} width="390" height="844" loading="lazy" /></figure>
               ))}
             </div>
-          </Section>
+            <p className="s-note">{cs.gallery.caption}</p>
+          </Block>
+        )}
 
-          <div className="s-grid-2">
-            <Section icon="user" title="My Contribution">
-              <ul className="s-checks">
-                {cs.contribution.map((c) => <li key={c}><span className="s-check"><Icon name="check" /></span>{c}</li>)}
-              </ul>
-            </Section>
-            <Section icon="list" title="Where It Stands">
-              <p className="s-label-caps" style={{ marginBottom: 12 }}>Built</p>
-              <ul className="s-checks">
-                {cs.built.map((c) => <li key={c}><span className="s-check"><Icon name="check" /></span>{c}</li>)}
-              </ul>
-              <p className="s-label-caps" style={{ margin: '20px 0 12px' }}>Next</p>
-              <ul className="s-checks">
-                {cs.next.map((c) => <li key={c}><span className="s-check"><Icon name="arrowRight" /></span>{c}</li>)}
-              </ul>
-              {cs.note && <p className="s-note" style={{ marginTop: 18 }}>{cs.note}</p>}
-            </Section>
-          </div>
-
-          {next && next.slug !== slug && (
-            <Link to={`/work/${next.slug}`} className="s-card s-card--hover s-cs__next">
-              <div>
-                <p className="s-eyebrow" style={{ marginBottom: 0 }}>Next case study</p>
-                <p className="s-h3">{next.title}</p>
+        <Block n={num()} label="Decisions" title="Engineering decisions">
+          <div className="s-decisions">
+            {cs.decisions.map((d) => (
+              <div key={d.title} className="s-decision">
+                <h3>{d.title}</h3>
+                <p>{d.body}</p>
               </div>
-              <Icon name="arrowRight" />
-            </Link>
-          )}
-        </div>
+            ))}
+          </div>
+        </Block>
+
+        <Block n={num()} label="Status" title="Where it stands">
+          <div className="s-cs__prose s-cs__prose--2">
+            <div>
+              <h3 className="s-label">My contribution</h3>
+              <ul className="s-list">{cs.contribution.map((c) => <li key={c}>{c}</li>)}</ul>
+            </div>
+            <div>
+              <h3 className="s-label">Built</h3>
+              <ul className="s-list">{cs.built.map((c) => <li key={c}>{c}</li>)}</ul>
+              <h3 className="s-label" style={{ marginTop: 28 }}>Next</h3>
+              <ul className="s-list s-list--next">{cs.next.map((c) => <li key={c}>{c}</li>)}</ul>
+            </div>
+          </div>
+          {cs.note && <p className="s-note">{cs.note}</p>}
+        </Block>
+
+        {next && next.slug !== slug && (
+          <Link to={`/work/${next.slug}`} className="s-cs__next">
+            <span>
+              <span className="s-label">Next case study · {next.index}</span>
+              <strong>{next.title}</strong>
+            </span>
+            <Icon name="arrowRight" />
+          </Link>
+        )}
       </article>
     </SiteLayout>
   );

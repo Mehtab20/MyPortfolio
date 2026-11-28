@@ -5,7 +5,7 @@ export const SITE_URL = 'https://mehtabakbar.com';
 
 const HOME_TITLE = `${profile.name} — ${profile.positioning.join(', ')}`;
 const HOME_DESC =
-  'Mehtab Akbar is a software engineer in Pakistan who builds AI-native products and full-stack systems: MehZu AI, the MedRef referral system and a hospital management system for Gohar Medical Trust.';
+  'Mehtab Akbar is a software engineer in Pakistan who builds Flutter apps and full-stack systems: MehZu AI, the MedRef referral system and a hospital management system for Gohar Medical Trust.';
 
 function personLd() {
   return {
