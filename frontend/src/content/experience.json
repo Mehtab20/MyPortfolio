@@ -19,7 +19,7 @@
     "org": "Gohar Medical Trust HMS",
     "when": "2026",
     "where": "Buner, Khyber Pakhtunkhwa",
-    "body": "Building a phased hospital management system: a 21-table Convex schema, role-based access for 9 staff roles, and modules for patients, appointments, admissions, medical records and the lab.",
+    "body": "Building a phased hospital management system: a 20-table Convex schema, role-based access for 10 staff roles, and modules for patients, appointments, admissions, medical records and the lab.",
     "tags": [
       "React",
       "TypeScript",
@@ -34,28 +34,14 @@
     "org": "Iqra University",
     "when": "2025 – 2026",
     "where": "Islamabad, Pakistan",
-    "body": "An AI-assisted diagnosis and specialist-referral system: FastAPI backend, NLP and CNN models with graceful fallbacks, and a Flutter client with patient, doctor and admin roles.",
+    "body": "An AI-assisted specialist-referral system: a FastAPI backend with rule-based NLP and optional CNN image models, and a Flutter client. A second version added a weighted questionnaire with patient, doctor and admin roles.",
     "tags": [
       "Flutter",
       "FastAPI",
+      "Python",
       "TensorFlow",
-      "scikit-learn",
-      "PostgreSQL"
+      "SQLAlchemy"
     ],
     "href": "/work/medref"
-  },
-  {
-    "title": "Freelance Full-Stack Developer",
-    "org": "Self-directed",
-    "when": "2024 – Present",
-    "where": "Rawalpindi, Pakistan",
-    "body": "Web and mobile work outside coursework, including business and inventory software for small organisations.",
-    "tags": [
-      "React",
-      "Node.js",
-      "Express",
-      "Supabase",
-      "Flutter"
-    ]
   }
 ]

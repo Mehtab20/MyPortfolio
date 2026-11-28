@@ -5,7 +5,7 @@ export const SITE_URL = 'https://mehtabakbar.com';
 
 const HOME_TITLE = `${profile.name} — ${profile.positioning.join(', ')}`;
 const HOME_DESC =
-  'Mehtab Akbar is a software engineer in Pakistan who builds AI-native products and full-stack systems: MehZu AI, the MedRef referral system and a hospital management system for Gohar Medical Trust.';
+  'Mehtab Akbar is a software engineer in Pakistan who builds Flutter apps and full-stack systems: MehZu AI, the MedRef referral system and a hospital management system for Gohar Medical Trust.';
 
 function personLd() {
   return {
@@ -52,6 +52,14 @@ export function pageMeta(path) {
       };
     }
   }
+  if (/^\/resume\/?$/.test(path)) {
+    return {
+      title: `Résumé — ${profile.name}`,
+      description: `${profile.name}: ${profile.positioning.join(', ')}. Experience, projects, skills and education.`,
+      path: '/resume',
+      jsonLd: [personLd()],
+    };
+  }
   return {
     title: HOME_TITLE,
     description: HOME_DESC,
@@ -68,7 +76,7 @@ export function pageMeta(path) {
   };
 }
 
-export const prerenderRoutes = () => ['/', ...work.filter((p) => p.caseStudy).map((p) => `/work/${p.slug}`)];
+export const prerenderRoutes = () => ['/', ...work.filter((p) => p.caseStudy).map((p) => `/work/${p.slug}`), '/resume'];
 
 /** Plain-text summary for AI tools (https://llmstxt.org). */
 export function llmsTxt() {
@@ -91,6 +99,6 @@ export function llmsTxt() {
 }
 
 export function sitemapXml() {
-  const urls = prerenderRoutes().map((r) => `  <url><loc>${SITE_URL}${r === '/' ? '/' : r}</loc><changefreq>monthly</changefreq><priority>${r === '/' ? '1.0' : '0.8'}</priority></url>`);
+  const urls = prerenderRoutes().map((r) => `  <url><loc>${SITE_URL}${r === '/' ? '/' : r}</loc><changefreq>monthly</changefreq><priority>${r === '/' ? '1.0' : r === '/resume' ? '0.5' : '0.8'}</priority></url>`);
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
 }

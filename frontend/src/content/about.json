@@ -8,7 +8,7 @@
     {
       "title": "Model the domain first",
       "body": "Schemas, roles and workflows come before UI. Most product bugs are really modelling bugs.",
-      "proof": "Gohar HMS: 21-table schema, 9 roles × 13 modules"
+      "proof": "Gohar HMS: 20-table schema, 10 roles × 12 modules"
     },
     {
       "title": "Ground the AI in real data",
@@ -18,7 +18,7 @@
     {
       "title": "Degrade gracefully",
       "body": "When a model file or an API key is missing, the product should still work at a lower level instead of failing.",
-      "proof": "MedRef: keyword NLP when trained models are absent"
+      "proof": "MedRef: keyword rules when trained models are absent"
     },
     {
       "title": "Write it down",

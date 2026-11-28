@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Landing from './pages/Landing';
 import CaseStudy from './pages/CaseStudy';
+import Resume from './pages/Resume';
 
 export { pageMeta, prerenderRoutes, llmsTxt, sitemapXml } from './seo';
 
@@ -15,6 +16,7 @@ export function render(url) {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
+          <Route path="/resume" element={<Resume />} />
         </Routes>
       </ThemeProvider>
     </StaticRouter>,

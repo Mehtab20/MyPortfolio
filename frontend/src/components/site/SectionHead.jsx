@@ -1,22 +1,17 @@
 /**
- * Centred section header: eyebrow, title with one gradient word, bar, subtitle.
- * `title` is an array of parts; strings render plain, { g: 'word' } renders gradient.
+ * Section header: numbered mono label, serif title, optional lede.
+ * `title` is an array of parts; strings render plain, { em: 'word' } renders gold italic.
  */
-export default function SectionHead({ id, eyebrow, title, subtitle }) {
+export default function SectionHead({ id, n, label, title, lede }) {
   return (
-    <header className="s-head" data-reveal>
-      <p className="s-eyebrow">{eyebrow}</p>
-      <h2 id={id} className="s-title">
-        {title.map((part, i) =>
-          typeof part === 'string' ? (
-            <span key={i}>{part}</span>
-          ) : (
-            <span key={i} className="s-gradient-text">{part.g}</span>
-          ),
-        )}
-      </h2>
-      <span className="s-bar" aria-hidden="true" />
-      {subtitle && <p className="s-subtitle">{subtitle}</p>}
+    <header className="s-sec-head" data-reveal>
+      <div>
+        <p className="s-label"><b>{n}</b> — {label}</p>
+        <h2 id={id} className="s-display">
+          {title.map((part, i) => (typeof part === 'string' ? <span key={i}>{part}</span> : <em key={i}>{part.em}</em>))}
+        </h2>
+      </div>
+      {lede && <p className="s-lede">{lede}</p>}
     </header>
   );
 }

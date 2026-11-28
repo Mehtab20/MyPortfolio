@@ -2,7 +2,7 @@
   "name": "Mehtab Akbar",
   "positioning": [
     "Software Engineer",
-    "AI Product Builder",
+    "Flutter Developer",
     "Full-Stack Developer"
   ],
   "location": "Rawalpindi, Pakistan",
@@ -17,5 +17,6 @@
     "label": "MehZu AI",
     "href": "/work/mehzu-ai"
   },
-  "tagline": "I build AI-native products and full-stack systems, from the data model to the screen."
+  "tagline": "I build AI-native products and full-stack systems, from the data model to the screen.",
+  "intro": "I’m a software engineer in Rawalpindi. I build Flutter apps and full-stack web systems, and add AI where it actually helps: specialist referral, hospital operations and a personal AI companion."
 }
